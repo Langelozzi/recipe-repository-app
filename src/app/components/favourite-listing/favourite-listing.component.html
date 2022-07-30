@@ -1,0 +1,25 @@
+<mat-card>
+  <mat-card-title>Favourites</mat-card-title>
+
+  <mat-card-content>
+    <h3 *ngIf="recipes.length == 0" style="text-align: center">
+      Looks like you don't have any favourites yet!
+    </h3>
+    <h3 *ngIf="recipes.length == 0" style="text-align: center">
+      To add some recipes, go to:
+    </h3>
+    <h3 *ngIf="recipes.length == 0" style="text-align: center">
+      <strong>Menu</strong> > <strong>Recipes</strong> >
+      <strong>All Recipes</strong> >
+      <strong><i style="color: rgb(92, 91, 91)">recipe_name</i></strong> >
+      <strong>Options</strong> >
+      <strong>Add to Favourites</strong>
+    </h3>
+
+    <div *ngFor="let recipe of recipes">
+      <mat-card class="recipe-listing-item" (click)="viewRecipe(recipe._id)">
+        {{ recipe.name }}
+      </mat-card>
+    </div>
+  </mat-card-content>
+</mat-card>

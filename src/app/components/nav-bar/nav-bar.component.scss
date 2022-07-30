@@ -1,0 +1,124 @@
+.sidenav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#side-nav {
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 350px !important;
+}
+
+#nav-bar-container,
+#top-side-nav {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox */
+  box-sizing: border-box;
+  position: block;
+  min-height: 40px;
+  max-height: 100px;
+  padding: 10px;
+  padding-top: 15px !important;
+  overflow: auto;
+  width: 100%;
+  background-color: #673ab7;
+  box-shadow: 0px 2px 5px #585858;
+  // horizontal offset, vert offset, blur, color
+}
+
+#top-side-nav {
+  overflow: none !important;
+  height: 78px !important;
+}
+
+.btn-icon {
+  height: 40px;
+  width: 45px;
+}
+
+.side-nav-toggle,
+#usr-menu-icon,
+.menu-title {
+  position: relative;
+  float: left;
+  height: inherit !important;
+}
+
+#usr-menu-icon {
+  float: right !important;
+}
+
+.menu-title {
+  font-size: 35px;
+  color: white;
+  width: 50% !important;
+  margin-top: 4px;
+  margin-left: 20px !important;
+}
+
+.side-nav-title {
+  height: 100% !important;
+  margin: 0 !important;
+  margin-top: 8px !important;
+  margin-left: 8px !important;
+  text-align: left;
+}
+
+#close-side-nav-img {
+  height: 40px;
+  width: 40px;
+}
+
+#close-side-nav-toggle {
+  height: 100%;
+  float: right;
+}
+
+::ng-deep.mat-menu-panel {
+  max-width: none !important;
+}
+
+.side-nav-item {
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 350px !important;
+  height: 70px;
+  font-size: 19px;
+  text-align: left;
+  padding-right: 3em;
+}
+
+.side-nav-btn {
+  width: 100% !important;
+  padding-left: 1.6rem !important;
+  padding-right: 1.6rem !important;
+  padding-top: 1rem !important;
+  font-weight: 400 !important;
+  font-size: 22px !important;
+}
+
+.menu-item-icon {
+  height: 40px;
+  width: 40px;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+  margin-right: -4px !important;
+  align-items: center;
+}
+
+.nav-item-icon {
+  height: 35px;
+  float: right;
+}
+
+mat-panel-title {
+  font-size: 22px;
+  height: 70px;
+}
+
+mat-expansion-panel-header {
+  height: 70px;
+}

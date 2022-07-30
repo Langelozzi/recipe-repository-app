@@ -1,0 +1,165 @@
+<mat-card>
+  <mat-card-title>
+    <button
+      mat-icon-button
+      aria-label="Recipe options"
+      class="top-left-card-btn"
+      [matMenuTriggerFor]="recipeoptions"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <!-- options menu -->
+    <mat-menu
+      #recipeoptions
+      class="mat-menu-panel"
+      yPosition="below"
+      xPosition="after"
+    >
+      <button class="menu-item" mat-button (click)="openEditPage()">
+        <h4 class="menu-item-title">Edit Recipe</h4>
+        <mat-icon class="menu-item-icon">edit</mat-icon>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button class="menu-item" mat-button (click)="openDialog()">
+        <h4 class="menu-item-title">Delete Recipe</h4>
+        <mat-icon class="menu-item-icon">delete</mat-icon>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button
+        *ngIf="!recipe.favourite"
+        class="menu-item"
+        mat-button
+        (click)="addToFavourites()"
+      >
+        <h4 class="menu-item-title">Add to Favourites</h4>
+        <mat-icon class="menu-item-icon">star_border</mat-icon>
+      </button>
+
+      <button
+        *ngIf="recipe.favourite"
+        class="menu-item"
+        mat-button
+        (click)="removeFromFavourites()"
+      >
+        <h4 class="menu-item-title">Remove from Favourites</h4>
+        <mat-icon class="menu-item-icon">star</mat-icon>
+      </button>
+    </mat-menu>
+
+    {{ recipe.name }}
+
+    <button
+      mat-icon-button
+      type="button"
+      aria-label="Close recipe"
+      class="top-right-card-btn"
+      (click)="goBack()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-title>
+
+  <mat-card-subtitle *ngIf="recipe.description"
+    >{{ recipe.description }}
+    <mat-divider class="subtitle-divider"></mat-divider>
+  </mat-card-subtitle>
+  <mat-card-subtitle
+    *ngIf="
+      recipe.prepTime || recipe.cookTime || recipe.ovenTemp || recipe.cuisine
+    "
+  >
+    <div class="flex-container">
+      <div *ngIf="recipe.prepTime">
+        <strong>Prep Time:</strong> {{ recipe.prepTime }} min
+      </div>
+      <div *ngIf="recipe.cookTime">
+        <strong>Cook Time:</strong> {{ recipe.cookTime }} min
+      </div>
+      <div *ngIf="recipe.ovenTemp">
+        <strong>Oven Tempurature:</strong> {{ recipe.ovenTemp }}&#176;F
+      </div>
+      <div *ngIf="recipe.cuisine">
+        <strong>Cuisine</strong> {{ recipe.cuisine }}
+      </div>
+    </div>
+    <mat-divider class="subtitle-divider"></mat-divider>
+  </mat-card-subtitle>
+
+  <mat-card-content>
+    <div class="viewing-subsection">
+      <h3 class="viewing-subsection-title">Ingredients</h3>
+
+      <div class="ingredient-table-container">
+        <table class="ingredient-table">
+          <tr *ngFor="let ingredient of firstHalfOfIngredients; let i = index">
+            <td
+              class="ingredient-cell"
+              [class.ingredient-cell-bordered]="
+                !isLastIngredient(firstHalfOfIngredients, i + 1)
+              "
+            >
+              {{ ingredient.quantity }} {{ ingredient.units }}
+              {{ ingredient.ingredient }}
+            </td>
+          </tr>
+        </table>
+
+        <!-- <mat-divider
+          [ngStyle]="{ height: getDividerHeight() }"
+          [vertical]="true"
+          class="ingredients-divider"
+        ></mat-divider> -->
+
+        <table class="ingredient-table">
+          <tr *ngFor="let ingredient of secondHalfOfIngredients; let i = index">
+            <td
+              class="ingredient-cell"
+              [class.ingredient-cell-bordered]="
+                !isLastIngredient(secondHalfOfIngredients, i + 1)
+              "
+            >
+              {{ ingredient.quantity }} {{ ingredient.units }}
+              {{ ingredient.ingredient }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="viewing-subsection">
+      <h3 class="viewing-subsection-title">Steps</h3>
+
+      <ol *ngFor="let step of recipe.steps; let i = index">
+        <li value="{{ i + 1 }}">{{ step }}</li>
+        <mat-divider class="list-item-divider"></mat-divider>
+      </ol>
+    </div>
+
+    <div class="viewing-subsection" *ngIf="recipe.notes">
+      <h3 class="viewing-subsection-title">Notes</h3>
+
+      <p class="paragraph">{{ recipe.notes }}</p>
+    </div>
+
+    <div class="viewing-subsection" *ngIf="recipe.facts.length > 0">
+      <h3 class="viewing-subsection-title">Nutritional Facts</h3>
+
+      <ul *ngFor="let fact of recipe.fact">
+        <li>{{ fact }}</li>
+      </ul>
+    </div>
+
+    <mat-divider *ngIf="recipe.tags.length > 0"></mat-divider>
+
+    <mat-chip-list class="centered-chip-list">
+      <mat-chip class="tag-chip" *ngFor="let tag of recipe.tags">{{
+        tag
+      }}</mat-chip>
+    </mat-chip-list>
+  </mat-card-content>
+</mat-card>

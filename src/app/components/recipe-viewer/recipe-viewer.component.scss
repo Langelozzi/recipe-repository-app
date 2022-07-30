@@ -1,0 +1,138 @@
+.top-right-card-btn {
+  float: right;
+  margin-top: -9px;
+}
+
+.top-left-card-btn {
+  float: left;
+  margin-top: -9px;
+}
+
+mat-expansion-panel {
+  margin-left: 0.5%;
+  margin-right: 0.5%;
+  margin-bottom: 1rem;
+}
+
+mat-card-title,
+mat-card-subtitle {
+  text-align: center;
+}
+
+li {
+  font-size: 1rem;
+  margin-left: 2.5rem;
+}
+
+.list-item-divider {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100%;
+}
+
+.subtitle-divider {
+  margin-top: 2%;
+  margin-bottom: 2%;
+
+  width: 100%;
+}
+
+.ingredient-list-item {
+  list-style-type: '\2680';
+  line-height: 20px;
+}
+
+li::marker {
+  font-size: 1rem !important;
+  padding-top: 2rem !important;
+}
+
+li::before {
+  content: ' ';
+  margin-right: 0.5rem !important;
+}
+
+.viewing-subsection {
+  margin-top: 1%;
+  margin-bottom: 2%;
+}
+
+.viewing-subsection-title {
+  margin: 2%;
+  margin-left: 5% !important;
+  font-weight: bold;
+}
+
+.paragraph {
+  margin-left: 8%;
+  margin-right: 8%;
+  font-size: 0.95rem;
+}
+
+.centered-chip-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 2%;
+  // remove this once chip list is able to redirect to sorted listing page
+  pointer-events: none;
+}
+
+.tag-chip {
+  color: #ffffff;
+}
+
+.tag-chip:nth-of-type(odd) {
+  background-color: #512da8;
+}
+.tag-chip:nth-of-type(even) {
+  background-color: #ffc107;
+}
+
+.ingredient-table-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8%;
+  margin-right: 12%;
+  margin-top: -2%;
+  margin-bottom: 2%;
+}
+
+.ingredient-table {
+  width: 100%;
+}
+
+.ingredient-cell {
+  font-size: 1rem;
+  text-align: left;
+  padding-top: 4%;
+  padding-bottom: 5%;
+}
+
+.ingredients-divider {
+  margin-right: 2%;
+  margin-left: 2%;
+  width: 0px !important;
+}
+
+.menu-item {
+  width: 270px !important;
+  height: 50px !important;
+}
+
+.menu-item-title,
+.menu-item-icon {
+  display: inline;
+}
+
+.menu-item-icon {
+  float: right !important;
+  margin-top: 1.5% !important;
+  margin-right: 1.5% !important;
+  margin-bottom: 1.5% !important;
+}

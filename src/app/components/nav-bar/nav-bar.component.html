@@ -1,0 +1,134 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav id="side-nav" #sidenav mode="over">
+    <div id="top-side-nav">
+      <h1 class="side-nav-title menu-title"><strong>Menu</strong></h1>
+      <button id="close-side-nav-toggle" mat-button (click)="sidenav.toggle()">
+        <img
+          id="close-side-nav-img"
+          src="assets/imgs/back-arrow.png"
+          alt="back-arrow"
+        />
+      </button>
+    </div>
+
+    <button
+      mat-button
+      class="side-nav-item side-nav-btn"
+      (click)="openUserHome()"
+    >
+      Home
+      <mat-icon class="menu-item-icon">home</mat-icon>
+    </button>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Recipes </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <button
+        mat-button
+        class="side-nav-item"
+        (click)="openRecipeListingPage()"
+      >
+        All Recipes
+        <img
+          class="nav-item-icon"
+          src="assets/imgs/all-recipe-icon.png"
+          alt=""
+        />
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button mat-button class="side-nav-item" (click)="openFavouritesPage()">
+        Favourites
+        <img
+          class="nav-item-icon"
+          src="assets/imgs/favourites-icon.png"
+          alt=""
+        />
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button mat-button class="side-nav-item" (click)="openCreatePage()">
+        Create New
+        <img class="nav-item-icon" src="assets/imgs/add-new-icon.png" alt="" />
+      </button>
+    </mat-expansion-panel>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div id="nav-bar-container">
+      <button
+        class="side-nav-toggle"
+        mat-button
+        (click)="sidenav.toggle()"
+        *ngIf="authService.isLoggedIn()"
+      >
+        <img
+          class="btn-icon"
+          src="assets/imgs/hamburger-menu-white.png"
+          alt="hbgr-menu-icon"
+        />
+      </button>
+
+      <h2 id="recipe-repo-title" class="menu-title">
+        <strong>Recipe Repository</strong>
+      </h2>
+
+      <button
+        id="usr-menu-icon"
+        class="usr-menu-btn"
+        mat-button
+        [matMenuTriggerFor]="usrmenu"
+      >
+        <img
+          class="btn-icon"
+          src="assets/imgs/usr-icon.png"
+          alt="usr-menu-icon"
+        />
+      </button>
+
+      <mat-menu
+        class="mat-menu-panel"
+        #usrmenu
+        yPosition="below"
+        xPosition="after"
+      >
+        <button
+          class="menu-item"
+          *ngIf="!authService.isLoggedIn()"
+          mat-button
+          (click)="openLogInPage()"
+        >
+          <h4 class="menu-item-title">Log in</h4>
+        </button>
+
+        <mat-divider *ngIf="!authService.isLoggedIn()"></mat-divider>
+
+        <button
+          class="menu-item"
+          *ngIf="!authService.isLoggedIn()"
+          mat-button
+          (click)="openSignUpPage()"
+        >
+          <h4 class="menu-item-title">Sign up</h4>
+        </button>
+
+        <button
+          class="menu-item"
+          *ngIf="authService.isLoggedIn()"
+          mat-button
+          (click)="logout()"
+        >
+          <h4 class="menu-item-title">Log out</h4>
+        </button>
+      </mat-menu>
+    </div>
+
+    <div class="main-content-container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

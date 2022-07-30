@@ -1,0 +1,229 @@
+<mat-card>
+  <mat-card-title>New Recipe</mat-card-title>
+
+  <mat-card-content>
+    <form name="createForm" [formGroup]="createForm" (ngSubmit)="saveRecipe()">
+      <mat-form-field class="block-form-field">
+        <mat-label>Name</mat-label>
+        <input
+          type="text"
+          placeholder="e.g. Grandma's Apple Crumble"
+          matInput
+          formControlName="name"
+        />
+      </mat-form-field>
+
+      <!-- Ingredients card -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header> Ingredients * </mat-expansion-panel-header>
+
+        <div class="dynamic-form-container" formArrayName="ingredients">
+          <div class="title-container"></div>
+          <div
+            class="flex-input-group"
+            *ngFor="let quantity of ingredients().controls; let i = index"
+            [formGroupName]="i"
+          >
+            <mat-form-field class="flex-input-field small-flex-input-field">
+              <mat-label>Quantity</mat-label>
+              <input
+                type="number"
+                placeholder="e.g. 30"
+                matInput
+                formControlName="quantity"
+              />
+              <mat-error *ngIf="this.ingredients().controls[0]?.status"
+                >Quantity must be a number</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field class="flex-input-field small-flex-input-field">
+              <mat-label>Units</mat-label>
+              <mat-select formControlName="units">
+                <mat-option value=" ">item</mat-option>
+                <mat-option value="tbsp">tbsp</mat-option>
+                <mat-option value="tsp">tsp</mat-option>
+                <mat-option value="cup">cup</mat-option>
+                <mat-option value="mL">mL</mat-option>
+                <mat-option value="L">L</mat-option>
+                <mat-option value="oz">oz</mat-option>
+                <mat-option value="fl. oz">fl. oz</mat-option>
+                <mat-option value="g">g</mat-option>
+                <mat-option value="kg">kg</mat-option>
+                <mat-option value="lb">lb</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="flex-input-field">
+              <mat-label>Ingredient</mat-label>
+              <input
+                type="text"
+                placeholder="e.g. Sugar"
+                matInput
+                formControlName="ingredient"
+              />
+            </mat-form-field>
+
+            <button
+              (click)="removeIngredient(i)"
+              class="dynamic-input-remove-btn"
+              mat-flat-button
+              color="warn"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+        <div class="center-btn-container">
+          <button
+            class="dynamic-input-add-btn"
+            type="button"
+            (click)="addIngredient()"
+            mat-mini-fab
+            color="primary"
+          >
+            +
+          </button>
+        </div>
+      </mat-expansion-panel>
+
+      <!-- Steps card -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>Steps *</mat-expansion-panel-header>
+
+        <div class="dynamic-form-container" formArrayName="steps">
+          <div class="title-container"></div>
+
+          <ol class="dynamic-list">
+            <li
+              *ngFor="let quantity of steps().controls; let i = index"
+              [formGroupName]="i"
+            >
+              <div class="flex-input-group">
+                <mat-form-field class="flex-input-field">
+                  <mat-label>Instruction</mat-label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Mix together flower and milk"
+                    matInput
+                    formControlName="step"
+                  />
+                </mat-form-field>
+
+                <button
+                  (click)="removeStep(i)"
+                  class="dynamic-input-remove-btn"
+                  mat-flat-button
+                  color="warn"
+                >
+                  Remove
+                </button>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <div class="center-btn-container">
+          <button
+            class="dynamic-input-add-btn"
+            type="button"
+            (click)="addStep()"
+            mat-mini-fab
+            color="primary"
+          >
+            +
+          </button>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header
+          >Additional Information
+        </mat-expansion-panel-header>
+
+        <div class="flex-input-group">
+          <mat-form-field class="flex-input-field">
+            <mat-label>Prep Time ( min )</mat-label>
+            <input
+              type="number"
+              placeholder="e.g. 30"
+              matInput
+              formControlName="prepTime"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="flex-input-field">
+            <mat-label>Cook Time ( min )</mat-label>
+            <input
+              type="number"
+              placeholder="e.g. 60"
+              matInput
+              formControlName="cookTime"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="flex-input-field">
+            <mat-label>Oven Tempurature ( &#176;F )</mat-label>
+            <input
+              type="number"
+              placeholder="e.g. 350"
+              matInput
+              formControlName="ovenTemp"
+            />
+          </mat-form-field>
+        </div>
+
+        <mat-form-field class="block-form-field">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"> </textarea>
+        </mat-form-field>
+
+        <mat-form-field class="block-form-field">
+          <mat-label>Notes</mat-label>
+          <textarea matInput formControlName="notes"> </textarea>
+        </mat-form-field>
+
+        <mat-form-field class="block-form-field">
+          <mat-label>Add Tags</mat-label>
+          <mat-chip-list #chipList aria-label="Tag selection">
+            <mat-chip *ngFor="let tag of tags" (removed)="removeTag(tag)">
+              {{ tag }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+            <input
+              placeholder="New tag..."
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="addTag($event)"
+            />
+          </mat-chip-list>
+        </mat-form-field>
+      </mat-expansion-panel>
+
+      <div class="btn-container">
+        <button
+          class="std-btn"
+          type="button"
+          mat-raised-button
+          color="warn"
+          (click)="goBack()"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="std-btn"
+          mat-raised-button
+          color="primary"
+          id="login-submit-btn"
+          type="submit"
+          [disabled]="createForm.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

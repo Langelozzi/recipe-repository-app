@@ -1,0 +1,139 @@
+<mat-card>
+    <mat-card-title>Sign Up</mat-card-title>
+
+    <mat-card-content>
+        <form
+            name="signupForm"
+            [formGroup]="signupForm"
+            (ngSubmit)="registerUser()"
+        >
+            <div class="flex-input-group">
+                <mat-form-field class="flex-input-field">
+                    <mat-label>First Name</mat-label>
+                    <input
+                        type="text"
+                        placeholder="e.g. Joe"
+                        matInput
+                        formControlName="firstName"
+                        required
+                    />
+                </mat-form-field>
+
+                <mat-form-field class="flex-input-field">
+                    <mat-label>Last Name</mat-label>
+                    <input
+                        type="text"
+                        placeholder="e.g. Smith"
+                        matInput
+                        formControlName="lastName"
+                        required
+                    />
+                </mat-form-field>
+            </div>
+
+            <mat-form-field class="block-form-field">
+                <mat-label>Email</mat-label>
+                <input
+                    type="email"
+                    placeholder="e.g. jsmith@example.com"
+                    matInput
+                    formControlName="email"
+                    required
+                />
+                <mat-error *ngIf="this.signupForm?.get('email')?.invalid">{{
+                    getEmailError()
+                }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="block-form-field">
+                <mat-label>Password</mat-label>
+                <input
+                    [type]="hidePassword ? 'password' : 'text'"
+                    matInput
+                    formControlName="password"
+                    required
+                />
+                <button
+                    mat-icon-button
+                    matSuffix
+                    (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hidePassword"
+                    type="button"
+                >
+                    <mat-icon>{{
+                        hidePassword ? 'visibility_off' : 'visibility'
+                    }}</mat-icon>
+                </button>
+                <mat-error
+                    *ngIf="
+                        this.signupForm?.get('password')?.hasError('minlength')
+                    "
+                >
+                    Password must be at least 8 characters long
+                </mat-error>
+                <mat-error
+                    *ngIf="
+                        this.signupForm?.get('password')?.hasError('pattern')
+                    "
+                >
+                    Password must contain at least: 1 lowercase letter, 1
+                    uppercase letter and 1 number
+                </mat-error>
+            </mat-form-field>
+            <div
+                *ngIf="
+                    this.signupForm?.get('password')?.hasError('minlength') &&
+                    this.signupForm?.get('password')?.hasError('pattern')
+                "
+                style="margin-bottom: 4%"
+            ></div>
+
+            <mat-form-field class="block-form-field">
+                <mat-label>Repeat Password</mat-label>
+                <input
+                    [type]="hideRepeat ? 'password' : 'text'"
+                    matInput
+                    formControlName="repeatPassword"
+                    required
+                />
+                <button
+                    mat-icon-button
+                    matSuffix
+                    (click)="hideRepeat = !hideRepeat"
+                    [attr.aria-label]="'Hide password repeat'"
+                    [attr.aria-pressed]="hideRepeat"
+                    type="button"
+                >
+                    <mat-icon>{{
+                        hideRepeat ? 'visibility_off' : 'visibility'
+                    }}</mat-icon>
+                </button>
+                <mat-error
+                    *ngIf="this.signupForm?.get('repeatPassword')?.dirty"
+                >
+                    Passwords must match
+                </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="warn" routerLink="/">
+                Cancel
+            </button>
+
+            <button
+                mat-raised-button
+                color="primary"
+                id="login-submit-btn"
+                type="submit"
+                [disabled]="signupForm.invalid"
+            >
+                Sign Up
+            </button>
+        </form>
+    </mat-card-content>
+
+    <mat-card-footer
+        >Already registered? Log in
+        <strong> <a routerLink="/login">here</a></strong>
+    </mat-card-footer>
+</mat-card>

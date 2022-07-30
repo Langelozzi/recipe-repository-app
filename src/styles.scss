@@ -1,0 +1,147 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+
+html {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+mat-card-title {
+  margin-top: 5%;
+  margin-left: 1%;
+  text-align: left;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+mat-card {
+  margin: auto;
+  margin-top: 2.5% !important;
+  max-width: 1000px;
+  align-self: center !important;
+}
+
+.main-content-container {
+  margin: 3% !important;
+}
+
+mat-form-field {
+  margin-bottom: 2% !important;
+}
+
+label {
+  padding-bottom: 0.5% !important;
+}
+
+.mat-form-field-outline {
+  background-color: white !important;
+}
+
+.block-form-field {
+  display: block !important;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
+}
+
+.flex-input-group {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.flex-input-field {
+  width: 100%;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
+}
+
+mat-label,
+mat-error {
+  font-size: larger !important;
+}
+
+mat-card-footer {
+  font-size: large !important;
+  text-align: center !important;
+  margin: 2% !important;
+}
+
+.error-message {
+  text-align: center !important;
+  color: red !important;
+}
+
+div.mat-simple-snackbar-action {
+  color: rgb(64, 185, 84) !important;
+}
+
+mat-divider {
+  width: 90% !important;
+  margin-left: 5% !important;
+  margin-right: 5% !important;
+  margin-top: 3% !important;
+  margin-bottom: 3% !important;
+}
+
+.full-screen-container {
+  padding: 2em !important;
+}
+
+.btn-container {
+  margin: 1%;
+  margin-top: 3%;
+}
+
+.std-btn {
+  margin: 1% !important;
+  width: 6rem !important;
+  height: 2.8rem !important;
+}
+
+.small-flex-input-field {
+  width: 9rem !important;
+}
+
+li::marker {
+  font-size: 1rem !important;
+}
+
+.flex-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  gap: 0.5rem;
+}
+
+.menu-item {
+  display: block !important;
+  width: 150px !important;
+  max-width: none !important;
+}
+
+.menu-item-title {
+  text-align: center !important;
+  font-size: 15px !important;
+  margin: 20px !important;
+}
+
+.recipe-listing-item {
+  margin-bottom: 1.5% !important;
+  margin-top: 1.5% !important;
+  cursor: pointer !important;
+  background-color: #d1c4e9 !important;
+  font-size: 18px !important;
+  text-align: center !important;
+}
+
+.cdk-overlay-backdrop {
+  cursor: default;
+}
+
+.menu-item-icon {
+  float: right !important;
+}
