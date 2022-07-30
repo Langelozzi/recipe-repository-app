@@ -16,11 +16,13 @@ import { SnackBarHelper } from '../../helpers/snack-bar.helper';
 import { Router } from '@angular/router';
 
 import { Location } from '@angular/common';
+import { AnimationHelper } from 'src/app/helpers/animation-helper';
 
 @Component( {
     selector: 'app-create-recipe-form',
     templateUrl: './create-recipe-form.component.html',
     styleUrls: [ './create-recipe-form.component.scss' ],
+    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class CreateRecipeFormComponent implements OnInit {
     createForm: FormGroup;

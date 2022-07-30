@@ -4,11 +4,13 @@ import { AuthService } from './../../services/auth-service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SnackBarHelper } from '../../helpers/snack-bar.helper';
+import { AnimationHelper } from 'src/app/helpers/animation-helper';
 
 @Component( {
     selector: 'app-login-form',
     templateUrl: './login-form.component.html',
     styleUrls: [ './login-form.component.scss' ],
+    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class LoginFormComponent implements OnInit {
     loginForm: FormGroup = new FormGroup( {

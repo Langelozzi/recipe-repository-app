@@ -11,11 +11,13 @@ import { Ingredient } from '../../../models/ingredient';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { AnimationHelper } from 'src/app/helpers/animation-helper';
 
 @Component( {
     selector: 'app-recipe-viewer',
     templateUrl: './recipe-viewer.component.html',
     styleUrls: [ './recipe-viewer.component.scss' ],
+    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class RecipeViewerComponent implements OnInit {
     private recipeId: string | null;
