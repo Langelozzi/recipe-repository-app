@@ -42,6 +42,7 @@ import { UpdateRecipeComponent } from './components/update-recipe/update-recipe.
 import { HttpRequestInterceptor } from './interceptors/request.interceptor';
 import { FavouriteListingComponent } from './components/favourite-listing/favourite-listing.component';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { RecipeUploadComponent } from './components/recipe-upload/recipe-upload.component';
 
 // Angular Material
 @NgModule( {
@@ -57,6 +58,7 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
         UpdateRecipeComponent,
         FavouriteListingComponent,
         ConfirmationDialogComponent,
+        RecipeUploadComponent,
     ],
     imports: [
         BrowserModule,

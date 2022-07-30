@@ -31,6 +31,10 @@ export class RecipeService {
         } );
     }
 
+    uploadRecipe( body: any ) {
+        return this.http.post( `${environment.baseApiUrl}/recipes/upload`, body );
+    }
+
     getAllRecipes(): Observable<object> {
         return this.http.get( `${environment.baseApiUrl}/recipes` );
     }

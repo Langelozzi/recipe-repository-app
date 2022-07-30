@@ -1,0 +1,113 @@
+<mat-card [@fastFade]="'in'">
+  <mat-card-title>New Recipe</mat-card-title>
+
+  <mat-card-content>
+    <form name="createForm" [formGroup]="createForm" (ngSubmit)="saveRecipe()">
+      <mat-form-field class="block-form-field">
+        <mat-label>Name</mat-label>
+        <input
+          type="text"
+          placeholder="e.g. Grandma's Apple Crumble"
+          matInput
+          formControlName="name"
+        />
+      </mat-form-field>
+
+      <input
+        type="file"
+        multiple="multiple"
+        (change)="onFileSelected($event)"
+      />
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header
+          >Additional Information
+        </mat-expansion-panel-header>
+
+        <div class="flex-input-group">
+          <mat-form-field class="flex-input-field">
+            <mat-label>Prep Time ( min )</mat-label>
+            <input
+              type="number"
+              placeholder="e.g. 30"
+              matInput
+              formControlName="prepTime"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="flex-input-field">
+            <mat-label>Cook Time ( min )</mat-label>
+            <input
+              type="number"
+              placeholder="e.g. 60"
+              matInput
+              formControlName="cookTime"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="flex-input-field">
+            <mat-label>Oven Tempurature ( &#176;F )</mat-label>
+            <input
+              type="number"
+              placeholder="e.g. 350"
+              matInput
+              formControlName="ovenTemp"
+            />
+          </mat-form-field>
+        </div>
+
+        <mat-form-field class="block-form-field">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"> </textarea>
+        </mat-form-field>
+
+        <mat-form-field class="block-form-field">
+          <mat-label>Notes</mat-label>
+          <textarea matInput formControlName="notes"> </textarea>
+        </mat-form-field>
+
+        <mat-form-field class="block-form-field">
+          <mat-label>Add Tags</mat-label>
+          <mat-chip-list #chipList aria-label="Tag selection">
+            <mat-chip *ngFor="let tag of tags" (removed)="removeTag(tag)">
+              {{ tag }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+            <input
+              placeholder="New tag..."
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="addTag($event)"
+            />
+          </mat-chip-list>
+        </mat-form-field>
+      </mat-expansion-panel>
+
+      <div class="btn-container">
+        <button
+          class="std-btn"
+          type="button"
+          mat-raised-button
+          color="warn"
+          (click)="goBack()"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="std-btn"
+          mat-raised-button
+          color="primary"
+          id="login-submit-btn"
+          type="submit"
+          [disabled]="createForm.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

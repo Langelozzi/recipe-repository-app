@@ -11,6 +11,7 @@ import { RecipeListingComponent } from './components/recipe-listing/recipe-listi
 import { RecipeViewerComponent } from './components/recipe-viewer/recipe-viewer.component';
 import { UpdateRecipeComponent } from './components/update-recipe/update-recipe.component';
 import { FavouriteListingComponent } from './components/favourite-listing/favourite-listing.component';
+import { RecipeUploadComponent } from './components/recipe-upload/recipe-upload.component';
 
 const routes: Routes = [
     {
@@ -27,6 +28,11 @@ const routes: Routes = [
     {
         path: 'recipes/create',
         component: CreateRecipeFormComponent,
+        canActivate: [ AuthGuard ],
+    },
+    {
+        path: 'recipes/upload',
+        component: RecipeUploadComponent,
         canActivate: [ AuthGuard ],
     },
     {
