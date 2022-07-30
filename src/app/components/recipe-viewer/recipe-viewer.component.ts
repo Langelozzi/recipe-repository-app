@@ -38,19 +38,12 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.recipeService.getRecipeById( this.recipeId ).subscribe(
-            ( data: any ) => {
+        this.recipeService
+            .getRecipeById( this.recipeId )
+            .subscribe( ( data: any ) => {
                 this.recipe = plainToClass( Recipe, data.recipe );
                 this.splitIngredients();
-            },
-            ( err: any ) => {
-                SnackBarHelper.triggerSnackBar(
-                    this._snackBar,
-                    'An unexpected error occurred while loading your recipe',
-                    'Ok'
-                );
-            }
-        );
+            } );
     }
 
     openDialog(): void {

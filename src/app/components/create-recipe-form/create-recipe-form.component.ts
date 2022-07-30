@@ -163,8 +163,9 @@ export class CreateRecipeFormComponent implements OnInit {
     }
 
     saveRecipe(): void {
-        this.recipeService.createRecipe( this.getNewRecipe() ).subscribe(
-            ( data: any ) => {
+        this.recipeService
+            .createRecipe( this.getNewRecipe() )
+            .subscribe( ( data: any ) => {
                 SnackBarHelper.triggerSnackBar(
                     this._snackBar,
                     `New recipe "${data.recipe.name}" was successfully created`,
@@ -172,14 +173,6 @@ export class CreateRecipeFormComponent implements OnInit {
                 );
 
                 this.router.navigate( [ '/recipes' ] );
-            },
-            ( err: any ) => {
-                SnackBarHelper.triggerSnackBar(
-                    this._snackBar,
-                    'Failed to create new recipe',
-                    'Ok'
-                );
-            }
-        );
+            } );
     }
 }

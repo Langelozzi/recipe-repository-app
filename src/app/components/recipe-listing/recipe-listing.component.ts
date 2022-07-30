@@ -25,14 +25,6 @@ export class RecipeListingComponent implements OnInit {
             // if the response is good then create list of recipes
             ( data: any ) => {
                 this.recipes = plainToClass( Recipe, data.recipes );
-            },
-            // if there is an error then show alert message snack bar
-            ( err: any ) => {
-                SnackBarHelper.triggerSnackBar(
-                    this._snackBar,
-                    'An unexpected error has occured while loading recipes',
-                    'Ok'
-                );
             }
         );
     }
