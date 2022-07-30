@@ -88,12 +88,13 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
         },
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: TokenInterceptor,
+            useClass: HttpRequestInterceptor,
             multi: true,
         },
+        // this must be last interceptor for the catch error to work properly and redirect to login
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: HttpRequestInterceptor,
+            useClass: TokenInterceptor,
             multi: true,
         },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },

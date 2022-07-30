@@ -145,3 +145,42 @@ li::marker {
 .menu-item-icon {
   float: right !important;
 }
+
+.large-card-header {
+  font-size: 40px !important;
+  margin: 2% !important;
+}
+
+.small-card-header {
+  font-size: 20px !important;
+  margin: 2% !important;
+}
+
+.fancy-font {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.white-text {
+  color: #ffffff !important;
+}
+
+.text-shadow {
+  text-shadow: 1px 2px 2px #3d3d3d !important;
+}
+
+.card-title-centered {
+  text-align: center !important;
+}
+
+.large-btn-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  gap: 0.5rem;
+}
+
+.large-btn {
+  margin: 1% !important;
+  width: 15rem !important;
+  height: 4rem !important;
+}

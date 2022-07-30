@@ -21,11 +21,13 @@ import { Location } from '@angular/common';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ColorPalletEnum } from 'src/enums/colorPallet.enum';
+import { AnimationHelper } from 'src/app/helpers/animation-helper';
 
 @Component( {
     selector: 'app-update-recipe',
     templateUrl: './update-recipe.component.html',
     styleUrls: [ './update-recipe.component.scss' ],
+    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class UpdateRecipeComponent implements OnInit {
     private recipeId: string | null;

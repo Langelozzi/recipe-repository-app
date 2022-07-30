@@ -2,11 +2,13 @@ import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth-service/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { AnimationHelper } from 'src/app/helpers/animation-helper';
 
 @Component( {
     selector: 'app-nav-bar',
     templateUrl: './nav-bar.component.html',
     styleUrls: [ './nav-bar.component.scss' ],
+    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class NavBarComponent implements OnInit {
     @ViewChild( 'sidenav' ) sideNav!: MatSidenav;
