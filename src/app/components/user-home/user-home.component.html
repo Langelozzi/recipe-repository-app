@@ -1,11 +1,43 @@
-<mat-card>
-  <mat-card-title>My Recipes</mat-card-title>
+<mat-card class="mat-card-w-background" *ngIf="recipes && currentUser">
+  <mat-card-title
+    [@slowFade]="'in'"
+    class="white-text text-shadow large-card-header fancy-font fade-in-text"
+    >Welcome back, {{ currentUser.firstName }}!</mat-card-title
+  >
 
   <mat-card-content>
-    <div *ngFor="let recipe of this.recipes">
-      <mat-card class="recipe-listing-item" (click)="viewRecipe(recipe._id)">
-        {{ recipe.name }}
-      </mat-card>
-    </div>
+    <mat-card *ngIf="getRecentRecipes().length > 0" [@slowFade]="'in'">
+      <mat-card-title class="small-card-header fancy-font card-title-centered"
+        >Jump back into some of your recent recipes:</mat-card-title
+      >
+      <div *ngFor="let recipe of getRecentRecipes()">
+        <mat-card class="recipe-listing-item" (click)="viewRecipe(recipe._id)">
+          {{ recipe.name }}
+        </mat-card>
+      </div>
+    </mat-card>
+    <mat-card *ngIf="getRecentRecipes().length > 0" [@slowFade]="'in'">
+      <mat-card-title class="small-card-header fancy-font card-title-centered"
+        >Or get started on something new!</mat-card-title
+      >
+      <div class="large-btn-container">
+        <button
+          mat-raised-button
+          color="primary"
+          class="std-btn large-btn"
+          (click)="openCreatePage()"
+        >
+          Create from scratch
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          class="std-btn large-btn"
+          (click)="openUploadPage()"
+        >
+          Upload via image
+        </button>
+      </div>
+    </mat-card>
   </mat-card-content>
 </mat-card>
