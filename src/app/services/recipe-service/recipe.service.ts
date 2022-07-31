@@ -14,21 +14,24 @@ export class RecipeService {
 
     constructor( private http: HttpClient ) {}
 
-    createRecipe( newRecipe: Recipe ): Observable<object> {
-        return this.http.post( `${environment.baseApiUrl}/recipes/create`, {
-            name: newRecipe.name,
-            ingredients: newRecipe.ingredients,
-            steps: newRecipe.steps,
-            favourite: newRecipe.favourite,
-            ovenTemp: newRecipe.ovenTemp,
-            prepTime: newRecipe.prepTime,
-            cookTime: newRecipe.cookTime,
-            notes: newRecipe.notes,
-            cuisine: newRecipe.cuisine,
-            facts: newRecipe.facts,
-            tags: newRecipe.tags,
-            description: newRecipe.description,
-        } );
+    createRecipe( body: any ): Observable<object> {
+        return this.http.post( `${environment.baseApiUrl}/recipes/create`, body );
+        // else if ( newRecipe ) {
+        //     return this.http.post( `${environment.baseApiUrl}/recipes/create`, {
+        //         name: newRecipe.name,
+        //         ingredients: newRecipe.ingredients,
+        //         steps: newRecipe.steps,
+        //         favourite: newRecipe.favourite,
+        //         ovenTemp: newRecipe.ovenTemp,
+        //         prepTime: newRecipe.prepTime,
+        //         cookTime: newRecipe.cookTime,
+        //         notes: newRecipe.notes,
+        //         cuisine: newRecipe.cuisine,
+        //         facts: newRecipe.facts,
+        //         tags: newRecipe.tags,
+        //         description: newRecipe.description,
+        //     } );
+        // }
     }
 
     uploadRecipe( body: any ) {

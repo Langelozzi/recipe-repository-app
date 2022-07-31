@@ -127,7 +127,7 @@ export class CreateRecipeFormComponent implements OnInit {
     }
 
     // service related methods
-    private getNewRecipe(): Recipe {
+    private getNewRecipe(): object {
         const formObject = this.createForm.value;
         const ingredients: Ingredient[] = [];
         const steps: string[] = [];
