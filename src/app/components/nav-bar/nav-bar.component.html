@@ -140,6 +140,7 @@
     </div>
 
     <div class="main-content-container">
+      <app-landing-page *ngIf="isRootPath()"></app-landing-page>
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

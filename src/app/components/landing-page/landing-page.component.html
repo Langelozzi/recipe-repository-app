@@ -1,1 +1,40 @@
-<p>landing-page works!</p>
+<mat-card class="landing-card" [@slowFade]="'in'">
+  <img
+    class="landing-photo"
+    src="assets/imgs/pancakes.jpg"
+    alt="pancakes image"
+  />
+
+  <mat-card-title
+    [@slowFade]="'in'"
+    class="large-card-header fancy-font fade-in-text"
+    >Welcome to the Recipe Repository</mat-card-title
+  >
+  <mat-card-subtitle class="centered-text"
+    >All your recipes in one location</mat-card-subtitle
+  >
+
+  <h2 class="centered-text fancy-font landing-h2">To get started please:</h2>
+
+  <div class="large-btn-container">
+    <button
+      mat-raised-button
+      color="primary"
+      class="std-btn large-btn large-btn-text fancy-font"
+      (click)="openLoginPage()"
+    >
+      Log In
+    </button>
+    <h2 class="btn-middle-text">or</h2>
+    <button
+      mat-raised-button
+      color="accent"
+      class="std-btn large-btn large-btn-text fancy-font"
+      (click)="openSignUpPage()"
+    >
+      Sign Up
+    </button>
+  </div>
+
+  <h2 class="centered-text fancy-font landing-h2">I hope you enjoy :)</h2>
+</mat-card>
