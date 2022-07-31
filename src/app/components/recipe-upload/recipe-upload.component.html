@@ -18,26 +18,27 @@
           >Upload Images *</mat-card-title
         >
         <mat-card-content class="mat-card-content-center">
-          <button
+          <!-- <button
             mat-raised-button
             color="primary"
             type="button"
             (click)="uploader.click()"
           >
-            <label class="file-input-label">
-              <input
-                class="file-input"
-                type="file"
-                multiple="multiple"
-                (change)="onFileSelected($event)"
-                required
-                #uploader
-              />
-              <span>Select files</span>
+            <label class="file-input-label"> -->
+          <input
+            class="file-input"
+            accept="image/*"
+            type="file"
+            multiple="multiple"
+            (change)="onFileSelected($event)"
+            required
+            #uploader
+          />
+          <!-- <span>Select files</span>
             </label>
-          </button>
+          </button> -->
 
-          <button
+          <!-- <button
             (click)="removeUploads()"
             class="file-upload-remove-btn"
             mat-fab
@@ -50,7 +51,7 @@
           <h4>{{ selectedImageNames.length }} files selected:</h4>
           <div *ngFor="let fileName of selectedImageNames">
             <p>{{ fileName }}</p>
-          </div>
+          </div> -->
         </mat-card-content>
       </mat-card>
 

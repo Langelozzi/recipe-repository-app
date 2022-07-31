@@ -17,6 +17,14 @@ export class NavBarComponent implements OnInit {
 
     ngOnInit(): void {}
 
+    isRootPath(): boolean {
+        if ( this.router.url == '/' ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     logout(): void {
         this.authService.logout();
         this.router.navigate( [ '/login' ] );
