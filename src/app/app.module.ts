@@ -42,6 +42,8 @@ import { UpdateRecipeComponent } from './components/update-recipe/update-recipe.
 import { HttpRequestInterceptor } from './interceptors/request.interceptor';
 import { FavouriteListingComponent } from './components/favourite-listing/favourite-listing.component';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { RecipeUploadComponent } from './components/recipe-upload/recipe-upload.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 // Angular Material
 @NgModule( {
@@ -57,6 +59,8 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
         UpdateRecipeComponent,
         FavouriteListingComponent,
         ConfirmationDialogComponent,
+        RecipeUploadComponent,
+        LandingPageComponent,
     ],
     imports: [
         BrowserModule,
@@ -88,12 +92,13 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
         },
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: TokenInterceptor,
+            useClass: HttpRequestInterceptor,
             multi: true,
         },
+        // this must be last interceptor for the catch error to work properly and redirect to login
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: HttpRequestInterceptor,
+            useClass: TokenInterceptor,
             multi: true,
         },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },

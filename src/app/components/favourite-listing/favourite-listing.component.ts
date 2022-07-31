@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { plainToClass } from 'class-transformer';
+import { AnimationHelper } from 'src/app/helpers/animation-helper';
 import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
 import { RecipeService } from 'src/app/services/recipe-service/recipe.service';
 import { Recipe } from 'src/models/recipe';
@@ -10,6 +11,7 @@ import { Recipe } from 'src/models/recipe';
     selector: 'app-favourite-listing',
     templateUrl: './favourite-listing.component.html',
     styleUrls: [ './favourite-listing.component.scss' ],
+    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class FavouriteListingComponent implements OnInit {
     public recipes!: Recipe[];
@@ -25,14 +27,6 @@ export class FavouriteListingComponent implements OnInit {
             // if the response is good then create list of recipes
             ( data: any ) => {
                 this.recipes = plainToClass( Recipe, data.recipes );
-            },
-            // if there is an error then show alert message snack bar
-            ( err: any ) => {
-                SnackBarHelper.triggerSnackBar(
-                    this._snackBar,
-                    'An unexpected error has occured while loading recipes',
-                    'Ok'
-                );
             }
         );
     }

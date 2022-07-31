@@ -4,6 +4,7 @@ import { Recipe } from '../../../models/recipe';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs/internal/Observable';
 import { Subject } from 'rxjs';
+import { response } from 'express';
 
 @Injectable( {
     providedIn: 'root',
@@ -13,21 +14,12 @@ export class RecipeService {
 
     constructor( private http: HttpClient ) {}
 
-    createRecipe( newRecipe: Recipe ): Observable<object> {
-        return this.http.post( `${environment.baseApiUrl}/recipes/create`, {
-            name: newRecipe.name,
-            ingredients: newRecipe.ingredients,
-            steps: newRecipe.steps,
-            favourite: newRecipe.favourite,
-            ovenTemp: newRecipe.ovenTemp,
-            prepTime: newRecipe.prepTime,
-            cookTime: newRecipe.cookTime,
-            notes: newRecipe.notes,
-            cuisine: newRecipe.cuisine,
-            facts: newRecipe.facts,
-            tags: newRecipe.tags,
-            description: newRecipe.description,
-        } );
+    createRecipe( body: any ): Observable<object> {
+        return this.http.post( `${environment.baseApiUrl}/recipes/create`, body );
+    }
+
+    uploadRecipe( body: any ) {
+        return this.http.post( `${environment.baseApiUrl}/recipes/upload`, body );
     }
 
     getAllRecipes(): Observable<object> {
@@ -66,6 +58,16 @@ export class RecipeService {
     deleteRecipeById( recipeId: string | null ): Observable<object> {
         return this.http.delete(
             `${environment.baseApiUrl}/recipes/${recipeId}`
+        );
+    }
+
+    getImage( imgPath: string ): Observable<object> {
+        return this.http.post(
+            `${environment.baseApiUrl}/img`,
+            {
+                path: imgPath,
+            },
+            { responseType: 'blob' }
         );
     }
 }

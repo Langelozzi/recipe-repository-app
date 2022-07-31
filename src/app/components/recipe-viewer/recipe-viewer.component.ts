@@ -11,16 +11,20 @@ import { Ingredient } from '../../../models/ingredient';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { AnimationHelper } from 'src/app/helpers/animation-helper';
+import { concatMap, tap } from 'rxjs';
 
 @Component( {
     selector: 'app-recipe-viewer',
     templateUrl: './recipe-viewer.component.html',
     styleUrls: [ './recipe-viewer.component.scss' ],
+    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class RecipeViewerComponent implements OnInit {
     private recipeId: string | null;
     public recipe!: any;
     public hasOptionalDetails!: boolean;
+    public images?: any = [];
 
     // ingredient arrays
     public firstHalfOfIngredients!: Ingredient[];
@@ -38,19 +42,38 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.recipeService.getRecipeById( this.recipeId ).subscribe(
-            ( data: any ) => {
+        this.recipeService
+            .getRecipeById( this.recipeId )
+            .subscribe( ( data: any ) => {
                 this.recipe = plainToClass( Recipe, data.recipe );
-                this.splitIngredients();
+                this.loadImages( data.recipe );
+            } );
+    }
+
+    createImageFromBlob( image: Blob ) {
+        const reader = new FileReader();
+
+        reader.addEventListener(
+            'load',
+            () => {
+                this.images.push( reader.result );
             },
-            ( err: any ) => {
-                SnackBarHelper.triggerSnackBar(
-                    this._snackBar,
-                    'An unexpected error occurred while loading your recipe',
-                    'Ok'
-                );
-            }
+            false
         );
+
+        if ( image ) {
+            reader.readAsDataURL( image );
+        }
+    }
+
+    loadImages( recipe: any ) {
+        if ( recipe.imagePaths && recipe.imagePaths.length > 0 ) {
+            for ( const path of recipe.imagePaths ) {
+                this.recipeService.getImage( path ).subscribe( ( data: any ) => {
+                    this.createImageFromBlob( data );
+                } );
+            }
+        }
     }
 
     openDialog(): void {

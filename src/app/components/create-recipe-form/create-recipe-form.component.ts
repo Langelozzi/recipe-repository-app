@@ -16,11 +16,13 @@ import { SnackBarHelper } from '../../helpers/snack-bar.helper';
 import { Router } from '@angular/router';
 
 import { Location } from '@angular/common';
+import { AnimationHelper } from 'src/app/helpers/animation-helper';
 
 @Component( {
     selector: 'app-create-recipe-form',
     templateUrl: './create-recipe-form.component.html',
     styleUrls: [ './create-recipe-form.component.scss' ],
+    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class CreateRecipeFormComponent implements OnInit {
     createForm: FormGroup;
@@ -125,7 +127,7 @@ export class CreateRecipeFormComponent implements OnInit {
     }
 
     // service related methods
-    private getNewRecipe(): Recipe {
+    private getNewRecipe(): object {
         const formObject = this.createForm.value;
         const ingredients: Ingredient[] = [];
         const steps: string[] = [];
@@ -163,8 +165,9 @@ export class CreateRecipeFormComponent implements OnInit {
     }
 
     saveRecipe(): void {
-        this.recipeService.createRecipe( this.getNewRecipe() ).subscribe(
-            ( data: any ) => {
+        this.recipeService
+            .createRecipe( this.getNewRecipe() )
+            .subscribe( ( data: any ) => {
                 SnackBarHelper.triggerSnackBar(
                     this._snackBar,
                     `New recipe "${data.recipe.name}" was successfully created`,
@@ -172,14 +175,6 @@ export class CreateRecipeFormComponent implements OnInit {
                 );
 
                 this.router.navigate( [ '/recipes' ] );
-            },
-            ( err: any ) => {
-                SnackBarHelper.triggerSnackBar(
-                    this._snackBar,
-                    'Failed to create new recipe',
-                    'Ok'
-                );
-            }
-        );
+            } );
     }
 }

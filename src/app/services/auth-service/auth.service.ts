@@ -39,6 +39,10 @@ export class AuthService {
         this.removeAccessTokenFromLocalStorage();
     }
 
+    getCurrentUser() {
+        return this.http.get( `${environment.baseApiUrl}/auth/current-user` );
+    }
+
     isLoggedIn() {
         return !!this.getAccessToken();
     }

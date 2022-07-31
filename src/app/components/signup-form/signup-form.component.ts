@@ -9,11 +9,13 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AnimationHelper } from 'src/app/helpers/animation-helper';
 
 @Component( {
     selector: 'app-signup-form',
     templateUrl: './signup-form.component.html',
     styleUrls: [ './signup-form.component.scss' ],
+    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class SignupFormComponent implements OnInit {
     signupForm: FormGroup = new FormGroup( {
