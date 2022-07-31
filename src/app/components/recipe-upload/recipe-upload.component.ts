@@ -22,6 +22,7 @@ import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
 } )
 export class RecipeUploadComponent implements OnInit {
     selectedImages!: File[];
+    selectedImageNames: string[] = [];
 
     createForm: FormGroup;
 
@@ -74,7 +75,17 @@ export class RecipeUploadComponent implements OnInit {
 
     onFileSelected( event: any ) {
         this.selectedImages = <File[]>event.target.files;
-        console.log( this.selectedImages );
+
+        for ( const file of event.target.files ) {
+            this.selectedImageNames.push( file.name );
+        }
+
+        console.log( this.selectedImageNames );
+    }
+
+    removeUploads() {
+        this.selectedImages = [];
+        this.selectedImageNames = [];
     }
 
     saveRecipe() {

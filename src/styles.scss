@@ -19,13 +19,14 @@ mat-card-title {
 
 mat-card {
   margin: auto;
-  margin-top: 2.5% !important;
+  margin-top: 2% !important;
+  margin-bottom: 2% !important;
   max-width: 1000px;
   align-self: center !important;
 }
 
 .main-content-container {
-  margin: 3% !important;
+  margin: 3%;
 }
 
 mat-form-field {
@@ -88,7 +89,16 @@ mat-divider {
 }
 
 .full-screen-container {
-  padding: 2em !important;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-container {
@@ -189,10 +199,52 @@ li::marker {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100% !important;
+  width: 90%;
+  height: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .recipe-img {
   width: 100% !important;
   height: 100% !important;
+}
+
+.mat-card-title-small {
+  font-size: 1rem !important;
+}
+
+.file-input {
+  margin: 2rem !important;
+}
+
+.file-input-label {
+  cursor: pointer !important;
+}
+
+.mat-card-content-center {
+  text-align: center !important;
+}
+
+.file-upload-remove-btn {
+  position: relative;
+  margin-left: 2rem !important;
+  height: 40px !important;
+  width: 40px !important;
+  padding: 0px !important;
+}
+
+.mat-button-wrapper {
+  padding: 0px !important;
+}
+
+#upload-icon {
+  width: 38px !important;
+  height: 30px !important;
+}
+
+.file-input-label {
+  position: relative;
+  height: inherit;
+  width: inherit;
 }

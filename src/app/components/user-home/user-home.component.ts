@@ -47,11 +47,11 @@ export class UserHomeComponent implements OnInit {
     getRecentRecipes(): Recipe[] {
         let recentRecipes: Recipe[];
 
-        if ( this.recipes.length < 3 ) {
+        if ( this.recipes.length < 5 ) {
             recentRecipes = this.recipes;
         } else {
             recentRecipes = this.recipes.slice(
-                this.recipes.length - 3,
+                this.recipes.length - 5,
                 this.recipes.length
             );
         }

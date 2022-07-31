@@ -43,6 +43,7 @@ import { HttpRequestInterceptor } from './interceptors/request.interceptor';
 import { FavouriteListingComponent } from './components/favourite-listing/favourite-listing.component';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { RecipeUploadComponent } from './components/recipe-upload/recipe-upload.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 // Angular Material
 @NgModule( {
@@ -59,6 +60,7 @@ import { RecipeUploadComponent } from './components/recipe-upload/recipe-upload.
         FavouriteListingComponent,
         ConfirmationDialogComponent,
         RecipeUploadComponent,
+        LandingPageComponent,
     ],
     imports: [
         BrowserModule,
