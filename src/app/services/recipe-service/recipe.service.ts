@@ -16,22 +16,6 @@ export class RecipeService {
 
     createRecipe( body: any ): Observable<object> {
         return this.http.post( `${environment.baseApiUrl}/recipes/create`, body );
-        // else if ( newRecipe ) {
-        //     return this.http.post( `${environment.baseApiUrl}/recipes/create`, {
-        //         name: newRecipe.name,
-        //         ingredients: newRecipe.ingredients,
-        //         steps: newRecipe.steps,
-        //         favourite: newRecipe.favourite,
-        //         ovenTemp: newRecipe.ovenTemp,
-        //         prepTime: newRecipe.prepTime,
-        //         cookTime: newRecipe.cookTime,
-        //         notes: newRecipe.notes,
-        //         cuisine: newRecipe.cuisine,
-        //         facts: newRecipe.facts,
-        //         tags: newRecipe.tags,
-        //         description: newRecipe.description,
-        //     } );
-        // }
     }
 
     uploadRecipe( body: any ) {
@@ -74,6 +58,16 @@ export class RecipeService {
     deleteRecipeById( recipeId: string | null ): Observable<object> {
         return this.http.delete(
             `${environment.baseApiUrl}/recipes/${recipeId}`
+        );
+    }
+
+    getImage( imgPath: string ): Observable<object> {
+        return this.http.post(
+            `${environment.baseApiUrl}/img`,
+            {
+                path: imgPath,
+            },
+            { responseType: 'blob' }
         );
     }
 }

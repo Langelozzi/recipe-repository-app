@@ -184,3 +184,15 @@ li::marker {
   width: 15rem !important;
   height: 4rem !important;
 }
+
+.img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100% !important;
+}
+
+.recipe-img {
+  width: 100% !important;
+  height: 100% !important;
+}

@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
+import { concatMap, tap } from 'rxjs';
 
 @Component( {
     selector: 'app-recipe-viewer',
@@ -23,6 +24,7 @@ export class RecipeViewerComponent implements OnInit {
     private recipeId: string | null;
     public recipe!: any;
     public hasOptionalDetails!: boolean;
+    public images?: any = [];
 
     // ingredient arrays
     public firstHalfOfIngredients!: Ingredient[];
@@ -44,8 +46,34 @@ export class RecipeViewerComponent implements OnInit {
             .getRecipeById( this.recipeId )
             .subscribe( ( data: any ) => {
                 this.recipe = plainToClass( Recipe, data.recipe );
-                this.splitIngredients();
+                this.loadImages( data.recipe );
             } );
+    }
+
+    createImageFromBlob( image: Blob ) {
+        const reader = new FileReader();
+
+        reader.addEventListener(
+            'load',
+            () => {
+                this.images.push( reader.result );
+            },
+            false
+        );
+
+        if ( image ) {
+            reader.readAsDataURL( image );
+        }
+    }
+
+    loadImages( recipe: any ) {
+        if ( recipe.imagePaths && recipe.imagePaths.length > 0 ) {
+            for ( const path of recipe.imagePaths ) {
+                this.recipeService.getImage( path ).subscribe( ( data: any ) => {
+                    this.createImageFromBlob( data );
+                } );
+            }
+        }
     }
 
     openDialog(): void {
