@@ -13,47 +13,48 @@
         />
       </mat-form-field>
 
-      <mat-card>
-        <mat-card-title class="mat-card-title-small"
-          >Upload Images *</mat-card-title
+      <mat-expansion-panel>
+        <mat-expansion-panel-header class="mat-card-title-small"
+          >Upload Images *</mat-expansion-panel-header
         >
         <mat-card-content class="mat-card-content-center">
-          <!-- <button
-            mat-raised-button
-            color="primary"
-            type="button"
-            (click)="uploader.click()"
-          >
-            <label class="file-input-label"> -->
-          <input
-            class="file-input"
-            accept="image/*"
-            type="file"
-            multiple="multiple"
-            (change)="onFileSelected($event)"
-            required
-            #uploader
-          />
-          <!-- <span>Select files</span>
-            </label>
-          </button> -->
+              <button mat-raised-button color="primary" type="button">
+              <label class="file-input-label">
+                <input
+                  class="file-input"
+                  accept="image/*"
+                  type="file"
+                  multiple="multiple"
+                  (change)="onFileSelected($event)"
+                  required
+                  #uploader
+                />
+                <span>Select files</span>
+              </label>
+            </button>
 
-          <!-- <button
-            (click)="removeUploads()"
-            class="file-upload-remove-btn"
-            mat-fab
-            color="warn"
-            type="button"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
+            <button
+              (click)="removeUploads()"
+              class="file-upload-remove-btn"
+              mat-fab
+              color="warn"
+              type="button"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
 
           <h4>{{ selectedImageNames.length }} files selected:</h4>
           <div *ngFor="let fileName of selectedImageNames">
             <p>{{ fileName }}</p>
-          </div> -->
+          </div>
+
+          <div *ngIf="selectedImagePaths.length > 0">
+            <div *ngFor="let img of selectedImagePaths">
+              <img [src]="img" [alt]="" />
+            </div>
+          </div>
         </mat-card-content>
-      </mat-card>
+      </mat-expansion-panel>
 
       <mat-expansion-panel>
         <mat-expansion-panel-header

@@ -21,8 +21,9 @@ import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
     animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class RecipeUploadComponent implements OnInit {
-    selectedImages!: File[];
+    selectedImages: File[] = [];
     selectedImageNames: string[] = [];
+    selectedImagePaths: string[] = [];
 
     createForm: FormGroup;
 
@@ -50,7 +51,17 @@ export class RecipeUploadComponent implements OnInit {
 
     ngOnInit(): void {}
 
-    public goBack() {
+    imagePreview( file: any ) {
+        this.selectedImagePaths = [];
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.selectedImagePaths.push( reader.result as string );
+        }
+        reader.readAsDataURL(file)
+      }
+
+    goBack() {
         this.location.back();
     }
 
@@ -75,17 +86,18 @@ export class RecipeUploadComponent implements OnInit {
 
     onFileSelected( event: any ) {
         this.selectedImages = <File[]>event.target.files;
+        this.selectedImageNames = [];
 
         for ( const file of event.target.files ) {
             this.selectedImageNames.push( file.name );
+            this.imagePreview( file );
         }
-
-        console.log( this.selectedImageNames );
     }
 
     removeUploads() {
         this.selectedImages = [];
         this.selectedImageNames = [];
+        this.selectedImagePaths = [];
     }
 
     saveRecipe() {

@@ -40,6 +40,8 @@ export class UpdateRecipeComponent implements OnInit {
     tags: string[] = [];
     addOnBlur = true;
     readonly separatorKeysCodes = [ ENTER, COMMA ] as const;
+    selectedImages: File[] = [];
+    selectedImageNames: string[] = [];
 
     constructor(
         private route: ActivatedRoute,
@@ -113,6 +115,20 @@ export class UpdateRecipeComponent implements OnInit {
 
     goBack() {
         this.location.back();
+    }
+
+    onFileSelected( event: any ) {
+        this.selectedImages = <File[]>event.target.files;
+        this.selectedImageNames = [];
+
+        for ( const file of event.target.files ) {
+            this.selectedImageNames.push( file.name );
+        }
+    }
+
+    removeUploads() {
+        this.selectedImages = [];
+        this.selectedImageNames = [];
     }
 
     // ingredient related methods
