@@ -263,3 +263,11 @@ li::marker {
   font-size: 1.5rem !important;
   margin-top: 1.2rem !important;
 }
+
+.sticky {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  // makes sure that the sticky element is always overtop of other content
+  z-index: 1 !important;
+}
