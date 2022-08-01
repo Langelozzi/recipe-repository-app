@@ -140,7 +140,8 @@
     </div>
 
     <div class="main-content-container">
-      <app-landing-page *ngIf="isRootPath()"></app-landing-page>
+        <!-- show landing page if its root path and you aren't logged in yet -->
+      <app-landing-page *ngIf="isRootPath() && !isLoggedIn()"></app-landing-page>
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
