@@ -49,8 +49,8 @@
           </div>
 
           <div *ngIf="selectedImagePaths.length > 0">
-            <div *ngFor="let img of selectedImagePaths">
-              <img [src]="img" [alt]="" />
+            <div class="img-container" *ngFor="let img of selectedImagePaths">
+              <img class="recipe-img" [src]="img" alt="uploaded image" />
             </div>
           </div>
         </mat-card-content>
