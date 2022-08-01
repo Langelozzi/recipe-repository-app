@@ -19,42 +19,22 @@
         />
       </mat-form-field>
 
-      <mat-card>
-        <mat-card-title class="mat-card-title-small"
-          >Upload Images *</mat-card-title
+      <!-- Image viewer -->
+      <mat-expansion-panel *ngIf="recipe.imagePaths.length > 0">
+        <mat-expansion-panel-header class="mat-card-title-small"
         >
-        <mat-card-content class="mat-card-content-center">
-          <button mat-raised-button color="primary" type="button">
-            <label class="file-input-label">
-              <input
-                class="file-input"
-                accept="image/*"
-                type="file"
-                multiple="multiple"
-                (change)="onFileSelected($event)"
-                required
-                #uploader
-              />
-              <span>Select files</span>
-            </label>
-          </button>
+        <mat-panel-title>Images</mat-panel-title>
+        <mat-panel-description>Images cannot be changed once uploaded to a recipe</mat-panel-description>
+        </mat-expansion-panel-header
+        >
 
-          <button
-            (click)="removeUploads()"
-            class="file-upload-remove-btn"
-            mat-fab
-            color="warn"
-            type="button"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
 
-          <h4>{{ selectedImageNames.length }} files selected:</h4>
-          <div *ngFor="let fileName of selectedImageNames">
-            <p>{{ fileName }}</p>
+        <div *ngIf="images.length > 0" class="viewing-subsection">
+            <div class="img-container" *ngFor="let img of images">
+              <img class="recipe-img" [src]="img" alt="loaded image" />
+            </div>
           </div>
-        </mat-card-content>
-      </mat-card>
+      </mat-expansion-panel>
 
       <!-- Ingredients card -->
       <mat-expansion-panel *ngIf="recipe.ingredients.length > 0">
