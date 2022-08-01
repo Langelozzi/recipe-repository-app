@@ -75,12 +75,11 @@ export class RecipeUploadComponent implements OnInit {
 
     onFileSelected( event: any ) {
         this.selectedImages = <File[]>event.target.files;
+        this.selectedImageNames = [];
 
         for ( const file of event.target.files ) {
             this.selectedImageNames.push( file.name );
         }
-
-        console.log( this.selectedImageNames );
     }
 
     removeUploads() {
