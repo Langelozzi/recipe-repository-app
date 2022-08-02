@@ -50,12 +50,18 @@ label {
 .flex-input-group {
   display: flex;
   width: 100%;
+  // making the inputs take up the full width of the flex container
+  // also shrinks when the screen width is too small
+  max-width: none;
+  min-width: 5%;
   justify-content: space-between;
   gap: 0.5rem;
 }
 
 .flex-input-field {
   width: 100%;
+  max-width: none;
+  min-width: 5%;
   margin-left: 0.5%;
   margin-right: 0.5%;
 }
