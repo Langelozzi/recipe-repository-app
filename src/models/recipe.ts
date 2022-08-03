@@ -13,7 +13,7 @@ export class Recipe {
     facts?: string[];
     tags?: string[];
     description?: string;
-    imagePaths?: string[];
+    imageData?: string[];
 
     constructor(
         name: string,
@@ -29,7 +29,7 @@ export class Recipe {
         tags?: string[],
         description?: string,
         _id?: string,
-        imagePaths?: string[]
+        imageData?: string[]
     ) {
         this._id = _id;
         this.name = name;
@@ -44,7 +44,7 @@ export class Recipe {
         this.facts = facts;
         this.tags = tags;
         this.description = description;
-        this.imagePaths = imagePaths;
+        this.imageData = imageData;
     }
 
     update(
@@ -60,7 +60,7 @@ export class Recipe {
         facts?: string[],
         tags?: string[],
         description?: string,
-        imagePaths?: string[]
+        imageData?: string[]
     ): void {
         this.name = name;
         this.ingredients = ingredients;
@@ -74,7 +74,7 @@ export class Recipe {
         this.facts = facts;
         this.tags = tags;
         this.description = description;
-        this.imagePaths = imagePaths;
+        this.imageData = imageData;
     }
 
     updateFavouriteStatus( favStatus: boolean ) {
