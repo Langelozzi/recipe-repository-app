@@ -25,6 +25,7 @@ export class RecipeViewerComponent implements OnInit {
     public recipe!: any;
     public hasOptionalDetails!: boolean;
     public images?: any = [];
+    private previousPage: string | undefined;
 
     // ingredient arrays
     public firstHalfOfIngredients!: Ingredient[];
@@ -39,6 +40,7 @@ export class RecipeViewerComponent implements OnInit {
         private dialog: MatDialog
     ) {
         this.recipeId = this.route.snapshot.paramMap.get( 'id' );
+        this.previousPage = this.router.getCurrentNavigation()?.previousNavigation?.finalUrl?.toString();
     }
 
     ngOnInit(): void {
@@ -70,7 +72,11 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     goBack(): void {
-        this.location.back();
+        if ( this.previousPage == `/recipes/${ this.recipe._id }/edit` ) {
+            this.router.navigate( ['/recipes'] );
+        } else {
+            this.location.back();
+        }
     }
 
     getRandomChipColor(): string {
