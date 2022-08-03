@@ -93,9 +93,9 @@
 
   <mat-card-content>
     <!-- Image container -->
-    <div *ngIf="images.length > 0" class="viewing-subsection">
-      <div class="img-container" *ngFor="let img of images">
-        <img class="recipe-img" [src]="img" alt="loaded image" />
+    <div *ngIf="recipe.imageData.length > 0" class="viewing-subsection">
+      <div class="img-container" *ngFor="let img of recipe.imageData">
+        <img class="recipe-img" [src]="img.url" alt="loaded image" />
       </div>
     </div>
 

@@ -46,34 +46,7 @@ export class RecipeViewerComponent implements OnInit {
             .getRecipeById( this.recipeId )
             .subscribe( ( data: any ) => {
                 this.recipe = plainToClass( Recipe, data.recipe );
-                this.loadImages( data.recipe );
             } );
-    }
-
-    createImageFromBlob( image: Blob ) {
-        const reader = new FileReader();
-
-        reader.addEventListener(
-            'load',
-            () => {
-                this.images.push( reader.result );
-            },
-            false
-        );
-
-        if ( image ) {
-            reader.readAsDataURL( image );
-        }
-    }
-
-    loadImages( recipe: any ) {
-        if ( recipe.imagePaths && recipe.imagePaths.length > 0 ) {
-            for ( const path of recipe.imagePaths ) {
-                this.recipeService.getImage( path ).subscribe( ( data: any ) => {
-                    this.createImageFromBlob( data );
-                } );
-            }
-        }
     }
 
     openDialog(): void {
