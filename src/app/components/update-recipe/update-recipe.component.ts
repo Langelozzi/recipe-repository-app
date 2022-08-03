@@ -33,7 +33,6 @@ export class UpdateRecipeComponent implements OnInit {
     private recipeId: string | null;
     public recipe!: any;
     public recipeObs!: any;
-    public images: any[] = [];
 
     public editForm!: FormGroup;
 
@@ -41,8 +40,6 @@ export class UpdateRecipeComponent implements OnInit {
     tags: string[] = [];
     addOnBlur = true;
     readonly separatorKeysCodes = [ ENTER, COMMA ] as const;
-    selectedImages: File[] = [];
-    selectedImageNames: string[] = [];
 
     constructor(
         private route: ActivatedRoute,
@@ -87,38 +84,11 @@ export class UpdateRecipeComponent implements OnInit {
         this.recipeService.getRecipeById( this.recipeId ).subscribe(
             ( data: any ) => {
                 this.recipe = plainToClass( Recipe, data.recipe );
-                this.loadImages( this.recipe );
             },
             ( err: any ) => {
                 SnackBarHelper.triggerSnackBar( this._snackBar, err, 'Ok' );
             }
         );
-    }
-
-    createImageFromBlob( image: Blob ) {
-        const reader = new FileReader();
-
-        reader.addEventListener(
-            'load',
-            () => {
-                this.images.push( reader.result );
-            },
-            false
-        );
-
-        if ( image ) {
-            reader.readAsDataURL( image );
-        }
-    }
-
-    loadImages( recipe: any ) {
-        if ( recipe.imagePaths && recipe.imagePaths.length > 0 ) {
-            for ( const path of recipe.imagePaths ) {
-                this.recipeService.getImage( path ).subscribe( ( data: any ) => {
-                    this.createImageFromBlob( data );
-                } );
-            }
-        }
     }
 
     openDialog(): void {
@@ -143,20 +113,6 @@ export class UpdateRecipeComponent implements OnInit {
 
     goBack() {
         this.location.back();
-    }
-
-    onFileSelected( event: any ) {
-        this.selectedImages = <File[]>event.target.files;
-        this.selectedImageNames = [];
-
-        for ( const file of event.target.files ) {
-            this.selectedImageNames.push( file.name );
-        }
-    }
-
-    removeUploads() {
-        this.selectedImages = [];
-        this.selectedImageNames = [];
     }
 
     // ingredient related methods

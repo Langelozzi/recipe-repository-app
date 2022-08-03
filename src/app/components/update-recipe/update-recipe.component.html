@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="recipe">
   <mat-card-title [@fastFade]="'in'">Edit Recipe</mat-card-title>
 
   <mat-card-content>
@@ -20,7 +20,7 @@
       </mat-form-field>
 
       <!-- Image viewer -->
-      <mat-expansion-panel *ngIf="recipe.imagePaths.length > 0">
+      <mat-expansion-panel *ngIf="recipe.imageData && recipe.imageData.length > 0">
         <mat-expansion-panel-header class="mat-card-title-small"
         >
         <mat-panel-title>Images</mat-panel-title>
@@ -29,9 +29,9 @@
         >
 
 
-        <div *ngIf="images.length > 0" class="viewing-subsection">
-            <div class="img-container" *ngFor="let img of images">
-              <img class="recipe-img" [src]="img" alt="loaded image" />
+        <div *ngIf="recipe.imageData && recipe.imageData.length > 0" class="viewing-subsection">
+            <div class="img-container" *ngFor="let img of recipe.imageData">
+              <img class="recipe-img" [src]="img.url" alt="loaded image" />
             </div>
           </div>
       </mat-expansion-panel>
