@@ -50,6 +50,7 @@ export class RecipeViewerComponent implements OnInit {
             .getRecipeById( this.recipeId )
             .subscribe( ( data: any ) => {
                 this.recipe = plainToClass( Recipe, data.recipe );
+                this.splitIngredients();
             } );
     }
 
