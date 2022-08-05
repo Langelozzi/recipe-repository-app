@@ -40,7 +40,9 @@ export class RecipeViewerComponent implements OnInit {
         private dialog: MatDialog
     ) {
         this.recipeId = this.route.snapshot.paramMap.get( 'id' );
-        this.previousPage = this.router.getCurrentNavigation()?.previousNavigation?.finalUrl?.toString();
+        this.previousPage = this.router
+            .getCurrentNavigation()
+            ?.previousNavigation?.finalUrl?.toString();
     }
 
     ngOnInit(): void {
@@ -72,8 +74,8 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     goBack(): void {
-        if ( this.previousPage == `/recipes/${ this.recipe._id }/edit` ) {
-            this.router.navigate( ['/recipes'] );
+        if ( this.previousPage == `/recipes/${this.recipe._id}/edit` ) {
+            this.router.navigate( [ '/recipes' ] );
         } else {
             this.location.back();
         }
