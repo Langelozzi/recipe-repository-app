@@ -65,10 +65,10 @@ export class SignupFormComponent implements OnInit {
     registerUser() {
         this.authService
             .register(
-                <string>this.signupForm?.get( 'email' )?.value,
-                <string>this.signupForm?.get( 'firstName' )?.value,
-                <string>this.signupForm?.get( 'lastName' )?.value,
-                <string>this.signupForm?.get( 'password' )?.value
+                <string>this.signupForm?.get( 'email' )?.value.trim(),
+                <string>this.signupForm?.get( 'firstName' )?.value.trim(),
+                <string>this.signupForm?.get( 'lastName' )?.value.trim(),
+                <string>this.signupForm?.get( 'password' )?.value.trim()
             )
             .subscribe(
                 ( data ) => {

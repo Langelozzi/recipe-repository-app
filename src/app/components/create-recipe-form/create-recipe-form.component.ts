@@ -112,7 +112,7 @@ export class CreateRecipeFormComponent implements OnInit {
         const value = ( event.value || '' ).trim();
 
         if ( value ) {
-            this.tags.push( value );
+            this.tags.push( value.trim() );
         }
 
         event.chipInput?.clear();
@@ -136,29 +136,29 @@ export class CreateRecipeFormComponent implements OnInit {
             const newIng: Ingredient = {
                 quantity: ingredient.quantity,
                 units: ingredient.units,
-                ingredient: ingredient.ingredient,
+                ingredient: ingredient.ingredient.trim(),
             };
 
             ingredients.push( newIng );
         } );
 
         formObject.steps.forEach( ( step: any ) => {
-            steps.push( step.step );
+            steps.push( step.step.trim() );
         } );
 
         const newRecipe: Recipe = new Recipe(
-            formObject.name,
+            formObject.name.trim(),
             ingredients,
             steps,
             false,
             formObject.prepTime,
             formObject.cookTime,
             formObject.ovenTemp,
-            formObject.notes,
+            formObject.notes.trim(),
             undefined,
             undefined,
             this.tags,
-            formObject.description
+            formObject.description.trim()
         );
 
         return newRecipe;
