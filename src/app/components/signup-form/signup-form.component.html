@@ -8,7 +8,7 @@
       (ngSubmit)="registerUser()"
     >
       <div class="flex-input-group">
-        <mat-form-field class="flex-input-field">
+        <mat-form-field (keyup.enter)="registerUser()" class="flex-input-field">
           <mat-label>First Name</mat-label>
           <input
             type="text"
@@ -19,7 +19,7 @@
           />
         </mat-form-field>
 
-        <mat-form-field class="flex-input-field">
+        <mat-form-field (keyup.enter)="registerUser()" class="flex-input-field">
           <mat-label>Last Name</mat-label>
           <input
             type="text"
@@ -31,7 +31,7 @@
         </mat-form-field>
       </div>
 
-      <mat-form-field class="block-form-field">
+      <mat-form-field (keyup.enter)="registerUser()" class="block-form-field">
         <mat-label>Email</mat-label>
         <input
           type="email"
@@ -45,7 +45,7 @@
         }}</mat-error>
       </mat-form-field>
 
-      <mat-form-field class="block-form-field">
+      <mat-form-field (keyup.enter)="registerUser()" class="block-form-field">
         <mat-label>Password</mat-label>
         <input
           [type]="hidePassword ? 'password' : 'text'"
@@ -85,13 +85,14 @@
         style="margin-bottom: 4%"
       ></div>
 
-      <mat-form-field class="block-form-field">
+      <mat-form-field (keyup.enter)="registerUser()" class="block-form-field">
         <mat-label>Repeat Password</mat-label>
         <input
           [type]="hideRepeat ? 'password' : 'text'"
           matInput
           formControlName="repeatPassword"
           required
+          (keyup.enter)="registerUser()"
         />
         <button
           mat-icon-button

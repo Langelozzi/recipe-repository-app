@@ -81,6 +81,9 @@
       <div *ngIf="recipe.cookTime">
         <strong>Cook Time:</strong> {{ recipe.cookTime }} min
       </div>
+      <div *ngIf="recipe.cookTime && recipe.prepTime">
+        <strong>Total Time:</strong> {{ recipe.cookTime + recipe.prepTime }} min
+      </div>
       <div *ngIf="recipe.ovenTemp">
         <strong>Oven Tempurature:</strong> {{ recipe.ovenTemp }}&#176;F
       </div>
