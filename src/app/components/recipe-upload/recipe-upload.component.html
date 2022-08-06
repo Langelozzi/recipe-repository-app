@@ -15,37 +15,38 @@
 
       <!-- Image upload section -->
       <mat-expansion-panel>
-        <mat-expansion-panel-header class="mat-card-title-small"
-        >
-        <mat-panel-title>Upload Images *</mat-panel-title>
-        <mat-panel-description>Images cannot be changed once uploaded to a recipe</mat-panel-description>
-        </mat-expansion-panel-header
-        >
+        <mat-expansion-panel-header class="mat-card-title-small">
+          <mat-panel-title>Upload Images *</mat-panel-title>
+          <mat-panel-description
+            >Images cannot be changed once uploaded to a
+            recipe</mat-panel-description
+          >
+        </mat-expansion-panel-header>
         <div class="mat-card-content-center">
-              <button mat-raised-button color="primary" type="button">
-              <label class="file-input-label">
-                <input
-                  class="file-input"
-                  accept="image/*"
-                  type="file"
-                  multiple="multiple"
-                  (change)="onFileSelected($event)"
-                  required
-                  #uploader
-                />
-                <span>Select files</span>
-              </label>
-            </button>
+          <button mat-raised-button color="primary" type="button">
+            <label class="file-input-label">
+              <input
+                class="file-input"
+                accept="image/*"
+                type="file"
+                multiple="multiple"
+                (change)="onFileSelected($event)"
+                required
+                #uploader
+              />
+              <span>Select files</span>
+            </label>
+          </button>
 
-            <button
-              (click)="removeUploads()"
-              class="file-upload-remove-btn"
-              mat-fab
-              color="warn"
-              type="button"
-            >
-              <mat-icon>close</mat-icon>
-            </button>
+          <button
+            (click)="removeUploads()"
+            class="file-upload-remove-btn"
+            mat-fab
+            color="warn"
+            type="button"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
 
           <h4>{{ selectedImageNames.length }} files selected:</h4>
           <div *ngFor="let fileName of selectedImageNames">
@@ -60,6 +61,7 @@
         </div>
       </mat-expansion-panel>
 
+      <!-- Additional Information -->
       <mat-expansion-panel>
         <mat-expansion-panel-header
           >Additional Information
@@ -99,12 +101,12 @@
 
         <mat-form-field class="block-form-field">
           <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description"> </textarea>
+          <textarea autosize matInput formControlName="description"> </textarea>
         </mat-form-field>
 
         <mat-form-field class="block-form-field">
           <mat-label>Notes</mat-label>
-          <textarea matInput formControlName="notes"> </textarea>
+          <textarea autosize matInput formControlName="notes"> </textarea>
         </mat-form-field>
 
         <mat-form-field class="block-form-field">
@@ -127,6 +129,7 @@
         </mat-form-field>
       </mat-expansion-panel>
 
+      <!-- Buttons -->
       <div class="btn-container">
         <button
           class="std-btn"
