@@ -22,6 +22,8 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { MatDialog } from '@angular/material/dialog';
 import { ColorPalletEnum } from 'src/enums/colorPallet.enum';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
+import { ArrayHelper } from '../../helpers/array-helper';
 
 @Component( {
     selector: 'app-update-recipe',
@@ -35,6 +37,7 @@ export class UpdateRecipeComponent implements OnInit {
     public recipeObs!: any;
 
     public editForm!: FormGroup;
+    private changeCount = 0;
 
     // tags chip variables
     tags: string[] = [];
@@ -91,24 +94,92 @@ export class UpdateRecipeComponent implements OnInit {
         );
     }
 
-    openDialog(): void {
-        const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
-            width: '450px',
-            data: {
-                title: 'Save Changes',
-                subtitle: `Are you sure you want to save the changes made to ${this.recipe.name}?`,
-                cancelBtnText: 'Cancel',
-                cancelBtnColor: ColorPalletEnum.cancelRed,
-                submitBtnText: 'Save',
-                submitBtnColor: ColorPalletEnum.confirmGreen,
-            },
-        } );
+    openSaveDialog(): void {
+        if ( this.formChanged() ) {
+            const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+                width: '450px',
+                data: {
+                    title: 'Save Changes',
+                    subtitle: `Are you sure you want to save the changes made to ${this.recipe.name}?`,
+                    cancelBtnText: 'Cancel',
+                    cancelBtnColor: ColorPalletEnum.cancelRed,
+                    submitBtnText: 'Save',
+                    submitBtnColor: ColorPalletEnum.confirmGreen,
+                },
+            } );
 
-        dialogRef.afterClosed().subscribe( ( result ) => {
-            if ( result == true ) {
-                this.saveChanges();
-            }
-        } );
+            dialogRef.afterClosed().subscribe( ( result ) => {
+                if ( result == true ) {
+                    this.saveChanges();
+                }
+            } );
+        } else {
+            const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+                width: '450px',
+                data: {
+                    title: 'No changes made',
+                    subtitle: `Strange. You have not made any changes to ${this.recipe.name}. Would you like to change something before you leave?`,
+                    cancelBtnText: 'Yes',
+                    cancelBtnColor: ColorPalletEnum.confirmGreen,
+                    submitBtnText: 'No',
+                    submitBtnColor: ColorPalletEnum.cancelRed,
+                },
+            } );
+
+            dialogRef.afterClosed().subscribe( ( result ) => {
+                if ( result == true ) {
+                    this.goBack();
+                }
+            } );
+        }
+    }
+
+    openCancelDialog(): void {
+        if ( this.formChanged() ) {
+            const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+                width: '450px',
+                data: {
+                    title: 'Discard Changes',
+                    subtitle: `Are you sure you want to discard the changes made to ${this.recipe.name}?`,
+                    cancelBtnText: 'Back',
+                    cancelBtnColor: ColorPalletEnum.confirmGreen,
+                    submitBtnText: 'Discard',
+                    submitBtnColor: ColorPalletEnum.cancelRed,
+                },
+            } );
+
+            dialogRef.afterClosed().subscribe( ( result ) => {
+                if ( result == true ) {
+                    this.goBack();
+                }
+            } );
+        } else {
+            this.goBack();
+        }
+    }
+
+    private formChanged(): boolean {
+        if (
+            this.recipe.name != this.editForm.value.name ||
+            !ArrayHelper.areEqualObjects(
+                this.recipe.ingredients,
+                this.editForm.value.ingredients
+            ) ||
+            !ArrayHelper.areEqual(
+                this.recipe.steps,
+                this.editForm.value.steps
+            ) ||
+            this.recipe.prepTime != this.editForm.value.prepTime ||
+            this.recipe.cookTime != this.editForm.value.cookTime ||
+            this.recipe.ovenTemp != this.editForm.value.ovenTemp ||
+            this.recipe.description != this.editForm.value.description ||
+            this.recipe.notes != this.editForm.value.notes ||
+            !ArrayHelper.areEqual( this.recipe.tags, this.tags )
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     goBack() {
@@ -145,9 +216,7 @@ export class UpdateRecipeComponent implements OnInit {
     }
 
     newStep( value?: string ) {
-        return this.fb.group( {
-            step: new FormControl( `${value}`, [ Validators.required ] ),
-        } );
+        return new FormControl( `${value}`, [ Validators.required ] );
     }
 
     addStep( value?: string ) {
@@ -181,7 +250,6 @@ export class UpdateRecipeComponent implements OnInit {
     private getUpdatedRecipe(): Recipe {
         const formObject = this.editForm.value;
         const ingredients: Ingredient[] = [];
-        const steps: string[] = [];
 
         formObject.ingredients.forEach( ( ingredient: any ) => {
             const newIng: Ingredient = {
@@ -193,14 +261,10 @@ export class UpdateRecipeComponent implements OnInit {
             ingredients.push( newIng );
         } );
 
-        formObject.steps.forEach( ( step: any ) => {
-            steps.push( step.step );
-        } );
-
         this.recipe.update(
             formObject.name,
             ingredients,
-            steps,
+            formObject.steps,
             false,
             formObject.prepTime,
             formObject.cookTime,

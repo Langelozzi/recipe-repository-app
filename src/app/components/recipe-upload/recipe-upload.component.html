@@ -2,7 +2,11 @@
   <mat-card-title>New Recipe</mat-card-title>
 
   <mat-card-content>
-    <form name="createForm" [formGroup]="createForm" (ngSubmit)="saveRecipe()">
+    <form
+      name="createForm"
+      [formGroup]="createForm"
+      (ngSubmit)="openSaveDialog()"
+    >
       <mat-form-field class="block-form-field">
         <mat-label>Name</mat-label>
         <input
@@ -136,7 +140,7 @@
           type="button"
           mat-raised-button
           color="warn"
-          (click)="goBack()"
+          (click)="openCancelDialog()"
         >
           Cancel
         </button>
@@ -147,7 +151,7 @@
           color="primary"
           id="login-submit-btn"
           type="submit"
-          [disabled]="createForm.invalid"
+          [disabled]="createForm.invalid || uploader.value == ''"
         >
           Save
         </button>

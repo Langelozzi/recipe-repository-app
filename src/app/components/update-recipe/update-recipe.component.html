@@ -6,7 +6,7 @@
       *ngIf="recipeObs | async"
       name="editForm"
       [formGroup]="editForm"
-      (ngSubmit)="openDialog()"
+      (ngSubmit)="openSaveDialog()"
     >
       <mat-form-field class="block-form-field">
         <mat-label>Name</mat-label>
@@ -123,10 +123,7 @@
           <div class="title-container"></div>
 
           <ol class="dynamic-list">
-            <li
-              *ngFor="let step of steps().controls; let i = index"
-              [formGroupName]="i"
-            >
+            <li *ngFor="let step of steps().controls; let i = index">
               <div class="flex-input-group">
                 <mat-form-field class="flex-input-field">
                   <mat-label>Instruction</mat-label>
@@ -134,7 +131,7 @@
                     type="text"
                     placeholder="e.g. Mix together flower and milk"
                     matInput
-                    formControlName="step"
+                    [formControlName]="i"
                   />
                 </mat-form-field>
 
@@ -238,7 +235,7 @@
           type="button"
           mat-raised-button
           color="warn"
-          (click)="goBack()"
+          (click)="openCancelDialog()"
         >
           Cancel
         </button>

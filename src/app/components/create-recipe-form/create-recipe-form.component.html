@@ -2,7 +2,11 @@
   <mat-card-title>New Recipe</mat-card-title>
 
   <mat-card-content>
-    <form name="createForm" [formGroup]="createForm" (ngSubmit)="saveRecipe()">
+    <form
+      name="createForm"
+      [formGroup]="createForm"
+      (ngSubmit)="openSaveDialog()"
+    >
       <mat-form-field class="block-form-field">
         <mat-label>Name</mat-label>
         <input
@@ -95,10 +99,7 @@
           <div class="title-container"></div>
 
           <ol class="dynamic-list">
-            <li
-              *ngFor="let quantity of steps().controls; let i = index"
-              [formGroupName]="i"
-            >
+            <li *ngFor="let quantity of steps().controls; let i = index">
               <div class="flex-input-group">
                 <mat-form-field class="flex-input-field">
                   <mat-label>Instruction</mat-label>
@@ -107,6 +108,7 @@
                     placeholder="e.g. Mix together flower and milk"
                     matInput
                     formControlName="step"
+                    [formControlName]="i"
                   />
                 </mat-form-field>
 
@@ -210,7 +212,7 @@
           type="button"
           mat-raised-button
           color="warn"
-          (click)="goBack()"
+          (click)="openCancelDialog()"
         >
           Cancel
         </button>

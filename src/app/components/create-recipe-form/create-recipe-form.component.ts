@@ -17,6 +17,9 @@ import { Router } from '@angular/router';
 
 import { Location } from '@angular/common';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
+import { ColorPalletEnum } from 'src/enums/colorPallet.enum';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component( {
     selector: 'app-create-recipe-form',
@@ -37,7 +40,8 @@ export class CreateRecipeFormComponent implements OnInit {
         private fb: FormBuilder,
         private recipeService: RecipeService,
         private router: Router,
-        private location: Location
+        private location: Location,
+        private dialog: MatDialog
     ) {
         this.createForm = this.fb.group( {
             name: new FormControl( '', [ Validators.required ] ),
@@ -51,11 +55,7 @@ export class CreateRecipeFormComponent implements OnInit {
                     ingredient: new FormControl( '', [ Validators.required ] ),
                 } ),
             ] ),
-            steps: this.fb.array( [
-                this.fb.group( {
-                    step: new FormControl( '', [ Validators.required ] ),
-                } ),
-            ] ),
+            steps: this.fb.array( [ new FormControl( '', [ Validators.required ] ) ] ),
             prepTime: new FormControl( '', [] ),
             cookTime: new FormControl( '', [] ),
             ovenTemp: new FormControl( '', [] ),
@@ -66,8 +66,82 @@ export class CreateRecipeFormComponent implements OnInit {
 
     ngOnInit(): void {}
 
-    public goBack() {
+    goBack() {
         this.location.back();
+    }
+
+    openSaveDialog(): void {
+        const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+            width: '450px',
+            data: {
+                title: 'Confirm Recipe',
+                subtitle: `Create new recipe "${this.createForm.value.name}"?`,
+                cancelBtnText: 'Cancel',
+                cancelBtnColor: ColorPalletEnum.cancelRed,
+                submitBtnText: 'Confirm',
+                submitBtnColor: ColorPalletEnum.confirmGreen,
+            },
+        } );
+
+        dialogRef.afterClosed().subscribe( ( result ) => {
+            if ( result == true ) {
+                this.saveRecipe();
+            }
+        } );
+    }
+
+    openCancelDialog(): void {
+        if ( !this.formEmpty() ) {
+            const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+                width: '450px',
+                data: {
+                    title: 'Discard Recipe',
+                    subtitle:
+                        'Are you sure you want to discard your new recipe?',
+                    cancelBtnText: 'Back',
+                    cancelBtnColor: ColorPalletEnum.confirmGreen,
+                    submitBtnText: 'Discard',
+                    submitBtnColor: ColorPalletEnum.cancelRed,
+                },
+            } );
+
+            dialogRef.afterClosed().subscribe( ( result ) => {
+                if ( result == true ) {
+                    this.goBack();
+                }
+            } );
+        } else {
+            this.goBack();
+        }
+    }
+
+    private formEmpty(): boolean {
+        let noIngredients = true;
+
+        for ( let i = 0; i < this.createForm.value.ingredients.length; i++ ) {
+            for ( const key in this.createForm.value.ingredients[i] ) {
+                if ( this.createForm.value.ingredients[i][key] != '' ) {
+                    noIngredients = false;
+                    break;
+                }
+            }
+        }
+
+        if (
+            this.createForm.value.name != '' ||
+            !noIngredients ||
+            this.createForm.value.steps[0] != '' ||
+            this.createForm.value.prepTime != '' ||
+            this.createForm.value.cookTime != '' ||
+            this.createForm.value.ovenTemp != '' ||
+            this.createForm.value.description != '' ||
+            this.createForm.value.notes != '' ||
+            this.tags.length > 0
+        ) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // ingredient related methods
@@ -97,9 +171,7 @@ export class CreateRecipeFormComponent implements OnInit {
     }
 
     newStep() {
-        return this.fb.group( {
-            step: new FormControl( '', [ Validators.required ] ),
-        } );
+        return new FormControl( '', [ Validators.required ] );
     }
 
     addStep() {
@@ -146,7 +218,7 @@ export class CreateRecipeFormComponent implements OnInit {
         } );
 
         formObject.steps.forEach( ( step: any ) => {
-            steps.push( step.step.trim() );
+            steps.push( step.trim() );
         } );
 
         const newRecipe: Recipe = new Recipe(
