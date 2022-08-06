@@ -122,7 +122,10 @@ export class UpdateRecipeComponent implements OnInit {
 
     newIngredient() {
         return this.fb.group( {
-            quantity: new FormControl( '', [ Validators.required ] ),
+            quantity: new FormControl( '', [
+                Validators.required,
+                Validators.pattern( /^[0-9/.]+$/ ), // only numbers, slashes, and periods
+            ] ),
             units: new FormControl( '', [ Validators.required ] ),
             ingredient: new FormControl( '', [ Validators.required ] ),
         } );

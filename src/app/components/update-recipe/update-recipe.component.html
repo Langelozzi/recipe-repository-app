@@ -20,20 +20,25 @@
       </mat-form-field>
 
       <!-- Image viewer -->
-      <mat-expansion-panel *ngIf="recipe.imageData && recipe.imageData.length > 0">
-        <mat-expansion-panel-header class="mat-card-title-small"
-        >
-        <mat-panel-title>Images</mat-panel-title>
-        <mat-panel-description>Images cannot be changed once uploaded to a recipe</mat-panel-description>
-        </mat-expansion-panel-header
-        >
+      <mat-expansion-panel
+        *ngIf="recipe.imageData && recipe.imageData.length > 0"
+      >
+        <mat-expansion-panel-header class="mat-card-title-small">
+          <mat-panel-title>Images</mat-panel-title>
+          <mat-panel-description
+            >Images cannot be changed once uploaded to a
+            recipe</mat-panel-description
+          >
+        </mat-expansion-panel-header>
 
-
-        <div *ngIf="recipe.imageData && recipe.imageData.length > 0" class="viewing-subsection">
-            <div class="img-container" *ngFor="let img of recipe.imageData">
-              <img class="recipe-img" [src]="img.url" alt="loaded image" />
-            </div>
+        <div
+          *ngIf="recipe.imageData && recipe.imageData.length > 0"
+          class="viewing-subsection"
+        >
+          <div class="img-container" *ngFor="let img of recipe.imageData">
+            <img class="recipe-img" [src]="img.url" alt="loaded image" />
           </div>
+        </div>
       </mat-expansion-panel>
 
       <!-- Ingredients card -->
@@ -50,7 +55,7 @@
             <mat-form-field class="flex-input-field small-flex-input-field">
               <mat-label>Quantity</mat-label>
               <input
-                type="number"
+                type="text"
                 placeholder="e.g. 30"
                 matInput
                 formControlName="quantity"
