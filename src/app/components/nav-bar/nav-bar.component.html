@@ -3,11 +3,7 @@
     <div id="top-side-nav">
       <h1 class="side-nav-title menu-title"><strong>Menu</strong></h1>
       <button id="close-side-nav-toggle" mat-button (click)="sidenav.toggle()">
-        <img
-          id="close-side-nav-img"
-          src="assets/imgs/back-arrow.png"
-          alt="back-arrow"
-        />
+        <mat-icon class="nav-bar-icon">keyboard_arrow_left</mat-icon>
       </button>
     </div>
 
@@ -78,11 +74,7 @@
         (click)="sidenav.toggle()"
         *ngIf="authService.isLoggedIn()"
       >
-        <img
-          class="btn-icon"
-          src="assets/imgs/hamburger-menu-white.png"
-          alt="hbgr-menu-icon"
-        />
+        <mat-icon class="nav-bar-icon">menu</mat-icon>
       </button>
 
       <h2 id="recipe-repo-title" class="menu-title">
@@ -95,11 +87,7 @@
         mat-button
         [matMenuTriggerFor]="usrmenu"
       >
-        <img
-          class="btn-icon"
-          src="assets/imgs/usr-icon.png"
-          alt="usr-menu-icon"
-        />
+        <mat-icon class="nav-bar-icon">person</mat-icon>
       </button>
 
       <mat-menu
@@ -140,8 +128,10 @@
     </div>
 
     <div class="main-content-container">
-        <!-- show landing page if its root path and you aren't logged in yet -->
-      <app-landing-page *ngIf="isRootPath() && !isLoggedIn()"></app-landing-page>
+      <!-- show landing page if its root path and you aren't logged in yet -->
+      <app-landing-page
+        *ngIf="isRootPath() && !isLoggedIn()"
+      ></app-landing-page>
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
