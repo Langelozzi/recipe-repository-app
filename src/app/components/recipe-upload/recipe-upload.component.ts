@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
     FormBuilder,
     FormControl,
@@ -13,6 +13,9 @@ import { RecipeService } from 'src/app/services/recipe-service/recipe.service';
 import { Location } from '@angular/common';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
 import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ColorPalletEnum } from 'src/enums/colorPallet.enum';
 
 @Component( {
     selector: 'app-recipe-upload',
@@ -21,11 +24,15 @@ import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
     animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class RecipeUploadComponent implements OnInit {
+    @ViewChild( 'uploader' ) uploader!: ElementRef;
+
     selectedImages: File[] = [];
     selectedImageNames: string[] = [];
     selectedImagePaths: string[] = [];
 
     createForm: FormGroup;
+    isDuplicateName!: boolean;
+    allRecipeNames: string[] = [];
 
     // tags chip variables
     tags: string[] = [];
@@ -37,7 +44,8 @@ export class RecipeUploadComponent implements OnInit {
         private fb: FormBuilder,
         private recipeService: RecipeService,
         private router: Router,
-        private location: Location
+        private location: Location,
+        private dialog: MatDialog
     ) {
         this.createForm = this.fb.group( {
             name: new FormControl( '', [ Validators.required ] ),
@@ -49,17 +57,98 @@ export class RecipeUploadComponent implements OnInit {
         } );
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.recipeService.getAllRecipes().subscribe( ( data: any ) => {
+            const allRecipeNames: string[] = [];
+
+            for ( let i = 0; i < data.recipes.length; i++ ) {
+                allRecipeNames.push( data.recipes[i].name );
+            }
+
+            this.allRecipeNames = allRecipeNames;
+        } );
+    }
 
     imagePreview( file: any ) {
         this.selectedImagePaths = [];
 
         const reader = new FileReader();
         reader.onload = () => {
-          this.selectedImagePaths.push( reader.result as string );
+            this.selectedImagePaths.push( reader.result as string );
+        };
+        reader.readAsDataURL( file );
+    }
+
+    openSaveDialog(): void {
+        const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+            width: '450px',
+            data: {
+                title: 'Confirm Recipe',
+                subtitle: `Create new recipe "${this.createForm.value.name}"?`,
+                cancelBtnText: 'Cancel',
+                cancelBtnColor: ColorPalletEnum.cancelRed,
+                submitBtnText: 'Confirm',
+                submitBtnColor: ColorPalletEnum.confirmGreen,
+            },
+        } );
+
+        dialogRef.afterClosed().subscribe( ( result ) => {
+            if ( result == true ) {
+                this.saveRecipe();
+            }
+        } );
+    }
+
+    openCancelDialog(): void {
+        if ( !this.formEmpty() ) {
+            const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+                width: '450px',
+                data: {
+                    title: 'Discard Recipe',
+                    subtitle:
+                        'Are you sure you want to discard your new recipe?',
+                    cancelBtnText: 'Cancel',
+                    cancelBtnColor: ColorPalletEnum.confirmGreen,
+                    submitBtnText: 'Discard',
+                    submitBtnColor: ColorPalletEnum.cancelRed,
+                },
+            } );
+
+            dialogRef.afterClosed().subscribe( ( result ) => {
+                if ( result == true ) {
+                    this.goBack();
+                }
+            } );
+        } else {
+            this.goBack();
         }
-        reader.readAsDataURL(file)
-      }
+    }
+
+    private formEmpty(): boolean {
+        if (
+            this.createForm.value.name != '' ||
+            this.uploader.nativeElement.value != '' ||
+            this.createForm.value.prepTime != '' ||
+            this.createForm.value.cookTime != '' ||
+            this.createForm.value.ovenTemp != '' ||
+            this.createForm.value.description != '' ||
+            this.createForm.value.notes != '' ||
+            this.tags.length > 0
+        ) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    determineDuplicateName(): void {
+        if ( this.allRecipeNames.includes( this.createForm.value.name ) ) {
+            this.isDuplicateName = true;
+            this.createForm.controls['name'].setErrors( { incorrect: true } );
+        } else {
+            this.isDuplicateName = false;
+        }
+    }
 
     goBack() {
         this.location.back();
@@ -98,6 +187,7 @@ export class RecipeUploadComponent implements OnInit {
         this.selectedImages = [];
         this.selectedImageNames = [];
         this.selectedImagePaths = [];
+        this.uploader.nativeElement.value = '';
     }
 
     saveRecipe() {

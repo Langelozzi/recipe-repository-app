@@ -6,7 +6,7 @@
       *ngIf="recipeObs | async"
       name="editForm"
       [formGroup]="editForm"
-      (ngSubmit)="openDialog()"
+      (ngSubmit)="openSaveDialog()"
     >
       <mat-form-field class="block-form-field">
         <mat-label>Name</mat-label>
@@ -15,25 +15,33 @@
           placeholder="e.g. Grandma's Apple Crumble"
           matInput
           formControlName="name"
-          value=""
+          (keyup)="determineDuplicateName()"
         />
+        <mat-error *ngIf="isDuplicateName"
+          >Recipe names must be unique</mat-error
+        >
       </mat-form-field>
 
       <!-- Image viewer -->
-      <mat-expansion-panel *ngIf="recipe.imageData && recipe.imageData.length > 0">
-        <mat-expansion-panel-header class="mat-card-title-small"
-        >
-        <mat-panel-title>Images</mat-panel-title>
-        <mat-panel-description>Images cannot be changed once uploaded to a recipe</mat-panel-description>
-        </mat-expansion-panel-header
-        >
+      <mat-expansion-panel
+        *ngIf="recipe.imageData && recipe.imageData.length > 0"
+      >
+        <mat-expansion-panel-header class="mat-card-title-small">
+          <mat-panel-title>Images</mat-panel-title>
+          <mat-panel-description
+            >Images cannot be changed once uploaded to a
+            recipe</mat-panel-description
+          >
+        </mat-expansion-panel-header>
 
-
-        <div *ngIf="recipe.imageData && recipe.imageData.length > 0" class="viewing-subsection">
-            <div class="img-container" *ngFor="let img of recipe.imageData">
-              <img class="recipe-img" [src]="img.url" alt="loaded image" />
-            </div>
+        <div
+          *ngIf="recipe.imageData && recipe.imageData.length > 0"
+          class="viewing-subsection"
+        >
+          <div class="img-container" *ngFor="let img of recipe.imageData">
+            <img class="recipe-img" [src]="img.url" alt="loaded image" />
           </div>
+        </div>
       </mat-expansion-panel>
 
       <!-- Ingredients card -->
@@ -50,7 +58,7 @@
             <mat-form-field class="flex-input-field small-flex-input-field">
               <mat-label>Quantity</mat-label>
               <input
-                type="number"
+                type="text"
                 placeholder="e.g. 30"
                 matInput
                 formControlName="quantity"
@@ -118,10 +126,7 @@
           <div class="title-container"></div>
 
           <ol class="dynamic-list">
-            <li
-              *ngFor="let step of steps().controls; let i = index"
-              [formGroupName]="i"
-            >
+            <li *ngFor="let step of steps().controls; let i = index">
               <div class="flex-input-group">
                 <mat-form-field class="flex-input-field">
                   <mat-label>Instruction</mat-label>
@@ -129,7 +134,7 @@
                     type="text"
                     placeholder="e.g. Mix together flower and milk"
                     matInput
-                    formControlName="step"
+                    [formControlName]="i"
                   />
                 </mat-form-field>
 
@@ -158,6 +163,7 @@
         </div>
       </mat-expansion-panel>
 
+      <!-- Additional Information -->
       <mat-expansion-panel>
         <mat-expansion-panel-header
           >Additional Information
@@ -197,12 +203,12 @@
 
         <mat-form-field class="block-form-field">
           <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description"> </textarea>
+          <textarea autosize matInput formControlName="description"> </textarea>
         </mat-form-field>
 
         <mat-form-field class="block-form-field">
           <mat-label>Notes</mat-label>
-          <textarea matInput formControlName="notes"> </textarea>
+          <textarea autosize matInput formControlName="notes"> </textarea>
         </mat-form-field>
 
         <mat-form-field class="block-form-field">
@@ -225,13 +231,14 @@
         </mat-form-field>
       </mat-expansion-panel>
 
+      <!-- Buttons -->
       <div class="btn-container">
         <button
           class="std-btn"
           type="button"
           mat-raised-button
           color="warn"
-          (click)="goBack()"
+          (click)="openCancelDialog()"
         >
           Cancel
         </button>

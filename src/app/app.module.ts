@@ -44,6 +44,7 @@ import { FavouriteListingComponent } from './components/favourite-listing/favour
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { RecipeUploadComponent } from './components/recipe-upload/recipe-upload.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { AutosizeModule } from 'ngx-autosize';
 
 // Angular Material
 @NgModule( {
@@ -84,6 +85,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
         MatSelectModule,
         MatProgressSpinnerModule,
         MatDialogModule,
+        AutosizeModule,
     ],
     providers: [
         {
