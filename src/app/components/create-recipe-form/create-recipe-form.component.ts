@@ -49,10 +49,7 @@ export class CreateRecipeFormComponent implements OnInit {
             name: new FormControl( '', [ Validators.required ] ),
             ingredients: this.fb.array( [
                 this.fb.group( {
-                    quantity: new FormControl( '', [
-                        Validators.required,
-                        Validators.pattern( /^[0-9/.]+$/ ), // only numbers, slashes, and periods
-                    ] ),
+                    quantity: new FormControl( '', [ Validators.required ] ),
                     units: new FormControl( '', [ Validators.required ] ),
                     ingredient: new FormControl( '', [ Validators.required ] ),
                 } ),
