@@ -15,8 +15,11 @@
           placeholder="e.g. Grandma's Apple Crumble"
           matInput
           formControlName="name"
-          value=""
+          (keyup)="determineDuplicateName()"
         />
+        <mat-error *ngIf="isDuplicateName"
+          >Recipe names must be unique</mat-error
+        >
       </mat-form-field>
 
       <!-- Image viewer -->

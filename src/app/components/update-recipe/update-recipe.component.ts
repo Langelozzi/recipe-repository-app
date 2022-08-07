@@ -37,7 +37,8 @@ export class UpdateRecipeComponent implements OnInit {
     public recipeObs!: any;
 
     public editForm!: FormGroup;
-    private changeCount = 0;
+    allRecipeNames: string[] = [];
+    isDuplicateName!: boolean;
 
     // tags chip variables
     tags: string[] = [];
@@ -87,6 +88,21 @@ export class UpdateRecipeComponent implements OnInit {
         this.recipeService.getRecipeById( this.recipeId ).subscribe(
             ( data: any ) => {
                 this.recipe = plainToClass( Recipe, data.recipe );
+
+                this.recipeService.getAllRecipes().subscribe( ( data: any ) => {
+                    const allRecipeNames: string[] = [];
+
+                    for ( let i = 0; i < data.recipes.length; i++ ) {
+                        allRecipeNames.push( data.recipes[i].name );
+                    }
+
+                    delete allRecipeNames[
+                        allRecipeNames.indexOf( this.recipe.name )
+                    ];
+                    console.log( allRecipeNames );
+
+                    this.allRecipeNames = allRecipeNames;
+                } );
             },
             ( err: any ) => {
                 SnackBarHelper.triggerSnackBar( this._snackBar, err, 'Ok' );
@@ -179,6 +195,15 @@ export class UpdateRecipeComponent implements OnInit {
             return true;
         } else {
             return false;
+        }
+    }
+
+    determineDuplicateName(): void {
+        if ( this.allRecipeNames.includes( this.editForm.value.name ) ) {
+            this.isDuplicateName = true;
+            this.editForm.controls['name'].setErrors( { incorrect: true } );
+        } else {
+            this.isDuplicateName = false;
         }
     }
 

@@ -29,6 +29,8 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 } )
 export class CreateRecipeFormComponent implements OnInit {
     createForm: FormGroup;
+    isDuplicateName!: boolean;
+    private allRecipeNames: string[] = [];
 
     // tags chip variables
     tags: string[] = [];
@@ -64,7 +66,17 @@ export class CreateRecipeFormComponent implements OnInit {
         } );
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.recipeService.getAllRecipes().subscribe( ( data: any ) => {
+            const allRecipeNames: string[] = [];
+
+            for ( let i = 0; i < data.recipes.length; i++ ) {
+                allRecipeNames.push( data.recipes[i].name );
+            }
+
+            this.allRecipeNames = allRecipeNames;
+        } );
+    }
 
     goBack() {
         this.location.back();
@@ -141,6 +153,15 @@ export class CreateRecipeFormComponent implements OnInit {
             return false;
         } else {
             return true;
+        }
+    }
+
+    determineDuplicateName(): void {
+        if ( this.allRecipeNames.includes( this.createForm.value.name ) ) {
+            this.isDuplicateName = true;
+            this.createForm.controls['name'].setErrors( { incorrect: true } );
+        } else {
+            this.isDuplicateName = false;
         }
     }
 
