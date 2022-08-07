@@ -96,10 +96,10 @@ export class UpdateRecipeComponent implements OnInit {
                         allRecipeNames.push( data.recipes[i].name );
                     }
 
+                    // delete the name of the recipe you are editing
                     delete allRecipeNames[
                         allRecipeNames.indexOf( this.recipe.name )
                     ];
-                    console.log( allRecipeNames );
 
                     this.allRecipeNames = allRecipeNames;
                 } );
@@ -134,11 +134,11 @@ export class UpdateRecipeComponent implements OnInit {
                 width: '450px',
                 data: {
                     title: 'No changes made',
-                    subtitle: `Strange. You have not made any changes to ${this.recipe.name}. Would you like to change something before you leave?`,
-                    cancelBtnText: 'Yes',
-                    cancelBtnColor: ColorPalletEnum.confirmGreen,
-                    submitBtnText: 'No',
-                    submitBtnColor: ColorPalletEnum.cancelRed,
+                    subtitle: `Strange. You have not made any changes to ${this.recipe.name}. Are you sure you would like to stop editing?`,
+                    cancelBtnText: 'No',
+                    cancelBtnColor: ColorPalletEnum.cancelRed,
+                    submitBtnText: 'Yes',
+                    submitBtnColor: ColorPalletEnum.confirmGreen,
                 },
             } );
 
@@ -157,7 +157,7 @@ export class UpdateRecipeComponent implements OnInit {
                 data: {
                     title: 'Discard Changes',
                     subtitle: `Are you sure you want to discard the changes made to ${this.recipe.name}?`,
-                    cancelBtnText: 'Back',
+                    cancelBtnText: 'Cancel',
                     cancelBtnColor: ColorPalletEnum.confirmGreen,
                     submitBtnText: 'Discard',
                     submitBtnColor: ColorPalletEnum.cancelRed,

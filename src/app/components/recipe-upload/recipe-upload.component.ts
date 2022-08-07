@@ -107,7 +107,7 @@ export class RecipeUploadComponent implements OnInit {
                     title: 'Discard Recipe',
                     subtitle:
                         'Are you sure you want to discard your new recipe?',
-                    cancelBtnText: 'Back',
+                    cancelBtnText: 'Cancel',
                     cancelBtnColor: ColorPalletEnum.confirmGreen,
                     submitBtnText: 'Discard',
                     submitBtnColor: ColorPalletEnum.cancelRed,
