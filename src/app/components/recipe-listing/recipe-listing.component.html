@@ -1,8 +1,15 @@
-<mat-card *ngIf="recipes" [@fastFade]="'in'">
+<mat-card *ngIf="recipeBatch" [@fastFade]="'in'">
   <mat-card-title>My Recipes</mat-card-title>
 
+  <!-- Tags -->
+  <mat-chip-list class="centered-chip-list">
+    <mat-chip (click)="sortByTag( tag )" class="tag-chip" *ngFor="let tag of recipeBatch.getAllTags()">{{
+      tag
+    }}</mat-chip>
+  </mat-chip-list>
+
   <mat-card-content>
-    <div *ngFor="let recipe of this.recipes">
+    <div *ngFor="let recipe of listedRecipes">
       <mat-card class="recipe-listing-item" (click)="viewRecipe(recipe._id)">
         {{ recipe.name }}
       </mat-card>

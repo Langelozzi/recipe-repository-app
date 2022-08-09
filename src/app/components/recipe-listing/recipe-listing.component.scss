@@ -1,0 +1,35 @@
+
+// scrollable chip list
+::ng-deep .mat-chip-list {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    align-content: center !important;
+    margin: 2%;
+    margin-top: 0 !important;
+  }
+
+::ng-deep .mat-chip-list-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    overflow: scroll;
+  }
+
+.tag-chip {
+    color: #ffffff !important;
+    cursor: pointer !important;
+    display: inline-block !important;
+    margin-bottom: 2% !important;
+}
+  
+.tag-chip:nth-of-type(odd) {
+    background-color: #522da8cb !important;
+}
+.tag-chip:nth-of-type(even) {
+    background-color: #ffa807ea !important;
+}
