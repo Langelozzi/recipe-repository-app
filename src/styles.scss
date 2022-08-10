@@ -277,3 +277,14 @@ li::marker {
   // makes sure that the sticky element is always overtop of other content
   z-index: 1 !important;
 }
+
+.centered-chip-list {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    align-content: center !important;
+    margin: 2%;
+    margin-top: 0 !important;
+  }

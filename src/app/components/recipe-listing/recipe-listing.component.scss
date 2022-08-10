@@ -1,16 +1,5 @@
 
 // scrollable chip list
-::ng-deep .mat-chip-list {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    justify-content: center !important;
-    align-items: center !important;
-    align-content: center !important;
-    margin: 2%;
-    margin-top: 0 !important;
-  }
-
 ::ng-deep .mat-chip-list-wrapper {
     display: flex !important;
     flex-direction: row !important;
@@ -32,4 +21,25 @@
 }
 .tag-chip:nth-of-type(even) {
     background-color: #ffa807ea !important;
+}
+
+.large-chip {
+    font-size: 1.1rem !important;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-right: -2%;
+    background-color: #3a923291;
+    margin: auto;
+}
+
+.large-chip-close-btn {
+    width: fit-content;
+    height: fit-content;
+    margin-right: -5px;
+    margin-left: 2px;
+}
+
+.large-chip-close-btn-icon {
+    font-size: 1rem;
+    color: #5c5b5bb9;
 }

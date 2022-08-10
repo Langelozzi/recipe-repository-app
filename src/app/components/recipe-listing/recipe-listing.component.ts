@@ -18,6 +18,9 @@ export class RecipeListingComponent implements OnInit {
     public recipeBatch!: RecipeBatch;
     public listedRecipes!: Recipe[];
 
+    public sorted = false;
+    public currentTag!: string;
+
     constructor(
         private recipeService: RecipeService,
         private router: Router,
@@ -39,9 +42,16 @@ export class RecipeListingComponent implements OnInit {
         this.router.navigate( [ `/recipes/${recipeId}` ] );
     }
 
+    showAllRecipes(): void {
+        this.listedRecipes = this.recipeBatch.recipes;
+        this.sorted = false;
+    }
+
     sortByTag( tag: string ): void {
         this.listedRecipes = this.recipeBatch.getRecipesByTag( tag );
+        this.currentTag = tag;
 
+        this.sorted = true;
         // figure out a way to make it visibly clear which tag it is now sorting by
     }
 }
