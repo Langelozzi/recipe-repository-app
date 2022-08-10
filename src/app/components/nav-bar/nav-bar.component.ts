@@ -18,7 +18,7 @@ export class NavBarComponent implements OnInit {
     ngOnInit(): void {}
 
     isRootPath(): boolean {
-        if ( this.router.url == '/' ) {
+        if ( this.router.url === '/' ) {
             return true;
         } else {
             return false;
@@ -27,7 +27,6 @@ export class NavBarComponent implements OnInit {
 
     isLoggedIn(): boolean {
         if ( this.authService.isLoggedIn() ) {
-            this.router.navigate( ['/userhome'] );
             return true;
         } else {
             return false;

@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
 import { Recipe } from '../../../models/recipe';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
+import { RecipeBatch } from 'src/models/recipe-batch';
 
 @Component( {
     selector: 'app-recipe-listing',
@@ -14,7 +15,11 @@ import { AnimationHelper } from 'src/app/helpers/animation-helper';
     animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class RecipeListingComponent implements OnInit {
-    public recipes!: Recipe[];
+    public recipeBatch!: RecipeBatch;
+    public listedRecipes!: Recipe[];
+
+    public sorted = false;
+    public currentTag!: string;
 
     constructor(
         private recipeService: RecipeService,
@@ -26,12 +31,27 @@ export class RecipeListingComponent implements OnInit {
         this.recipeService.getAllRecipes().subscribe(
             // if the response is good then create list of recipes
             ( data: any ) => {
-                this.recipes = plainToClass( Recipe, data.recipes );
+                this.recipeBatch = new RecipeBatch( plainToClass( Recipe, data.recipes ) );
+
+                this.listedRecipes = this.recipeBatch.recipes;
             }
         );
     }
 
     viewRecipe( recipeId: string | undefined ): void {
         this.router.navigate( [ `/recipes/${recipeId}` ] );
+    }
+
+    showAllRecipes(): void {
+        this.listedRecipes = this.recipeBatch.recipes;
+        this.sorted = false;
+    }
+
+    sortByTag( tag: string ): void {
+        this.listedRecipes = this.recipeBatch.getRecipesByTag( tag );
+        this.currentTag = tag;
+
+        this.sorted = true;
+        // figure out a way to make it visibly clear which tag it is now sorting by
     }
 }

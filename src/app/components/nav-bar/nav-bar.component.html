@@ -132,6 +132,7 @@
       <app-landing-page
         *ngIf="isRootPath() && !isLoggedIn()"
       ></app-landing-page>
+      <app-user-home *ngIf="isRootPath() && isLoggedIn()"></app-user-home>
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

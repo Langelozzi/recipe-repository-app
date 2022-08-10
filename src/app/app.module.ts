@@ -45,6 +45,7 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
 import { RecipeUploadComponent } from './components/recipe-upload/recipe-upload.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { AutosizeModule } from 'ngx-autosize';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 // Angular Material
 @NgModule( {
@@ -104,6 +105,7 @@ import { AutosizeModule } from 'ngx-autosize';
             multi: true,
         },
         { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+        { provide: LocationStrategy, useClass: PathLocationStrategy },
         AuthService,
     ],
     bootstrap: [ AppComponent ],

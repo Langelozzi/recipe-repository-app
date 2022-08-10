@@ -65,31 +65,23 @@ li::before {
   font-weight: bold;
 }
 
+.tag-chip {
+    color: #ffffff !important;
+    cursor: pointer !important;
+    display: inline-block !important;
+}
+  
+.tag-chip:nth-of-type(odd) {
+    background-color: #522da8cb !important;
+}
+.tag-chip:nth-of-type(even) {
+    background-color: #ffa807ea !important;
+}
+
 .paragraph {
   margin-left: 8%;
   margin-right: 8%;
   font-size: 0.95rem;
-}
-
-.centered-chip-list {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin: 2%;
-  // remove this once chip list is able to redirect to sorted listing page
-  pointer-events: none;
-}
-
-.tag-chip {
-  color: #ffffff;
-}
-
-.tag-chip:nth-of-type(odd) {
-  background-color: #512da8;
-}
-.tag-chip:nth-of-type(even) {
-  background-color: #ffc107;
 }
 
 .ingredient-table-container {
