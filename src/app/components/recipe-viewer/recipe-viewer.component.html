@@ -149,7 +149,7 @@
 
       <ol *ngFor="let step of recipe.steps; let i = index">
         <li value="{{ i + 1 }}">{{ step }}</li>
-        <mat-divider class="list-item-divider"></mat-divider>
+        <mat-divider *ngIf="i != recipe.steps.length - 1" class="list-item-divider"></mat-divider>
       </ol>
     </div>
 
