@@ -5,15 +5,17 @@
   
   
   <mat-card-content>
-    <mat-divider></mat-divider>
-    
-    <mat-chip-list class="centered-chip-list">
-        <mat-chip (click)="sortByTag( tag )" class="tag-chip" *ngFor="let tag of recipeBatch.getAllTags()">
-            {{ tag }}
-        </mat-chip>
-    </mat-chip-list>
-    
-    <mat-divider></mat-divider>
+    <div id="tag-list-container" *ngIf="recipeBatch.getAllTags().size > 0">
+        <mat-divider></mat-divider>
+        
+        <mat-chip-list class="centered-chip-list">
+            <mat-chip (click)="sortByTag( tag )" class="tag-chip" *ngFor="let tag of recipeBatch.getAllTags()">
+                {{ tag }}
+            </mat-chip>
+        </mat-chip-list>
+        
+        <mat-divider></mat-divider>
+    </div>
 
     <mat-card *ngIf="sorted">
         <mat-card-title>
