@@ -1,5 +1,21 @@
 <mat-card *ngIf="recipeBatch" [@fastFade]="'in'">
-  <mat-card-title>My Recipes</mat-card-title>
+    <mat-card-header>
+        <mat-card-title class="listing-title">
+            My Recipes
+        </mat-card-title>
+        <div [formGroup]="searchFg">
+            <mat-form-field id="search-input" class="right-align">
+                <mat-label>Search</mat-label>
+                <input
+                type="text"
+                matInput
+                formControlName="searchBox"
+                (keyup)="searchByName()"
+                />
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+    </mat-card-header>
 
   <!-- Tags -->
   
@@ -44,6 +60,9 @@
             <mat-card class="recipe-listing-item" (click)="viewRecipe(recipe._id)">
             {{ recipe.name }}
             </mat-card>
+        </div>
+        <div *ngIf="listedRecipes.length < 1">
+            <h3 class="recipe-listing-message">No recipes found</h3>
         </div>
     </div>
   </mat-card-content>

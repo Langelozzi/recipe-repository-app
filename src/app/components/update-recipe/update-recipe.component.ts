@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { plainToClass } from 'class-transformer';
 import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
 import { RecipeService } from 'src/app/services/recipe-service/recipe.service';
-import { Ingredient } from 'src/models/ingredient';
+import { Ingredient } from 'src/interfaces/ingredient';
 import { Recipe } from 'src/models/recipe';
 import { tap } from 'rxjs/operators';
 import { of } from 'rxjs';

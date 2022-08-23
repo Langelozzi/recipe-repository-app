@@ -32,4 +32,18 @@ export class RecipeBatch {
 
         return sortedRecipes;
     }
+
+    public searchByName( searchString: string ): Recipe[] {
+        const searchResults: Recipe[] = [];
+
+        for ( const recipe of this.recipes ) {
+            if ( 
+                recipe.name.toLowerCase().includes( searchString.toLowerCase() )
+            ) {
+                searchResults.push( recipe );
+            }
+        }
+
+        return searchResults;
+    }
 }

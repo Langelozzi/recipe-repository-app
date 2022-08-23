@@ -7,6 +7,7 @@ import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
 import { Recipe } from '../../../models/recipe';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
 import { RecipeBatch } from 'src/models/recipe-batch';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component( {
     selector: 'app-recipe-listing',
@@ -20,6 +21,10 @@ export class RecipeListingComponent implements OnInit {
 
     public sorted = false;
     public currentTag!: string;
+
+    searchFg: FormGroup = new FormGroup( {
+        searchBox: new FormControl( '' ),
+    } );
 
     constructor(
         private recipeService: RecipeService,
@@ -52,6 +57,16 @@ export class RecipeListingComponent implements OnInit {
         this.currentTag = tag;
 
         this.sorted = true;
-        // figure out a way to make it visibly clear which tag it is now sorting by
+    }
+
+    searchByName(): void {
+        const searchString = this.searchFg.get( 'searchBox' )?.value;
+
+        if ( searchString == '' ) {
+            this.showAllRecipes();
+        } else {
+            this.listedRecipes = this.recipeBatch.searchByName( searchString );
+        }
+
     }
 }

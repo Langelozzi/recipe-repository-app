@@ -1,4 +1,4 @@
-import { Ingredient } from './ingredient';
+import { Ingredient } from '../interfaces/ingredient';
 export class Recipe {
     _id?: string;
     name: string;
@@ -47,7 +47,7 @@ export class Recipe {
         this.imageData = imageData;
     }
 
-    update(
+    public update(
         name: string,
         ingredients: Ingredient[],
         steps: string[],
@@ -77,7 +77,27 @@ export class Recipe {
         this.imageData = imageData;
     }
 
-    updateFavouriteStatus( favStatus: boolean ) {
+    public updateFavouriteStatus( favStatus: boolean ) {
         this.favourite = favStatus;
+    }
+
+    public getIngredientNames(): string[] {
+        const ingArray: string[] = [];
+
+        for ( const ingredient of this.ingredients ) {
+            ingArray.push( ingredient.ingredient.toLowerCase() );
+        }
+
+        return ingArray;
+    }
+
+    public getNameAsArray(): string[] {
+        const nameArray: string[] = this.name.split( ' ' );
+
+        for ( let i = 0; i < nameArray.length; i++ ) {
+            nameArray[i] = nameArray[i].toLowerCase();
+        }
+
+        return nameArray;
     }
 }
