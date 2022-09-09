@@ -1,4 +1,4 @@
-import { Ingredient } from './../../../models/ingredient';
+import { Ingredient } from '../../../interfaces/ingredient';
 import { Component, OnInit } from '@angular/core';
 import {
     FormArray,

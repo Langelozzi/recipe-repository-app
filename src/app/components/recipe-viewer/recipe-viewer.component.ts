@@ -7,7 +7,7 @@ import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
 import { plainToClass } from 'class-transformer';
 import { ArrayHelper } from '../../helpers/array-helper';
 import { ColorPalletEnum } from '../../../enums/colorPallet.enum';
-import { Ingredient } from '../../../models/ingredient';
+import { Ingredient } from '../../../interfaces/ingredient';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
