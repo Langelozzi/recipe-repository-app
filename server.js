@@ -8,8 +8,8 @@ const app = express();
 app.use(express.static(__dirname + '/dist/recipe-repository'));
 
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/recipe-repository/index.html'));
+    res.sendFile(path.join(__dirname + '/dist/recipe-repository/index.html'));
 });
 
-// Start the app by listening on the default Heroku port
+// Start the app by listening on the default port
 app.listen(process.env.PORT || 8080);
