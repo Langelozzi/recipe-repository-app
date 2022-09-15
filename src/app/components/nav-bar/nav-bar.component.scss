@@ -16,9 +16,9 @@ mat-side-nav-content {
 }
 
 #side-nav {
-  width: 300px !important;
-  min-width: 300px !important;
-  max-width: 350px !important;
+  width: 300px;
+  min-width: 300px;
+  max-width: 350px;
 }
 
 #nav-bar-container,
@@ -71,18 +71,18 @@ mat-side-nav-content {
 }
 
 .menu-title {
-  font-size: 35px;
+  font-size: 2.2rem;
   color: white;
   width: 50% !important;
   margin-top: 4px;
-  margin-left: 20px !important;
+  margin-left: 20px;
 }
 
 .side-nav-title {
   height: 100% !important;
-  margin: 0 !important;
-  margin-top: 8px !important;
-  margin-left: 8px !important;
+  margin-bottom: 0px;
+  margin-top: 8px;
+  margin-left: 8px;
   text-align: left;
 }
 
@@ -101,11 +101,10 @@ mat-side-nav-content {
 }
 
 .side-nav-item {
-  width: 300px !important;
-  min-width: 300px !important;
-  max-width: 350px !important;
+  width: 300px ;
+  min-width: 300px ;
+  max-width: 350px ;
   height: 70px;
-  font-size: 19px;
   text-align: left;
   padding-right: 3em;
 }
@@ -116,7 +115,7 @@ mat-side-nav-content {
   padding-right: 1.6rem !important;
   padding-top: 1rem !important;
   font-weight: 400 !important;
-  font-size: 22px !important;
+  font-size: 22px;
 }
 
 .menu-item-icon {
