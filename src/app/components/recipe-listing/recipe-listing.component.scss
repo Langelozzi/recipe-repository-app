@@ -55,7 +55,7 @@ mat-divider {
 #search-input {
     float: right !important;
     margin-right: 5% !important;
-    width: 27vw;
+    width: 100% !important;
 }
 
 mat-card-header {
@@ -67,7 +67,7 @@ mat-card-header {
 }
 
 mat-card-title {
-    font-size: 3.5vh !important;
+    font-size: 2.2rem !important;
     width: 100% !important;
     margin-top: 10.5%;
     margin-right: 0px !important;
@@ -75,4 +75,17 @@ mat-card-title {
 
 .listing-title .mat-card-header-text {
     width: 40px !important;
+}
+
+@media only screen and (max-width: 500px) {
+    #search-input {
+        width: 140px !important;
+    }
+
+    mat-card-title {
+        font-size: 1.5rem !important;
+        width: 100% !important;
+        margin-top: 10.5%;
+        margin-right: 0px !important;
+    }
 }
