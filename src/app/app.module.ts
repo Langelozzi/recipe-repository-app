@@ -46,6 +46,7 @@ import { RecipeUploadComponent } from './components/recipe-upload/recipe-upload.
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { AutosizeModule } from 'ngx-autosize';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { NgxPrintModule } from 'ngx-print';
 
 // Angular Material
 @NgModule( {
@@ -87,6 +88,7 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
         MatProgressSpinnerModule,
         MatDialogModule,
         AutosizeModule,
+        NgxPrintModule
     ],
     providers: [
         {
