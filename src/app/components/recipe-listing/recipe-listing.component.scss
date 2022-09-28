@@ -55,17 +55,22 @@ mat-divider {
 #search-input {
     float: right !important;
     margin-right: 5% !important;
-    width: 25vw;
+    width: 30vw;
 }
 
 mat-card-header {
     justify-content: space-between;
 }
 
+.mat-card-header-text {
+    margin-right: 0px !important;
+}
+
 mat-card-title {
-    font-size: 2rem !important;
-    width: 200px !important;
-    margin-top: 6.5%;
+    font-size: 3.5vh !important;
+    width: 100% !important;
+    margin-top: 10.5%;
+    margin-right: 0px !important;
 }
 
 .listing-title .mat-card-header-text {
