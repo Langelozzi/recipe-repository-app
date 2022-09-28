@@ -150,7 +150,7 @@ li::marker {
   margin-top: 1.5% !important;
   cursor: pointer !important;
   background-color: #d1c4e9 !important;
-  font-size: 3.2vw !important;
+  font-size: 1.2rem !important;
   text-align: center !important;
 }
 
@@ -169,7 +169,7 @@ li::marker {
 }
 
 .small-card-header {
-  font-size: 1vw !important;
+//   font-size: 1vw !important;
   margin: 2% !important;
 }
 
@@ -375,5 +375,17 @@ li::marker {
 
     .large-btn-container .mat-button-wrapper {
         font-size: 0.7rem !important;
+    }
+
+    .recipe-listing-item {
+        font-size: 3.5vw !important;
+      }
+
+    .menu-item-title {
+        font-size: 0.8rem !important;
+        margin: auto !important;
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+        width: fit-content;
     }
 }
