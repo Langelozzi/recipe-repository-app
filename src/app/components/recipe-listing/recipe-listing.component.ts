@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RecipeService } from '../../services/recipe-service/recipe.service';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
 import { Recipe } from '../../../models/recipe';
@@ -36,7 +36,7 @@ export class RecipeListingComponent implements OnInit {
         this.recipeService.getAllRecipes().subscribe(
             // if the response is good then create list of recipes
             ( data: any ) => {
-                this.recipeBatch = new RecipeBatch( plainToClass( Recipe, data.recipes ) );
+                this.recipeBatch = new RecipeBatch( plainToInstance( Recipe, data.recipes ) );
 
                 this.listedRecipes = this.recipeBatch.recipes;
             }

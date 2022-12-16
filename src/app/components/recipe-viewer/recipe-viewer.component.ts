@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../../services/recipe-service/recipe.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { ArrayHelper } from '../../helpers/array-helper';
 import { ColorPalletEnum } from '../../../enums/colorPallet.enum';
 import { Ingredient } from '../../../interfaces/ingredient';
@@ -49,7 +49,7 @@ export class RecipeViewerComponent implements OnInit {
         this.recipeService
             .getRecipeById( this.recipeId )
             .subscribe( ( data: any ) => {
-                this.recipe = plainToClass( Recipe, data.recipe );
+                this.recipe = plainToInstance( Recipe, data.recipe );
                 this.splitIngredients();
             } );
     }

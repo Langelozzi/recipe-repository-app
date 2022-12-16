@@ -10,7 +10,7 @@ import {
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
 import { RecipeService } from 'src/app/services/recipe-service/recipe.service';
 import { Ingredient } from 'src/interfaces/ingredient';
@@ -87,7 +87,7 @@ export class UpdateRecipeComponent implements OnInit {
 
         this.recipeService.getRecipeById( this.recipeId ).subscribe(
             ( data: any ) => {
-                this.recipe = plainToClass( Recipe, data.recipe );
+                this.recipe = plainToInstance( Recipe, data.recipe );
 
                 this.recipeService.getAllRecipes().subscribe( ( data: any ) => {
                     const allRecipeNames: string[] = [];
