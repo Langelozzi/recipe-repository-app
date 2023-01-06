@@ -1,27 +1,102 @@
-# RecipeRepository
+<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+<a name="readme-top"></a>
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.4.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
 
-## Code scaffolding
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="./src/favicon.ico">
+    <img src="./src/favicon.ico" alt="Logo" width="80" height="80">
+  </a>
 
-## Running unit tests
+<h3 align="center">Recipe Repository</h3>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  <p align="center">
+    A powerful web application for your recipes in a virtual cook book.
+    <br />
+</div>
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-## Further help
+Recipe Repository is a web application that works in junction with the recipe repository API (see below) to provide users with an online cookbook to store and manage their recipes. This project is currently being hosted on free CI/CD platforms which can cause load times to be longer than ideal, please be patient :)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+<br>
+
+### Built With
+
+[![Angular][Angular.io]][Angular-url]
+
+
+<br>
+
+### API
+
+This application was written along side the recipe repository API. To view the repository for the API please visit the following link: https://github.com/Langelozzi/recipe-repository-api
+
+
+<br>
+<br>
+
+<!-- CONTACT -->
+## Contact
+
+Lucas Angelozzi -lucasangelozzi32@gmail.com
+
+Project Link: [https://github.com/Langelozzi/recipe-repository-app](https://github.com/Langelozzi/recipe-repository-app)
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/Langelozzi/recipe-repository-app.svg?style=for-the-badge
+[contributors-url]: https://github.com/Langelozzi/recipe-repository-app/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Langelozzi/recipe-repository-app.svg?style=for-the-badge
+[forks-url]: https://github.com/Langelozzi/recipe-repository-app/network/members
+[stars-shield]: https://img.shields.io/github/stars/Langelozzi/recipe-repository-app.svg?style=for-the-badge
+[stars-url]: https://github.com/Langelozzi/recipe-repository-app/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Langelozzi/recipe-repository-app.svg?style=for-the-badge
+[issues-url]: https://github.com/Langelozzi/recipe-repository-app/issues
+[license-shield]: https://img.shields.io/github/license/Langelozzi/recipe-repository-app.svg?style=for-the-badge
+[license-url]: https://github.com/Langelozzi/recipe-repository-app/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/lucas-angelozzi/
+[product-screenshot]: images/screenshot.png
+[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next-url]: https://nextjs.org/
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
+[Vue-url]: https://vuejs.org/
+[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.io/
+[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
+[Svelte-url]: https://svelte.dev/
+[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
+[Laravel-url]: https://laravel.com
+[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Bootstrap-url]: https://getbootstrap.com
+[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
+[JQuery-url]: https://jquery.com 
