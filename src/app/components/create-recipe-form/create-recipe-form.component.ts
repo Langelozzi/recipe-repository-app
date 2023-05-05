@@ -179,6 +179,13 @@ export class CreateRecipeFormComponent implements OnInit {
         this.steps().removeAt(i);
     }
 
+    onStepDrop(event: CdkDragDrop<FormGroup>) {
+        const sourceIndex = event.previousIndex;
+        const targetIndex = event.currentIndex;
+
+        this.moveFormGroupInArray(this.steps(), sourceIndex, targetIndex);
+    }
+
     // tag related methods
     addTag(event: MatChipInputEvent): void {
         const value = (event.value || '').trim();
@@ -280,7 +287,7 @@ export class CreateRecipeFormComponent implements OnInit {
     }
 
     private moveFormGroupInArray(formArray: FormArray, sourceIndex: number, destinationIndex: number) {
-        const formGroupToMove = this.ingredients().at(sourceIndex) as FormGroup;
+        const formGroupToMove = formArray.at(sourceIndex) as FormControl;
         formArray.removeAt(sourceIndex);
         formArray.insert(destinationIndex, formGroupToMove)
     }
