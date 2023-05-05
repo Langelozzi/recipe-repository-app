@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
 import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
 import { RecipeService } from 'src/app/services/recipe-service/recipe.service';
@@ -26,7 +26,7 @@ export class FavouriteListingComponent implements OnInit {
         this.recipeService.getFavouriteRecipes().subscribe(
             // if the response is good then create list of recipes
             ( data: any ) => {
-                this.recipes = plainToClass( Recipe, data.recipes );
+                this.recipes = plainToInstance( Recipe, data.recipes );
             }
         );
     }

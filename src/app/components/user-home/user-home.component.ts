@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
 import { RecipeService } from 'src/app/services/recipe-service/recipe.service';
 import { Recipe } from 'src/models/recipe';
@@ -30,13 +30,13 @@ export class UserHomeComponent implements OnInit {
         this.recipeService.getAllRecipes().subscribe(
             // if the response is good then create list of recipes
             ( data: any ) => {
-                this.recipes = plainToClass( Recipe, data.recipes );
+                this.recipes = plainToInstance( Recipe, data.recipes );
                 this.recipes = this.recipes.reverse();
             }
         );
 
         this.authService.getCurrentUser().subscribe( ( user: any ) => {
-            this.currentUser = plainToClass( User, user );
+            this.currentUser = plainToInstance( User, user );
         } );
     }
 
