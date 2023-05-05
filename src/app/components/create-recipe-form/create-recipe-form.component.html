@@ -2,47 +2,28 @@
   <mat-card-title>New Recipe</mat-card-title>
 
   <mat-card-content>
-    <form
-      name="createForm"
-      [formGroup]="createForm"
-      (ngSubmit)="openSaveDialog()"
-    >
+    <form name="createForm" [formGroup]="createForm" (ngSubmit)="openSaveDialog()">
       <mat-form-field class="block-form-field">
         <mat-label>Name</mat-label>
-        <input
-          type="text"
-          placeholder="e.g. Grandma's Apple Crumble"
-          matInput
-          formControlName="name"
-          (keyup)="determineDuplicateName()"
-        />
-        <mat-error *ngIf="isDuplicateName"
-          >Recipe names must be unique</mat-error
-        >
+        <input type="text" placeholder="e.g. Grandma's Apple Crumble" matInput formControlName="name"
+          (keyup)="determineDuplicateName()" />
+        <mat-error *ngIf="isDuplicateName">Recipe names must be unique</mat-error>
       </mat-form-field>
 
       <!-- Ingredients card -->
       <mat-expansion-panel>
         <mat-expansion-panel-header> Ingredients * </mat-expansion-panel-header>
 
-        <div class="dynamic-form-container" formArrayName="ingredients">
-          <div class="title-container"></div>
-          <div
-            class="flex-input-group"
-            *ngFor="let quantity of ingredients().controls; let i = index"
-            [formGroupName]="i"
-          >
+        <div class="dynamic-form-container" formArrayName="ingredients" cdkDropList
+          (cdkDropListDropped)="onIngredientDrop($event)">
+          <div class="flex-input-group" *ngFor="let quantity of ingredients().controls; let i = index"
+            [formGroupName]="i" cdkDrag>
+            <mat-icon class="draggable-icon">drag_indicator</mat-icon>
+
             <mat-form-field class="flex-input-field small-flex-input-field">
               <mat-label>Quantity</mat-label>
-              <input
-                type="text"
-                placeholder="e.g. 30"
-                matInput
-                formControlName="quantity"
-              />
-              <mat-error *ngIf="this.ingredients().controls[0]?.status"
-                >Quantity must be a number</mat-error
-              >
+              <input type="text" placeholder="e.g. 30" matInput formControlName="quantity" />
+              <mat-error *ngIf="this.ingredients().controls[0]?.status">Quantity must be a number</mat-error>
             </mat-form-field>
 
             <mat-form-field class="flex-input-field small-flex-input-field">
@@ -64,32 +45,16 @@
 
             <mat-form-field class="flex-input-field">
               <mat-label>Ingredient</mat-label>
-              <input
-                type="text"
-                placeholder="e.g. Sugar"
-                matInput
-                formControlName="ingredient"
-              />
+              <input type="text" placeholder="e.g. Sugar" matInput formControlName="ingredient" />
             </mat-form-field>
 
-            <button
-              (click)="removeIngredient(i)"
-              class="dynamic-input-remove-btn"
-              mat-flat-button
-              color="warn"
-            >
+            <button (click)="removeIngredient(i)" class="dynamic-input-remove-btn" mat-flat-button color="warn">
               Remove
             </button>
           </div>
         </div>
         <div class="center-btn-container">
-          <button
-            class="dynamic-input-add-btn"
-            type="button"
-            (click)="addIngredient()"
-            mat-mini-fab
-            color="primary"
-          >
+          <button class="dynamic-input-add-btn" type="button" (click)="addIngredient()" mat-mini-fab color="primary">
             +
           </button>
         </div>
@@ -107,21 +72,11 @@
               <div class="flex-input-group">
                 <mat-form-field class="flex-input-field">
                   <mat-label>Instruction</mat-label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Mix together flower and milk"
-                    matInput
-                    formControlName="step"
-                    [formControlName]="i"
-                  />
+                  <input type="text" placeholder="e.g. Mix together flower and milk" matInput formControlName="step"
+                    [formControlName]="i" />
                 </mat-form-field>
 
-                <button
-                  (click)="removeStep(i)"
-                  class="dynamic-input-remove-btn"
-                  mat-flat-button
-                  color="warn"
-                >
+                <button (click)="removeStep(i)" class="dynamic-input-remove-btn" mat-flat-button color="warn">
                   Remove
                 </button>
               </div>
@@ -129,13 +84,7 @@
           </ol>
         </div>
         <div class="center-btn-container">
-          <button
-            class="dynamic-input-add-btn"
-            type="button"
-            (click)="addStep()"
-            mat-mini-fab
-            color="primary"
-          >
+          <button class="dynamic-input-add-btn" type="button" (click)="addStep()" mat-mini-fab color="primary">
             +
           </button>
         </div>
@@ -143,39 +92,23 @@
 
       <!-- Additional Information -->
       <mat-expansion-panel>
-        <mat-expansion-panel-header
-          >Additional Information
+        <mat-expansion-panel-header>Additional Information
         </mat-expansion-panel-header>
 
         <div class="flex-input-group">
           <mat-form-field class="flex-input-field">
             <mat-label>Prep Time ( min )</mat-label>
-            <input
-              type="number"
-              placeholder="e.g. 30"
-              matInput
-              formControlName="prepTime"
-            />
+            <input type="number" placeholder="e.g. 30" matInput formControlName="prepTime" />
           </mat-form-field>
 
           <mat-form-field class="flex-input-field">
             <mat-label>Cook Time ( min )</mat-label>
-            <input
-              type="number"
-              placeholder="e.g. 60"
-              matInput
-              formControlName="cookTime"
-            />
+            <input type="number" placeholder="e.g. 60" matInput formControlName="cookTime" />
           </mat-form-field>
 
           <mat-form-field class="flex-input-field">
             <mat-label>Oven Tempurature ( &#176;F )</mat-label>
-            <input
-              type="text"
-              placeholder="e.g. 350"
-              matInput
-              formControlName="ovenTemp"
-            />
+            <input type="text" placeholder="e.g. 350" matInput formControlName="ovenTemp" />
           </mat-form-field>
         </div>
 
@@ -198,37 +131,21 @@
                 <mat-icon>cancel</mat-icon>
               </button>
             </mat-chip>
-            <input
-              placeholder="New tag..."
-              [matChipInputFor]="chipList"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              [matChipInputAddOnBlur]="addOnBlur"
-              (matChipInputTokenEnd)="addTag($event)"
-            />
+            <input placeholder="New tag..." [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="addTag($event)" />
           </mat-chip-list>
         </mat-form-field>
       </mat-expansion-panel>
 
       <!-- Buttons -->
       <div class="btn-container">
-        <button
-          class="std-btn"
-          type="button"
-          mat-raised-button
-          color="warn"
-          (click)="openCancelDialog()"
-        >
+        <button class="std-btn" type="button" mat-raised-button color="warn" (click)="openCancelDialog()">
           Cancel
         </button>
 
-        <button
-          class="std-btn"
-          mat-raised-button
-          color="primary"
-          id="login-submit-btn"
-          type="submit"
-          [disabled]="createForm.invalid"
-        >
+        <button class="std-btn" mat-raised-button color="primary" id="login-submit-btn" type="submit"
+          [disabled]="createForm.invalid">
           Save
         </button>
       </div>
