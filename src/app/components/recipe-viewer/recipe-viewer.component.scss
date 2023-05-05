@@ -1,4 +1,7 @@
-@page { size: auto;  margin-top: 0mm; }
+@page {
+  size: auto;
+  margin-top: 0mm;
+}
 
 .top-right-card-btn {
   float: right;
@@ -68,16 +71,17 @@ li::before {
 }
 
 .tag-chip {
-    color: #ffffff !important;
-    cursor: pointer !important;
-    display: inline-block !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  display: inline-block !important;
 }
-  
+
 .tag-chip:nth-of-type(odd) {
-    background-color: #522da8cb !important;
+  background-color: #522da8cb !important;
 }
+
 .tag-chip:nth-of-type(even) {
-    background-color: #ffa807ea !important;
+  background-color: #ffa807ea !important;
 }
 
 .paragraph {
@@ -129,4 +133,9 @@ li::before {
   margin-top: 1.5% !important;
   margin-right: 1.5% !important;
   margin-bottom: 1.5% !important;
+}
+
+.ordered-list li::marker {
+  font-size: 2em !important;
+  font-family: cursive;
 }

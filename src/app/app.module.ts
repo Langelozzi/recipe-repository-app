@@ -26,7 +26,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
@@ -47,6 +46,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { AutosizeModule } from 'ngx-autosize';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { NgxPrintModule } from 'ngx-print';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Angular Material
 @NgModule( {
@@ -88,7 +88,8 @@ import { NgxPrintModule } from 'ngx-print';
         MatProgressSpinnerModule,
         MatDialogModule,
         AutosizeModule,
-        NgxPrintModule
+        NgxPrintModule,
+        DragDropModule
     ],
     providers: [
         {
