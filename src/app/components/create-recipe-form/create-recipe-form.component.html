@@ -15,10 +15,10 @@
         <mat-expansion-panel-header> Ingredients * </mat-expansion-panel-header>
 
         <div class="dynamic-form-container" formArrayName="ingredients" cdkDropList
-          (cdkDropListDropped)="onIngredientDrop($event)">
+          (cdkDropListDropped)="onIngredientDrop($event)" [cdkDropListLockAxis]="'y'">
           <div class="flex-input-group" *ngFor="let quantity of ingredients().controls; let i = index"
             [formGroupName]="i" cdkDrag>
-            <mat-icon class="draggable-icon">drag_indicator</mat-icon>
+            <mat-icon class="draggable-icon" cdkDragHandle>drag_indicator</mat-icon>
 
             <mat-form-field class="flex-input-field small-flex-input-field">
               <mat-label>Quantity</mat-label>
@@ -64,12 +64,13 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>Steps *</mat-expansion-panel-header>
 
-        <div class="dynamic-form-container" formArrayName="steps" cdkDropList (cdkDropListDropped)="onStepDrop($event)">
+        <div class="dynamic-form-container" formArrayName="steps" cdkDropList (cdkDropListDropped)="onStepDrop($event)"
+          [cdkDropListLockAxis]="'y'">
           <!-- <div class="title-container"></div> -->
           <ol class="dynamic-list">
             <li *ngFor="let quantity of steps().controls; let i = index">
               <div class="flex-input-group" cdkDrag>
-                <mat-icon class="draggable-icon">drag_indicator</mat-icon>
+                <mat-icon class="draggable-icon" cdkDragHandle>drag_indicator</mat-icon>
 
                 <mat-form-field class="flex-input-field">
                   <mat-label>Instruction</mat-label>

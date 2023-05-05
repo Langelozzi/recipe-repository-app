@@ -44,3 +44,25 @@ mat-expansion-panel {
   height: 50px !important;
   font-size: 0.7rem !important;
 }
+
+.dynamic-list li::marker {
+  font-size: 2.5em !important;
+  font-family: cursive;
+}
+
+.draggable-icon {
+  padding: 2.5% 0.5%;
+  cursor: move;
+  /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+/* (Optional) Apply a "closed-hand" cursor during drag operation. */
+.draggable-icon:active {
+  padding: 2.5% 0.3%;
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
