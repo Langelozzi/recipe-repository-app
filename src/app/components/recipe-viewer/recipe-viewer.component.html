@@ -5,29 +5,18 @@
     </button>
 
     <!-- options menu -->
-    <mat-menu #recipeoptions class="mat-menu-panel" yPosition="below" xPosition="after">
-      <button class="menu-item" mat-button (click)="openEditPage()">
-        <h4 class="menu-item-title">Edit Recipe</h4>
-        <mat-icon class="menu-item-icon">edit</mat-icon>
-      </button>
-
-      <mat-divider></mat-divider>
-
-      <button class="menu-item" mat-button (click)="openDialog()">
-        <h4 class="menu-item-title">Delete Recipe</h4>
-        <mat-icon class="menu-item-icon">delete</mat-icon>
-      </button>
-
-      <mat-divider></mat-divider>
-
-      <button class="menu-item" mat-button ngxPrint printSectionId="recipe-viewer-container" [useExistingCss]="true">
-        <h4 class="menu-item-title">Print Recipe</h4>
-        <mat-icon class="menu-item-icon">print</mat-icon>
-      </button>
-
-      <mat-divider></mat-divider>
-
-      <button *ngIf="!recipe.favourite" class="menu-item" mat-button (click)="addToFavourites()">
+    <mat-menu
+      #recipeoptions
+      class="mat-menu-panel"
+      yPosition="below"
+      xPosition="after"
+    >
+      <button
+        *ngIf="!recipe.favourite"
+        class="menu-item"
+        mat-button
+        (click)="addToFavourites()"
+      >
         <h4 class="menu-item-title">Add to Favourites</h4>
         <mat-icon class="menu-item-icon">star_border</mat-icon>
       </button>
@@ -35,6 +24,40 @@
       <button *ngIf="recipe.favourite" class="menu-item" mat-button (click)="removeFromFavourites()">
         <h4 class="menu-item-title">Remove from Favourites</h4>
         <mat-icon class="menu-item-icon">star</mat-icon>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button class="menu-item" mat-button (click)="openEditPage()">
+        <h4 class="menu-item-title">Edit Recipe</h4>
+        <mat-icon class="menu-item-icon">edit</mat-icon>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button class="menu-item" mat-button (click)="duplicateRecipe()">
+        <h4 class="menu-item-title">Duplicate Recipe</h4>
+        <mat-icon class="menu-item-icon">file_copy</mat-icon>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button
+        class="menu-item"
+        mat-button
+        ngxPrint
+        printSectionId="recipe-viewer-container"
+        [useExistingCss]="true"
+      >
+        <h4 class="menu-item-title">Print Recipe</h4>
+        <mat-icon class="menu-item-icon">print</mat-icon>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button class="menu-item" mat-button (click)="openDialog()">
+        <h4 class="menu-item-title">Delete Recipe</h4>
+        <mat-icon class="menu-item-icon">delete</mat-icon>
       </button>
     </mat-menu>
 
@@ -121,7 +144,10 @@
 
       <ol class="ordered-list" *ngFor="let step of recipe.steps; let i = index">
         <li value="{{ i + 1 }}">{{ step }}</li>
-        <mat-divider *ngIf="i != recipe.steps.length - 1" class="list-item-divider"></mat-divider>
+        <mat-divider
+          *ngIf="i != recipe.steps.length - 1"
+          class="list-item-divider"
+        ></mat-divider>
       </ol>
     </div>
 

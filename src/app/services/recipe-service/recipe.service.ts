@@ -70,4 +70,11 @@ export class RecipeService {
             { responseType: 'blob' }
         );
     }
+
+    duplicateRecipe( recipeId: string | null ): Observable<object> {
+        return this.http.post(
+            `${environment.baseApiUrl}/recipes/${recipeId}/duplicate`,
+            {}
+        );
+    }
 }

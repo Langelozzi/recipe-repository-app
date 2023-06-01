@@ -6,7 +6,7 @@ export class SnackBarHelper {
         btnText = 'Ok',
         duration = 6000
     ) {
-        snackbar.open( message, btnText, {
+        return snackbar.open( message, btnText, {
             duration: duration,
         } );
     }
