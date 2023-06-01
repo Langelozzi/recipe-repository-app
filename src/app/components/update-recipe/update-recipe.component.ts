@@ -24,13 +24,14 @@ import { ColorPalletEnum } from 'src/enums/colorPallet.enum';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { ArrayHelper } from '../../helpers/array-helper';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
-@Component( {
+@Component({
     selector: 'app-update-recipe',
     templateUrl: './update-recipe.component.html',
-    styleUrls: [ './update-recipe.component.scss' ],
-    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
-} )
+    styleUrls: ['./update-recipe.component.scss'],
+    animations: [AnimationHelper.getSimpleFade('fastFade', 200)],
+})
 export class UpdateRecipeComponent implements OnInit {
     private recipeId: string | null;
     public recipe!: any;
@@ -43,7 +44,7 @@ export class UpdateRecipeComponent implements OnInit {
     // tags chip variables
     tags: string[] = [];
     addOnBlur = true;
-    readonly separatorKeysCodes = [ ENTER, COMMA ] as const;
+    readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
     constructor(
         private route: ActivatedRoute,
@@ -54,65 +55,65 @@ export class UpdateRecipeComponent implements OnInit {
         private location: Location,
         private dialog: MatDialog
     ) {
-        this.recipeId = this.route.snapshot.paramMap.get( 'id' );
+        this.recipeId = this.route.snapshot.paramMap.get('id');
     }
 
     ngOnInit(): void {
-        this.editForm = this.fb.group( {
-            name: new FormControl( '', [ Validators.required ] ),
-            ingredients: this.fb.array( [] ),
-            steps: this.fb.array( [] ),
-            prepTime: new FormControl( '', [] ),
-            cookTime: new FormControl( '', [] ),
-            ovenTemp: new FormControl( '', [] ),
-            description: new FormControl( '', [] ),
-            notes: new FormControl( '', [] ),
-        } );
+        this.editForm = this.fb.group({
+            name: new FormControl('', [Validators.required]),
+            ingredients: this.fb.array([]),
+            steps: this.fb.array([]),
+            prepTime: new FormControl('', []),
+            cookTime: new FormControl('', []),
+            ovenTemp: new FormControl('', []),
+            description: new FormControl('', []),
+            notes: new FormControl('', []),
+        });
 
-        this.recipeObs = this.recipeService.getRecipeById( this.recipeId ).pipe(
-            tap( ( data: any ) => {
-                for ( let i = 0; i < data.recipe.ingredients.length; i++ ) {
+        this.recipeObs = this.recipeService.getRecipeById(this.recipeId).pipe(
+            tap((data: any) => {
+                for (let i = 0; i < data.recipe.ingredients.length; i++) {
                     this.addIngredient();
                 }
 
-                for ( let i = 0; i < data.recipe.steps.length; i++ ) {
-                    this.addStep( data.recipe.steps[i] );
+                for (let i = 0; i < data.recipe.steps.length; i++) {
+                    this.addStep(data.recipe.steps[i]);
                 }
 
                 this.tags = data.recipe.tags;
 
-                this.editForm.patchValue( data.recipe );
-            } )
+                this.editForm.patchValue(data.recipe);
+            })
         );
 
-        this.recipeService.getRecipeById( this.recipeId ).subscribe(
-            ( data: any ) => {
-                this.recipe = plainToInstance( Recipe, data.recipe );
+        this.recipeService.getRecipeById(this.recipeId).subscribe(
+            (data: any) => {
+                this.recipe = plainToInstance(Recipe, data.recipe);
 
-                this.recipeService.getAllRecipes().subscribe( ( data: any ) => {
+                this.recipeService.getAllRecipes().subscribe((data: any) => {
                     const allRecipeNames: string[] = [];
 
-                    for ( let i = 0; i < data.recipes.length; i++ ) {
-                        allRecipeNames.push( data.recipes[i].name );
+                    for (let i = 0; i < data.recipes.length; i++) {
+                        allRecipeNames.push(data.recipes[i].name);
                     }
 
                     // delete the name of the recipe you are editing
                     delete allRecipeNames[
-                        allRecipeNames.indexOf( this.recipe.name )
+                        allRecipeNames.indexOf(this.recipe.name)
                     ];
 
                     this.allRecipeNames = allRecipeNames;
-                } );
+                });
             },
-            ( err: any ) => {
-                SnackBarHelper.triggerSnackBar( this._snackBar, err, 'Ok' );
+            (err: any) => {
+                SnackBarHelper.triggerSnackBar(this._snackBar, err, 'Ok');
             }
         );
     }
 
     openSaveDialog(): void {
-        if ( this.formChanged() ) {
-            const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+        if (this.formChanged()) {
+            const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
                 width: '450px',
                 data: {
                     title: 'Save Changes',
@@ -122,15 +123,15 @@ export class UpdateRecipeComponent implements OnInit {
                     submitBtnText: 'Save',
                     submitBtnColor: ColorPalletEnum.confirmGreen,
                 },
-            } );
+            });
 
-            dialogRef.afterClosed().subscribe( ( result ) => {
-                if ( result == true ) {
+            dialogRef.afterClosed().subscribe((result) => {
+                if (result == true) {
                     this.saveChanges();
                 }
-            } );
+            });
         } else {
-            const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+            const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
                 width: '450px',
                 data: {
                     title: 'No changes made',
@@ -140,19 +141,19 @@ export class UpdateRecipeComponent implements OnInit {
                     submitBtnText: 'Yes',
                     submitBtnColor: ColorPalletEnum.confirmGreen,
                 },
-            } );
+            });
 
-            dialogRef.afterClosed().subscribe( ( result ) => {
-                if ( result == true ) {
+            dialogRef.afterClosed().subscribe((result) => {
+                if (result == true) {
                     this.goBack();
                 }
-            } );
+            });
         }
     }
 
     openCancelDialog(): void {
-        if ( this.formChanged() ) {
-            const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+        if (this.formChanged()) {
+            const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
                 width: '450px',
                 data: {
                     title: 'Discard Changes',
@@ -162,46 +163,22 @@ export class UpdateRecipeComponent implements OnInit {
                     submitBtnText: 'Discard',
                     submitBtnColor: ColorPalletEnum.cancelRed,
                 },
-            } );
+            });
 
-            dialogRef.afterClosed().subscribe( ( result ) => {
-                if ( result == true ) {
+            dialogRef.afterClosed().subscribe((result) => {
+                if (result == true) {
                     this.goBack();
                 }
-            } );
+            });
         } else {
             this.goBack();
         }
     }
 
-    private formChanged(): boolean {
-        if (
-            this.recipe.name != this.editForm.value.name ||
-            !ArrayHelper.areEqualObjects(
-                this.recipe.ingredients,
-                this.editForm.value.ingredients
-            ) ||
-            !ArrayHelper.areEqual(
-                this.recipe.steps,
-                this.editForm.value.steps
-            ) ||
-            this.recipe.prepTime != this.editForm.value.prepTime ||
-            this.recipe.cookTime != this.editForm.value.cookTime ||
-            this.recipe.ovenTemp != this.editForm.value.ovenTemp ||
-            this.recipe.description != this.editForm.value.description ||
-            this.recipe.notes != this.editForm.value.notes ||
-            !ArrayHelper.areEqual( this.recipe.tags, this.tags )
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     determineDuplicateName(): void {
-        if ( this.allRecipeNames.includes( this.editForm.value.name ) ) {
+        if (this.allRecipeNames.includes(this.editForm.value.name)) {
             this.isDuplicateName = true;
-            this.editForm.controls['name'].setErrors( { incorrect: true } );
+            this.editForm.controls['name'].setErrors({ incorrect: true });
         } else {
             this.isDuplicateName = false;
         }
@@ -213,59 +190,99 @@ export class UpdateRecipeComponent implements OnInit {
 
     // ingredient related methods
     ingredients(): FormArray {
-        return this.editForm.get( 'ingredients' ) as FormArray;
+        return this.editForm.get('ingredients') as FormArray;
     }
 
     newIngredient() {
-        return this.fb.group( {
-            quantity: new FormControl( '', [ Validators.required ] ),
-            units: new FormControl( '', [ Validators.required ] ),
-            ingredient: new FormControl( '', [ Validators.required ] ),
-        } );
+        return this.fb.group({
+            quantity: new FormControl('', [Validators.required]),
+            units: new FormControl('', [Validators.required]),
+            ingredient: new FormControl('', [Validators.required]),
+        });
     }
 
     addIngredient() {
-        this.ingredients().push( this.newIngredient() );
+        this.ingredients().push(this.newIngredient());
     }
 
-    removeIngredient( i: number ) {
-        this.ingredients().removeAt( i );
+    removeIngredient(i: number) {
+        this.ingredients().removeAt(i);
+    }
+
+    onIngredientDrop(event: CdkDragDrop<FormGroup>) {
+        const sourceIndex = event.previousIndex;
+        const targetIndex = event.currentIndex;
+
+        this.moveFormGroupInArray(this.ingredients(), sourceIndex, targetIndex);
     }
 
     // steps related methods
     steps(): FormArray {
-        return this.editForm.get( 'steps' ) as FormArray;
+        return this.editForm.get('steps') as FormArray;
     }
 
-    newStep( value?: string ) {
-        return new FormControl( `${value}`, [ Validators.required ] );
+    newStep(value?: string) {
+        return new FormControl(`${value}`, [Validators.required]);
     }
 
-    addStep( value?: string ) {
-        this.steps().push( this.newStep( value ) );
+    addStep(value?: string) {
+        if (!value) {
+            this.steps().push(this.newStep(""));
+        } else {
+            this.steps().push(this.newStep(value));
+        }
     }
 
-    removeStep( i: number ) {
-        this.steps().removeAt( i );
+    removeStep(i: number) {
+        this.steps().removeAt(i);
+    }
+
+    onStepDrop(event: CdkDragDrop<FormGroup>) {
+        const sourceIndex = event.previousIndex;
+        const targetIndex = event.currentIndex;
+
+        this.moveFormGroupInArray(this.steps(), sourceIndex, targetIndex);
     }
 
     // tag related methods
-    addTag( event: MatChipInputEvent ): void {
-        const value = ( event.value || '' ).trim();
+    addTag(event: MatChipInputEvent): void {
+        const value = (event.value || '').trim();
 
-        if ( value ) {
-            this.tags.push( value );
+        if (value) {
+            this.tags.push(value);
         }
 
         event.chipInput?.clear();
     }
 
-    removeTag( tag: string ): void {
-        const index = this.tags.indexOf( tag );
+    removeTag(tag: string): void {
+        const index = this.tags.indexOf(tag);
 
-        if ( index >= 0 ) {
-            this.tags.splice( index, 1 );
+        if (index >= 0) {
+            this.tags.splice(index, 1);
         }
+    }
+
+    saveChanges(): void {
+        // console.log( typeof this.recipe, this.recipe.name );
+        this.recipeService.updateRecipe(this.getUpdatedRecipe()).subscribe(
+            (data: any) => {
+                SnackBarHelper.triggerSnackBar(
+                    this._snackBar,
+                    `"${data.updatedRecipe.name}" was successfully updated`,
+                    'Ok'
+                );
+
+                this.router.navigate([`/recipes/${this.recipeId}`]);
+            },
+            (err: any) => {
+                SnackBarHelper.triggerSnackBar(
+                    this._snackBar,
+                    'Failed to create new recipe',
+                    'Ok'
+                );
+            }
+        );
     }
 
     // service related methods
@@ -273,15 +290,15 @@ export class UpdateRecipeComponent implements OnInit {
         const formObject = this.editForm.value;
         const ingredients: Ingredient[] = [];
 
-        formObject.ingredients.forEach( ( ingredient: any ) => {
+        formObject.ingredients.forEach((ingredient: any) => {
             const newIng: Ingredient = {
                 quantity: ingredient.quantity,
                 units: ingredient.units,
                 ingredient: ingredient.ingredient,
             };
 
-            ingredients.push( newIng );
-        } );
+            ingredients.push(newIng);
+        });
 
         this.recipe.update(
             formObject.name,
@@ -301,25 +318,33 @@ export class UpdateRecipeComponent implements OnInit {
         return this.recipe;
     }
 
-    saveChanges(): void {
-        // console.log( typeof this.recipe, this.recipe.name );
-        this.recipeService.updateRecipe( this.getUpdatedRecipe() ).subscribe(
-            ( data: any ) => {
-                SnackBarHelper.triggerSnackBar(
-                    this._snackBar,
-                    `"${data.updatedRecipe.name}" was successfully updated`,
-                    'Ok'
-                );
+    private formChanged(): boolean {
+        if (
+            this.recipe.name != this.editForm.value.name ||
+            !ArrayHelper.areEqualObjects(
+                this.recipe.ingredients,
+                this.editForm.value.ingredients
+            ) ||
+            !ArrayHelper.areEqual(
+                this.recipe.steps,
+                this.editForm.value.steps
+            ) ||
+            this.recipe.prepTime != this.editForm.value.prepTime ||
+            this.recipe.cookTime != this.editForm.value.cookTime ||
+            this.recipe.ovenTemp != this.editForm.value.ovenTemp ||
+            this.recipe.description != this.editForm.value.description ||
+            this.recipe.notes != this.editForm.value.notes ||
+            !ArrayHelper.areEqual(this.recipe.tags, this.tags)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-                this.router.navigate( [ `/recipes/${this.recipeId}` ] );
-            },
-            ( err: any ) => {
-                SnackBarHelper.triggerSnackBar(
-                    this._snackBar,
-                    'Failed to create new recipe',
-                    'Ok'
-                );
-            }
-        );
+    private moveFormGroupInArray(formArray: FormArray, sourceIndex: number, destinationIndex: number) {
+        const formGroupToMove = formArray.at(sourceIndex) as FormControl;
+        formArray.removeAt(sourceIndex);
+        formArray.insert(destinationIndex, formGroupToMove)
     }
 }
