@@ -12,7 +12,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
-import { concatMap, tap } from 'rxjs';
+import { concatMap, first, tap } from 'rxjs';
 
 @Component( {
     selector: 'app-recipe-viewer',
@@ -75,7 +75,7 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     goBack(): void {
-        if ( this.previousPage == `/recipes/${this.recipe._id}/edit` ) {
+        if ( !( this.previousPage == '/recipes' || this.previousPage == '/userhome' || this.previousPage == '/recipes/favourites' ) ) {
             this.router.navigate( [ '/recipes' ] );
         } else {
             this.location.back();
@@ -104,19 +104,6 @@ export class RecipeViewerComponent implements OnInit {
         }
     }
 
-    private splitIngredients(): void {
-        const middleIndex = Math.ceil( this.recipe.ingredients.length / 2 );
-
-        this.firstHalfOfIngredients = this.recipe.ingredients.slice(
-            0,
-            middleIndex
-        );
-
-        this.secondHalfOfIngredients = this.recipe.ingredients.slice(
-            middleIndex,
-            this.recipe.ingredients.length
-        );
-    }
 
     openEditPage(): void {
         this.router.navigate( [ `/recipes/${this.recipeId}/edit` ] );
@@ -182,6 +169,44 @@ export class RecipeViewerComponent implements OnInit {
                     'Ok'
                 );
             }
+        );
+    }
+
+    duplicateRecipe(): void {
+        this.recipeService.duplicateRecipe( this.recipeId ).pipe( first() ).subscribe( {
+            next: ( data: any ) => {
+                const snackBarRef = SnackBarHelper.triggerSnackBar(
+                    this._snackBar,
+                    `"${this.recipe.name}" successfully duplicated. "${data.recipe.name}" was created`,
+                    'Open'
+                );
+                snackBarRef.onAction().subscribe( () => {
+                    this.router.navigate( [ `/recipes/${data.recipe._id}` ] )
+                        .then( () => window.location.reload() );
+                } );
+            },
+            error: ( err: any ) => {
+                SnackBarHelper.triggerSnackBar(
+                    this._snackBar,
+                    `An unexpected error occurred. "${this.recipe.name}" was not duplicated`,
+                    'Ok'
+                );
+            }
+        } );
+    }
+
+
+    private splitIngredients(): void {
+        const middleIndex = Math.ceil( this.recipe.ingredients.length / 2 );
+
+        this.firstHalfOfIngredients = this.recipe.ingredients.slice(
+            0,
+            middleIndex
+        );
+
+        this.secondHalfOfIngredients = this.recipe.ingredients.slice(
+            middleIndex,
+            this.recipe.ingredients.length
         );
     }
 }
