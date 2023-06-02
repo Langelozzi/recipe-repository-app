@@ -8,6 +8,7 @@ import { Recipe } from 'src/models/recipe';
 import { User } from 'src/models/user';
 
 import { AuthService } from './../../services/auth-service/auth.service';
+import { first } from 'rxjs';
 
 @Component( {
     selector: 'app-user-home',
@@ -27,11 +28,10 @@ export class UserHomeComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.recipeService.getAllRecipes().subscribe(
+        this.recipeService.getAllRecipes().pipe( first() ).subscribe(
             // if the response is good then create list of recipes
             ( data: any ) => {
                 this.recipes = plainToInstance( Recipe, data.recipes );
-                this.recipes = this.recipes.reverse();
             }
         );
 

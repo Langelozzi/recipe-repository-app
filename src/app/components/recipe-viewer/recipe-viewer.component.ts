@@ -22,10 +22,11 @@ import { concatMap, first, tap } from 'rxjs';
 } )
 export class RecipeViewerComponent implements OnInit {
     private recipeId: string | null;
+    private previousPage: string | undefined;
     public recipe!: any;
     public hasOptionalDetails!: boolean;
     public images?: any = [];
-    private previousPage: string | undefined;
+    public ingredientMultiplier = 1;
 
     // ingredient arrays
     public firstHalfOfIngredients!: Ingredient[];
@@ -51,6 +52,7 @@ export class RecipeViewerComponent implements OnInit {
             .subscribe( ( data: any ) => {
                 this.recipe = plainToInstance( Recipe, data.recipe );
                 this.splitIngredients();
+                this.cleanIngredientData();
             } );
     }
 
@@ -103,7 +105,6 @@ export class RecipeViewerComponent implements OnInit {
             return false;
         }
     }
-
 
     openEditPage(): void {
         this.router.navigate( [ `/recipes/${this.recipeId}/edit` ] );
@@ -195,6 +196,42 @@ export class RecipeViewerComponent implements OnInit {
         } );
     }
 
+    onMultiplyServings( multiplier: number ): void {
+        this.ingredientMultiplier = multiplier;
+    }
+
+    isNumber( value: any ): boolean {
+        try {
+            return !isNaN( eval( value ) );
+        } catch ( e ) {
+            return false;
+        }
+    }
+
+    decimalToFraction( value: number ): string {
+        if ( typeof value !== 'number' ) return value;
+        if ( value % 1 == 0 ) return value.toString();
+
+        const tolerance = 1.0E-6;
+        let h1 = 1;
+        let h2 = 0;
+        let k1 = 0;
+        let k2 = 1;
+        let b = value;
+        do {
+            const a = Math.floor( b );
+            let aux = h1;
+            h1 = a * h1 + h2;
+            h2 = aux;
+            aux = k1;
+            k1 = a * k1 + k2;
+            k2 = aux;
+            b = 1 / ( b - a );
+        }
+        while ( Math.abs( value - h1 / k1 ) > value * tolerance );
+
+        return `${h1}/${k1}`;
+    }
 
     private splitIngredients(): void {
         const middleIndex = Math.ceil( this.recipe.ingredients.length / 2 );
@@ -208,5 +245,11 @@ export class RecipeViewerComponent implements OnInit {
             middleIndex,
             this.recipe.ingredients.length
         );
+    }
+
+    private cleanIngredientData(): void {
+        this.recipe.ingredients.map( ( ingr: Ingredient ) => {
+            ingr.quantity = this.isNumber( ingr.quantity ) ? eval( `${ingr.quantity}` ) : ingr.quantity;
+        } );
     }
 }

@@ -47,6 +47,7 @@ import { AutosizeModule } from 'ngx-autosize';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { NgxPrintModule } from 'ngx-print';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 // Angular Material
 @NgModule( {
@@ -89,7 +90,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         MatDialogModule,
         AutosizeModule,
         NgxPrintModule,
-        DragDropModule
+        DragDropModule,
+        MatToolbarModule
     ],
     providers: [
         {
