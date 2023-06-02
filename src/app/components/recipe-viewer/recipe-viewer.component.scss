@@ -139,3 +139,27 @@ li::before {
   font-size: 2em !important;
   font-family: cursive;
 }
+
+mat-toolbar {
+  width: 95% !important;
+  background-color: white !important;
+  margin: auto;
+}
+
+.header-left {
+  flex: 1;
+}
+
+.header-title {
+  font-size: 20px;
+  color: black;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+#multiplier {
+  padding-left: 15% !important;
+}
