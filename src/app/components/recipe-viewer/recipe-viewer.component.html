@@ -157,22 +157,8 @@
               [class.ingredient-cell-bordered]="
                 !isLastIngredient(firstHalfOfIngredients, i + 1)
               "
-              *ngIf="isNumber(ingredient.quantity)"
             >
-              {{
-                decimalToFraction(ingredient.quantity * ingredientMultiplier)
-              }}
-              {{ ingredient.units }}
-              {{ ingredient.ingredient }}
-            </td>
-            <td
-              class="ingredient-cell"
-              [class.ingredient-cell-bordered]="
-                !isLastIngredient(firstHalfOfIngredients, i + 1)
-              "
-              *ngIf="!isNumber(ingredient.quantity)"
-            >
-              {{ decimalToFraction(ingredient.quantity) }}
+              {{ calculateIngredientAmount(ingredient.quantity) }}
               {{ ingredient.units }}
               {{ ingredient.ingredient }}
             </td>
@@ -192,22 +178,8 @@
               [class.ingredient-cell-bordered]="
                 !isLastIngredient(firstHalfOfIngredients, i + 1)
               "
-              *ngIf="isNumber(ingredient.quantity)"
             >
-              {{
-                decimalToFraction(ingredient.quantity * ingredientMultiplier)
-              }}
-              {{ ingredient.units }}
-              {{ ingredient.ingredient }}
-            </td>
-            <td
-              class="ingredient-cell"
-              [class.ingredient-cell-bordered]="
-                !isLastIngredient(firstHalfOfIngredients, i + 1)
-              "
-              *ngIf="!isNumber(ingredient.quantity)"
-            >
-              {{ decimalToFraction(ingredient.quantity) }}
+              {{ calculateIngredientAmount(ingredient.quantity) }}
               {{ ingredient.units }}
               {{ ingredient.ingredient }}
             </td>
