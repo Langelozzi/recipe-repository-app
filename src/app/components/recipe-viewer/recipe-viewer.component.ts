@@ -200,7 +200,19 @@ export class RecipeViewerComponent implements OnInit {
         this.ingredientMultiplier = multiplier;
     }
 
-    isNumber( value: any ): boolean {
+    calculateIngredientAmount( amount: any ): string {
+        if ( this.isNumber( amount ) ) return `${this.decimalToFraction( amount * this.ingredientMultiplier )}`;
+        
+        try {
+            const decimalNum = this.twoPartFractionToDecimal( amount );
+            
+            return `${this.decimalToFraction( decimalNum * this.ingredientMultiplier )}`;
+        } catch ( error ) {
+            return amount;
+        }
+    }
+
+    private isNumber( value: any ): boolean {
         try {
             return !isNaN( eval( value ) );
         } catch ( e ) {
@@ -208,29 +220,50 @@ export class RecipeViewerComponent implements OnInit {
         }
     }
 
-    decimalToFraction( value: number ): string {
-        if ( typeof value !== 'number' ) return value;
+    private decimalToFraction( value: number ): string {
+        // if its a whole number, return it
         if ( value % 1 == 0 ) return value.toString();
 
         const tolerance = 1.0E-6;
-        let h1 = 1;
+        let numerator = 1;
         let h2 = 0;
-        let k1 = 0;
+        let denominator = 0;
         let k2 = 1;
         let b = value;
         do {
             const a = Math.floor( b );
-            let aux = h1;
-            h1 = a * h1 + h2;
+            let aux = numerator;
+            numerator = a * numerator + h2;
             h2 = aux;
-            aux = k1;
-            k1 = a * k1 + k2;
+            aux = denominator;
+            denominator = a * denominator + k2;
             k2 = aux;
             b = 1 / ( b - a );
         }
-        while ( Math.abs( value - h1 / k1 ) > value * tolerance );
+        while ( Math.abs( value - numerator / denominator ) > value * tolerance );
 
-        return `${h1}/${k1}`;
+        return numerator > denominator ? 
+            this.fractionToTwoPartFraction( `${numerator}/${denominator}` )
+            : `${numerator}/${denominator}`;
+    }
+
+    private twoPartFractionToDecimal( value: string ): number {
+        const fraction = value.trim().split( /\s+/ );
+        const wholeNumber = Number( fraction[ 0 ] );
+        const fractionParts = fraction[ 1 ].split( '/' );
+        const denominator = Number( fractionParts[ 1 ] );
+        const numerator = ( wholeNumber * denominator ) + Number( fractionParts[ 0 ] );
+
+        return numerator / denominator;
+    }
+
+    private fractionToTwoPartFraction( value: string ): string {
+        const splitFraction = value.trim().split( '/' );
+        const numerator = Number( splitFraction[ 0 ] );
+        const denominator = Number( splitFraction[ 1 ] );
+        const wholeNumber = Math.floor( numerator / denominator );
+
+        return `${wholeNumber} ${numerator % denominator}/${denominator}`;
     }
 
     private splitIngredients(): void {
@@ -252,4 +285,5 @@ export class RecipeViewerComponent implements OnInit {
             ingr.quantity = this.isNumber( ingr.quantity ) ? eval( `${ingr.quantity}` ) : ingr.quantity;
         } );
     }
+
 }
