@@ -7,11 +7,7 @@
       </button>
     </div>
 
-    <button
-      mat-button
-      class="side-nav-btn home-btn"
-      (click)="openUserHome()"
-    >
+    <button mat-button class="side-nav-btn home-btn" (click)="openUserHome()">
       Home
       <mat-icon class="menu-item-icon">home</mat-icon>
     </button>
@@ -24,9 +20,24 @@
       <button
         mat-button
         class="side-nav-item"
+        (click)="openCommunityRecipeListingPage()"
+      >
+        Community Recipes
+        <img
+          class="nav-item-icon"
+          src="assets/imgs/all-recipe-icon.png"
+          alt=""
+        />
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button
+        mat-button
+        class="side-nav-item"
         (click)="openRecipeListingPage()"
       >
-        All Recipes
+        My Recipes
         <img
           class="nav-item-icon"
           src="assets/imgs/all-recipe-icon.png"

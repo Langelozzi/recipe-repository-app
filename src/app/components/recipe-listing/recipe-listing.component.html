@@ -1,71 +1,77 @@
 <mat-card *ngIf="recipeBatch" [@fastFade]="'in'">
-    <mat-card-header>
-        <mat-card-title class="listing-title">
-            My Recipes
-        </mat-card-title>
-        <div [formGroup]="searchFg" id="search-div">
-            <mat-form-field id="search-input" class="right-align">
-                <mat-label>Search</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="searchBox"
-                (keyup)="searchByName()"
-                />
-                <mat-icon matSuffix>search</mat-icon>
-            </mat-form-field>
-        </div>
-    </mat-card-header>
+  <mat-card-header>
+    <mat-card-title class="listing-title">
+      {{ listTitle }}
+    </mat-card-title>
+    <div [formGroup]="searchFg" id="search-div">
+      <mat-form-field id="search-input" class="right-align">
+        <mat-label>Search</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="searchBox"
+          (keyup)="searchByName()"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </mat-card-header>
 
   <!-- Tags -->
-  
-  
+
   <mat-card-content>
     <div id="tag-list-container" *ngIf="recipeBatch.getAllTags().size > 0">
-        <mat-divider></mat-divider>
-        
-        <mat-chip-list class="centered-chip-list">
-            <mat-chip (click)="sortByTag( tag )" class="tag-chip" *ngFor="let tag of recipeBatch.getAllTags()">
-                {{ tag }}
-            </mat-chip>
-        </mat-chip-list>
-        
-        <mat-divider></mat-divider>
+      <mat-divider></mat-divider>
+
+      <mat-chip-list class="centered-chip-list">
+        <mat-chip
+          (click)="sortByTag(tag)"
+          class="tag-chip"
+          *ngFor="let tag of recipeBatch.getAllTags()"
+        >
+          {{ tag }}
+        </mat-chip>
+      </mat-chip-list>
+
+      <mat-divider></mat-divider>
     </div>
 
     <mat-card *ngIf="sorted">
-        <mat-card-title>
-            <mat-chip class="large-chip">
-                {{ currentTag }}
-                <button
-                    mat-icon-button
-                    type="button"
-                    aria-label="Close recipe"
-                    class="large-chip-close-btn"
-                    (click)="showAllRecipes()"
-                >
-                    <mat-icon class="large-chip-close-btn-icon">close</mat-icon>
-                </button>
-            </mat-chip>
-        </mat-card-title>
-        
-        <mat-card-content>
-            <div *ngFor="let recipe of listedRecipes">
-              <mat-card class="recipe-listing-item" (click)="viewRecipe(recipe._id)">
-                {{ recipe.name }}
-              </mat-card>
-            </div>
-        </mat-card-content>
+      <mat-card-title>
+        <mat-chip class="large-chip">
+          {{ currentTag }}
+          <button
+            mat-icon-button
+            type="button"
+            aria-label="Close recipe"
+            class="large-chip-close-btn"
+            (click)="showAllRecipes()"
+          >
+            <mat-icon class="large-chip-close-btn-icon">close</mat-icon>
+          </button>
+        </mat-chip>
+      </mat-card-title>
+
+      <mat-card-content>
+        <div *ngFor="let recipe of listedRecipes">
+          <mat-card
+            class="recipe-listing-item"
+            (click)="viewRecipe(recipe._id)"
+          >
+            {{ recipe.name }}
+          </mat-card>
+        </div>
+      </mat-card-content>
     </mat-card>
     <div *ngIf="!sorted">
-        <div *ngFor="let recipe of listedRecipes">
-            <mat-card class="recipe-listing-item" (click)="viewRecipe(recipe._id)">
-            {{ recipe.name }}
-            </mat-card>
-        </div>
-        <div *ngIf="listedRecipes.length < 1">
-            <h3 class="recipe-listing-message">No recipes found</h3>
-        </div>
+      <div *ngFor="let recipe of listedRecipes">
+        <mat-card class="recipe-listing-item" (click)="viewRecipe(recipe._id)">
+          {{ recipe.name }}
+        </mat-card>
+      </div>
+      <div *ngIf="listedRecipes.length < 1">
+        <h3 class="recipe-listing-message">No recipes found</h3>
+      </div>
     </div>
   </mat-card-content>
 </mat-card>

@@ -77,7 +77,11 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     goBack(): void {
-        if ( !( this.previousPage == '/recipes' || this.previousPage == '/userhome' || this.previousPage == '/recipes/favourites' ) ) {
+        if ( !( this.previousPage == '/recipes' ||
+                this.previousPage == '/userhome' ||
+                this.previousPage == '/recipes/favourites' ||
+                this.previousPage == '/recipes/community' )
+        ) {
             this.router.navigate( [ '/recipes' ] );
         } else {
             this.location.back();
@@ -202,10 +206,10 @@ export class RecipeViewerComponent implements OnInit {
 
     calculateIngredientAmount( amount: any ): string {
         if ( this.isNumber( amount ) ) return `${this.decimalToFraction( amount * this.ingredientMultiplier )}`;
-        
+
         try {
             const decimalNum = this.twoPartFractionToDecimal( amount );
-            
+
             return `${this.decimalToFraction( decimalNum * this.ingredientMultiplier )}`;
         } catch ( error ) {
             return amount;
@@ -242,7 +246,7 @@ export class RecipeViewerComponent implements OnInit {
         }
         while ( Math.abs( value - numerator / denominator ) > value * tolerance );
 
-        return numerator > denominator ? 
+        return numerator > denominator ?
             this.fractionToTwoPartFraction( `${numerator}/${denominator}` )
             : `${numerator}/${denominator}`;
     }

@@ -1,91 +1,89 @@
-
 // scrollable chip list
 ::ng-deep .mat-chip-list-wrapper {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    overflow: scroll;
-  }
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  overflow: scroll;
+}
 
 .tag-chip {
-    color: #ffffff !important;
-    cursor: pointer !important;
-    display: inline-block !important;
-    margin-bottom: 2% !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  display: inline-block !important;
+  margin-bottom: 2% !important;
 }
-  
+
 .tag-chip:nth-of-type(odd) {
-    background-color: #522da8cb !important;
+  background-color: #522da8cb !important;
 }
 .tag-chip:nth-of-type(even) {
-    background-color: #ffa807ea !important;
+  background-color: #ffa807ea !important;
 }
 
 .large-chip {
-    font-size: 1.1rem !important;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    padding-right: -2%;
-    background-color: #3a923291;
-    margin: auto;
+  font-size: 1.1rem !important;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-right: -2%;
+  background-color: #3a923291;
+  margin: auto;
 }
 
 .large-chip-close-btn {
-    width: fit-content;
-    height: fit-content;
-    margin-right: -5px;
-    margin-left: 2px;
+  width: fit-content;
+  height: fit-content;
+  margin-right: -5px;
+  margin-left: 2px;
 }
 
 .large-chip-close-btn-icon {
-    font-size: 1rem;
-    color: #5c5b5bb9;
+  font-size: 1rem;
+  color: #5c5b5bb9;
 }
 
 mat-divider {
-    margin-top: 0px !important;
-    margin-bottom: 1.8% !important;
-    margin-left: 1% !important;
-    margin-right: 1% !important;
-    width: 98% !important;
+  margin-top: 0px !important;
+  margin-bottom: 1.8% !important;
+  margin-left: 1% !important;
+  margin-right: 1% !important;
+  width: 98% !important;
 }
 
 #search-input {
-    float: right !important;
-    margin-right: 5% !important;
-    width: 100% !important;
+  float: right !important;
+  margin-right: 5% !important;
+  width: 100% !important;
 }
 
 mat-card-header {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .mat-card-header-text {
-    margin-right: 0px !important;
+  margin-right: 0px !important;
 }
 
 mat-card-title {
-    font-size: 2.2rem !important;
-    width: 100% !important;
-    margin-top: 10.5%;
-    margin-right: 0px !important;
+  font-size: 2.2rem !important;
+  width: 100% !important;
+  //   margin-right: 0px !important;
 }
 
 .listing-title .mat-card-header-text {
-    width: 40px !important;
+  width: 40px !important;
 }
 
 @media only screen and (max-width: 500px) {
-    #search-input {
-        width: 140px !important;
-    }
+  #search-input {
+    width: 140px !important;
+  }
 
-    mat-card-title {
-        font-size: 1.5rem !important;
-        width: 100% !important;
-        margin-top: 10.5%;
-        margin-right: 0px !important;
-    }
+  mat-card-title {
+    font-size: 1.5rem !important;
+    width: 100% !important;
+    margin-top: 10.5%;
+    margin-right: 0px !important;
+  }
 }

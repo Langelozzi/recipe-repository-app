@@ -56,6 +56,11 @@ export class NavBarComponent implements OnInit {
         this.router.navigate( [ '/recipes/upload' ] );
     }
 
+    openCommunityRecipeListingPage(): void {
+        this.sideNav.close();
+        this.router.navigate( [ '/recipes/community' ] );
+    }
+
     openRecipeListingPage(): void {
         this.sideNav.close();
         this.router.navigate( [ '/recipes' ] );

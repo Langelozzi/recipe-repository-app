@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RecipeService } from '../../services/recipe-service/recipe.service';
 import { plainToInstance } from 'class-transformer';
@@ -8,6 +8,8 @@ import { Recipe } from '../../../models/recipe';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
 import { RecipeBatch } from 'src/models/recipe-batch';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable, observable } from 'rxjs';
+import { RecipeVisibility } from 'src/enums/recipe-visibility.enum';
 
 @Component( {
     selector: 'app-recipe-listing',
@@ -16,6 +18,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
     animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class RecipeListingComponent implements OnInit {
+    @Input() communityRecipes = false;
+
+    public listTitle = '';
+
     public recipeBatch!: RecipeBatch;
     public listedRecipes!: Recipe[];
 
@@ -33,12 +39,21 @@ export class RecipeListingComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.recipeService.getAllRecipes().subscribe(
+        this.listTitle = this.communityRecipes ? 'Community Recipes' : 'My Recipes';
+
+        // define an observable to get the recipes
+        const observable: Observable<object> = this.communityRecipes ? this.recipeService.getCommunityRecipes() : this.recipeService.getAllRecipes();
+
+        observable.subscribe(
             // if the response is good then create list of recipes
             ( data: any ) => {
                 this.recipeBatch = new RecipeBatch( plainToInstance( Recipe, data.recipes ) );
 
-                this.listedRecipes = this.recipeBatch.recipes;
+                if ( this.communityRecipes ) {
+                    this.listedRecipes = this.recipeBatch.recipes.filter( recipe => recipe.visibility == RecipeVisibility.PUBLIC );
+                } else {
+                    this.listedRecipes = this.recipeBatch.recipes;
+                }
             }
         );
     }

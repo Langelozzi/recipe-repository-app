@@ -26,6 +26,10 @@ export class RecipeService {
         return this.http.get( `${environment.baseApiUrl}/recipes` );
     }
 
+    getCommunityRecipes(): Observable<object> {
+        return this.http.get( `${environment.baseApiUrl}/recipes/all` );
+    }
+
     getFavouriteRecipes(): Observable<object> {
         return this.http.get( `${environment.baseApiUrl}/recipes/favourites` );
     }

@@ -12,6 +12,7 @@ import { RecipeViewerComponent } from './components/recipe-viewer/recipe-viewer.
 import { UpdateRecipeComponent } from './components/update-recipe/update-recipe.component';
 import { FavouriteListingComponent } from './components/favourite-listing/favourite-listing.component';
 import { RecipeUploadComponent } from './components/recipe-upload/recipe-upload.component';
+import { CommunityRecipeListingComponent } from './components/community-recipe-listing/community-recipe-listing.component';
 
 const routes: Routes = [
     {
@@ -38,6 +39,11 @@ const routes: Routes = [
     {
         path: 'recipes',
         component: RecipeListingComponent,
+        canActivate: [ AuthGuard ],
+    },
+    {
+        path: 'recipes/community',
+        component: CommunityRecipeListingComponent,
         canActivate: [ AuthGuard ],
     },
     {

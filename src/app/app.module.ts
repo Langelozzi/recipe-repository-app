@@ -48,6 +48,7 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { NgxPrintModule } from 'ngx-print';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { CommunityRecipeListingComponent } from './components/community-recipe-listing/community-recipe-listing.component';
 
 // Angular Material
 @NgModule( {
@@ -65,6 +66,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         ConfirmationDialogComponent,
         RecipeUploadComponent,
         LandingPageComponent,
+        CommunityRecipeListingComponent,
     ],
     imports: [
         BrowserModule,
