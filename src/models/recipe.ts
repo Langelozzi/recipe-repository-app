@@ -1,3 +1,4 @@
+import { RecipeVisibility } from 'src/enums/recipe-visibility.enum';
 import { Ingredient } from '../interfaces/ingredient';
 export class Recipe {
     _id?: string;
@@ -14,12 +15,14 @@ export class Recipe {
     tags?: string[];
     description?: string;
     imageData?: string[];
+    visibility: RecipeVisibility;
 
     constructor(
         name: string,
         ingredients: Ingredient[],
         steps: string[],
         favourite: boolean,
+        visibility: RecipeVisibility,
         prepTime?: number,
         cookTime?: number,
         ovenTemp?: number,
@@ -36,6 +39,7 @@ export class Recipe {
         this.ingredients = ingredients;
         this.steps = steps;
         this.favourite = favourite;
+        this.visibility = visibility;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.ovenTemp = ovenTemp;
@@ -52,6 +56,7 @@ export class Recipe {
         ingredients: Ingredient[],
         steps: string[],
         favourite: boolean,
+        visibility: RecipeVisibility,
         prepTime?: number,
         cookTime?: number,
         ovenTemp?: number,
@@ -66,6 +71,7 @@ export class Recipe {
         this.ingredients = ingredients;
         this.steps = steps;
         this.favourite = favourite;
+        this.visibility = visibility;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.ovenTemp = ovenTemp;
