@@ -43,8 +43,8 @@ export class RecipeListingComponent implements OnInit {
         );
     }
 
-    viewRecipe( recipeId: string | undefined ): void {
-        this.router.navigate( [ `/recipes/${recipeId}` ] );
+    viewRecipe( recipe: Recipe | undefined ): void {
+        this.router.navigate( [ `/recipes/${recipe?._id}` ], { state: { recipe: recipe } } );
     }
 
     showAllRecipes(): void {
