@@ -3,8 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Recipe } from '../../../models/recipe';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs/internal/Observable';
-import { Subject } from 'rxjs';
+import { Subject, catchError, first, map } from 'rxjs';
 import { response } from 'express';
+import { CachingService } from '../caching-service/caching.service';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable( {
     providedIn: 'root',
@@ -12,7 +14,7 @@ import { response } from 'express';
 export class RecipeService {
     currentRecipe = new Subject<Recipe>();
 
-    constructor( private http: HttpClient ) {}
+    constructor( private http: HttpClient, private cachingService: CachingService ) {}
 
     createRecipe( body: any ): Observable<object> {
         return this.http.post( `${environment.baseApiUrl}/recipes/create`, body );
@@ -23,14 +25,56 @@ export class RecipeService {
     }
 
     getAllRecipes(): Observable<object> {
-        return this.http.get( `${environment.baseApiUrl}/recipes` );
+        const cachedRecipes = this.cachingService.getRecipesFromCache();
+        const recipesChanged = this.cachingService.getRecipesChanged();
+
+        if ( cachedRecipes && !recipesChanged ) {
+            return new Observable( ( observer ) => {
+                observer.next( { recipes: cachedRecipes } );
+                observer.complete();
+            } );
+        }
+
+        return this.http.get( `${environment.baseApiUrl}/recipes` ).pipe(
+            map( ( data: any ) => {
+                const recipes = plainToInstance( Recipe, data.recipes );
+                this.cachingService.setRecipesToCache( recipes );
+                return data;
+            } ),
+            catchError( error => {
+                // Handle errors here if needed
+                console.error( 'Error fetching recipes:', error );
+                throw error;
+            } ) );
     }
 
     getFavouriteRecipes(): Observable<object> {
+        const cachedRecipes = this.cachingService.getRecipesFromCache();
+        const recipesChanged = this.cachingService.getRecipesChanged();
+
+        if ( cachedRecipes && !recipesChanged ) {
+            return new Observable( ( observer ) => {
+                observer.next( { recipes: this.filterFavorites( cachedRecipes ) } );
+                observer.complete();
+            } );
+        }
+
         return this.http.get( `${environment.baseApiUrl}/recipes/favourites` );
     }
 
     getRecipeById( recipeId: string | null ): Observable<object> {
+        const cachedRecipes = this.cachingService.getRecipesFromCache();
+        const recipesChanged = this.cachingService.getRecipesChanged();
+
+        if ( cachedRecipes && !recipesChanged ) {
+            return new Observable( ( observer ) => {
+                const recipe = cachedRecipes.find( ( recipe: any ) => recipe._id === recipeId );
+
+                observer.next( { recipe: recipe } );
+                observer.complete();
+            } );
+        }
+
         return this.http.get( `${environment.baseApiUrl}/recipes/${recipeId}` );
     }
 
@@ -76,5 +120,10 @@ export class RecipeService {
             `${environment.baseApiUrl}/recipes/${recipeId}/duplicate`,
             {}
         );
+    }
+
+    private filterFavorites( recipes: Recipe[] ): Recipe[] {
+        const favRecipes = recipes.filter( ( recipe ) => recipe.favourite );
+        return favRecipes;
     }
 }
