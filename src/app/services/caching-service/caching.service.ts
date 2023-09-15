@@ -20,7 +20,8 @@ export class CachingService {
     }
 
     public getRecipesChanged(): boolean {
-        return Boolean( localStorage.getItem( this.RECIPES_CHANGED_KEY ) ?? false );
+        const storageData: string | null = localStorage.getItem( this.RECIPES_CHANGED_KEY );
+        return storageData ? JSON.parse( storageData ) : false;
     }
 
     public setRecipesChanged( changed: boolean ): void {
