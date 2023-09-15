@@ -51,6 +51,8 @@ export class RecipeViewerComponent implements OnInit {
         if ( this.navigation?.extras.state ) {
             const recipe = this.navigation.extras.state['recipe'];
             this.recipe = recipe;
+            this.splitIngredients();
+            this.cleanIngredientData();
         } else {
             this.recipeService
                 .getRecipeById( this.recipeId )
@@ -212,6 +214,7 @@ export class RecipeViewerComponent implements OnInit {
 
         try {
             const decimalNum = this.twoPartFractionToDecimal( amount );
+            if ( decimalNum == null || decimalNum == undefined || Number.isNaN( decimalNum ) ) return amount;
 
             return `${this.decimalToFraction( decimalNum * this.ingredientMultiplier )}`;
         } catch ( error ) {
