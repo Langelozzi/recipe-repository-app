@@ -1,6 +1,6 @@
 import { Recipe } from './../../../models/recipe';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Navigation, Router } from '@angular/router';
 import { RecipeService } from '../../services/recipe-service/recipe.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarHelper } from 'src/app/helpers/snack-bar.helper';
@@ -21,12 +21,13 @@ import { concatMap, first, tap } from 'rxjs';
     animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
 } )
 export class RecipeViewerComponent implements OnInit {
-    private recipeId: string | null;
-    private previousPage: string | undefined;
+    public recipeId: string | null;
     public recipe!: any;
     public hasOptionalDetails!: boolean;
     public images?: any = [];
     public ingredientMultiplier = 1;
+    private previousPage: string | undefined;
+    private navigation: Navigation | null;
 
     // ingredient arrays
     public firstHalfOfIngredients!: Ingredient[];
@@ -41,19 +42,25 @@ export class RecipeViewerComponent implements OnInit {
         private dialog: MatDialog
     ) {
         this.recipeId = this.route.snapshot.paramMap.get( 'id' );
-        this.previousPage = this.router
-            .getCurrentNavigation()
+        this.navigation = this.router.getCurrentNavigation();
+        this.previousPage = this.navigation
             ?.previousNavigation?.finalUrl?.toString();
     }
 
     ngOnInit(): void {
-        this.recipeService
-            .getRecipeById( this.recipeId )
-            .subscribe( ( data: any ) => {
-                this.recipe = plainToInstance( Recipe, data.recipe );
-                this.splitIngredients();
-                this.cleanIngredientData();
-            } );
+        if ( this.navigation?.extras.state ) {
+            const recipe = this.navigation.extras.state['recipe'];
+            this.recipe = recipe;
+        } else {
+            this.recipeService
+                .getRecipeById( this.recipeId )
+                .subscribe( ( data: any ) => {
+                    this.recipe = plainToInstance( Recipe, data.recipe );
+                    this.splitIngredients();
+                    this.cleanIngredientData();
+                } );
+        }
+
     }
 
     openDialog(): void {
@@ -202,10 +209,10 @@ export class RecipeViewerComponent implements OnInit {
 
     calculateIngredientAmount( amount: any ): string {
         if ( this.isNumber( amount ) ) return `${this.decimalToFraction( amount * this.ingredientMultiplier )}`;
-        
+
         try {
             const decimalNum = this.twoPartFractionToDecimal( amount );
-            
+
             return `${this.decimalToFraction( decimalNum * this.ingredientMultiplier )}`;
         } catch ( error ) {
             return amount;
@@ -242,7 +249,7 @@ export class RecipeViewerComponent implements OnInit {
         }
         while ( Math.abs( value - numerator / denominator ) > value * tolerance );
 
-        return numerator > denominator ? 
+        return numerator > denominator ?
             this.fractionToTwoPartFraction( `${numerator}/${denominator}` )
             : `${numerator}/${denominator}`;
     }

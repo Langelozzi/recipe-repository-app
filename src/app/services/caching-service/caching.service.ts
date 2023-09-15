@@ -26,4 +26,9 @@ export class CachingService {
     public setRecipesChanged( changed: boolean ): void {
         localStorage.setItem( this.RECIPES_CHANGED_KEY, JSON.stringify( changed ) );
     }
+
+    public clearCache(): void {
+        localStorage.removeItem( this.RECIPE_KEY );
+        localStorage.removeItem( this.RECIPES_CHANGED_KEY );
+    }
 }

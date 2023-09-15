@@ -17,7 +17,7 @@
     </h3>
 
     <div *ngFor="let recipe of recipes">
-      <mat-card class="recipe-listing-item" (click)="viewRecipe(recipe._id)">
+      <mat-card class="recipe-listing-item" (click)="viewRecipe(recipe)">
         {{ recipe.name }}
       </mat-card>
     </div>
