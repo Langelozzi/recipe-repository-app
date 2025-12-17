@@ -17,14 +17,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { ColorPalletEnum } from 'src/enums/colorPallet.enum';
 
-@Component( {
+@Component({
     selector: 'app-recipe-upload',
     templateUrl: './recipe-upload.component.html',
-    styleUrls: [ './recipe-upload.component.scss' ],
-    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
-} )
+    styleUrls: ['./recipe-upload.component.scss'],
+    animations: [AnimationHelper.getSimpleFade('fastFade', 200)],
+})
 export class RecipeUploadComponent implements OnInit {
-    @ViewChild( 'uploader' ) uploader!: ElementRef;
+    @ViewChild('uploader') uploader!: ElementRef;
 
     selectedImages: File[] = [];
     selectedImageNames: string[] = [];
@@ -37,7 +37,7 @@ export class RecipeUploadComponent implements OnInit {
     // tags chip variables
     tags: string[] = [];
     addOnBlur = true;
-    readonly separatorKeysCodes = [ ENTER, COMMA ] as const;
+    readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
     constructor(
         private _snackBar: MatSnackBar,
@@ -47,40 +47,40 @@ export class RecipeUploadComponent implements OnInit {
         private location: Location,
         private dialog: MatDialog
     ) {
-        this.createForm = this.fb.group( {
-            name: new FormControl( '', [ Validators.required ] ),
-            prepTime: new FormControl( '', [] ),
-            cookTime: new FormControl( '', [] ),
-            ovenTemp: new FormControl( '', [] ),
-            description: new FormControl( '', [] ),
-            notes: new FormControl( '', [] ),
-        } );
+        this.createForm = this.fb.group({
+            name: new FormControl('', [Validators.required]),
+            prepTime: new FormControl('', []),
+            cookTime: new FormControl('', []),
+            ovenTemp: new FormControl('', []),
+            description: new FormControl('', []),
+            notes: new FormControl('', []),
+        });
     }
 
     ngOnInit(): void {
-        this.recipeService.getAllRecipes().subscribe( ( data: any ) => {
+        this.recipeService.getAllRecipes().subscribe((data: any) => {
             const allRecipeNames: string[] = [];
 
-            for ( let i = 0; i < data.recipes.length; i++ ) {
-                allRecipeNames.push( data.recipes[i].name );
+            for (let i = 0; i < data.recipes.length; i++) {
+                allRecipeNames.push(data.recipes[i].name);
             }
 
             this.allRecipeNames = allRecipeNames;
-        } );
+        });
     }
 
-    imagePreview( file: any ) {
+    imagePreview(file: any) {
         this.selectedImagePaths = [];
 
         const reader = new FileReader();
         reader.onload = () => {
-            this.selectedImagePaths.push( reader.result as string );
+            this.selectedImagePaths.push(reader.result as string);
         };
-        reader.readAsDataURL( file );
+        reader.readAsDataURL(file);
     }
 
     openSaveDialog(): void {
-        const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             width: '450px',
             data: {
                 title: 'Confirm Recipe',
@@ -90,18 +90,18 @@ export class RecipeUploadComponent implements OnInit {
                 submitBtnText: 'Confirm',
                 submitBtnColor: ColorPalletEnum.confirmGreen,
             },
-        } );
+        });
 
-        dialogRef.afterClosed().subscribe( ( result ) => {
-            if ( result == true ) {
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result == true) {
                 this.saveRecipe();
             }
-        } );
+        });
     }
 
     openCancelDialog(): void {
-        if ( !this.formEmpty() ) {
-            const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+        if (!this.formEmpty()) {
+            const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
                 width: '450px',
                 data: {
                     title: 'Discard Recipe',
@@ -112,13 +112,13 @@ export class RecipeUploadComponent implements OnInit {
                     submitBtnText: 'Discard',
                     submitBtnColor: ColorPalletEnum.cancelRed,
                 },
-            } );
+            });
 
-            dialogRef.afterClosed().subscribe( ( result ) => {
-                if ( result == true ) {
+            dialogRef.afterClosed().subscribe((result) => {
+                if (result == true) {
                     this.goBack();
                 }
-            } );
+            });
         } else {
             this.goBack();
         }
@@ -142,9 +142,9 @@ export class RecipeUploadComponent implements OnInit {
     }
 
     determineDuplicateName(): void {
-        if ( this.allRecipeNames.includes( this.createForm.value.name ) ) {
+        if (this.allRecipeNames.includes(this.createForm.value.name)) {
             this.isDuplicateName = true;
-            this.createForm.controls['name'].setErrors( { incorrect: true } );
+            this.createForm.controls['name'].setErrors({ incorrect: true });
         } else {
             this.isDuplicateName = false;
         }
@@ -155,31 +155,31 @@ export class RecipeUploadComponent implements OnInit {
     }
 
     // tag related methods
-    addTag( event: MatChipInputEvent ): void {
-        const value = ( event.value || '' ).trim();
+    addTag(event: MatChipInputEvent): void {
+        const value = (event.value || '').trim();
 
-        if ( value ) {
-            this.tags.push( value );
+        if (value) {
+            this.tags.push(value);
         }
 
         event.chipInput?.clear();
     }
 
-    removeTag( tag: string ): void {
-        const index = this.tags.indexOf( tag );
+    removeTag(tag: string): void {
+        const index = this.tags.indexOf(tag);
 
-        if ( index >= 0 ) {
-            this.tags.splice( index, 1 );
+        if (index >= 0) {
+            this.tags.splice(index, 1);
         }
     }
 
-    onFileSelected( event: any ) {
+    onFileSelected(event: any) {
         this.selectedImages = <File[]>event.target.files;
         this.selectedImageNames = [];
 
-        for ( const file of event.target.files ) {
-            this.selectedImageNames.push( file.name );
-            this.imagePreview( file );
+        for (const file of event.target.files) {
+            this.selectedImageNames.push(file.name);
+            this.imagePreview(file);
         }
     }
 
@@ -194,29 +194,30 @@ export class RecipeUploadComponent implements OnInit {
         const fd = new FormData();
         const formObject = this.createForm.value;
 
-        for ( let i = 0; i < this.selectedImages.length; i++ ) {
-            fd.append( 'files', this.selectedImages[i] );
+        for (let i = 0; i < this.selectedImages.length; i++) {
+            fd.append('files', this.selectedImages[i]);
         }
 
-        for ( let i = 0; i < this.tags.length; i++ ) {
-            fd.append( 'tags', this.tags[i] );
+        for (let i = 0; i < this.tags.length; i++) {
+            fd.append('tags', this.tags[i]);
         }
 
-        fd.append( 'name', formObject.name );
-        fd.append( 'prepTime', formObject.prepTime );
-        fd.append( 'cookTime', formObject.cookTime );
-        fd.append( 'ovenTemp', formObject.ovenTemp );
-        fd.append( 'notes', formObject.notes );
-        fd.append( 'description', formObject.description );
+        fd.append('name', formObject.name);
+        fd.append('prepTime', formObject.prepTime);
+        fd.append('cookTime', formObject.cookTime);
+        fd.append('ovenTemp', formObject.ovenTemp);
+        fd.append('notes', formObject.notes);
+        fd.append('description', formObject.description);
+        fd.append('visibility', '0'); // default to private
 
-        this.recipeService.createRecipe( fd ).subscribe( ( data: any ) => {
+        this.recipeService.createRecipe(fd).subscribe((data: any) => {
             SnackBarHelper.triggerSnackBar(
                 this._snackBar,
                 `New recipe "${data.recipe.name}" was successfully created`,
                 'Ok'
             );
 
-            this.router.navigate( [ '/recipes' ] );
-        } );
+            this.router.navigate(['/recipes']);
+        });
     }
 }

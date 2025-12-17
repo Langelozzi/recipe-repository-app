@@ -3,17 +3,17 @@ import { Recipe } from './recipe';
 export class RecipeBatch {
     recipes: Recipe[] = [];
 
-    constructor( recipes: Recipe[] ) {
+    constructor(recipes: Recipe[]) {
         this.recipes = recipes;
     }
 
     public getAllTags(): Set<string> {
         const allTags: Set<string> = new Set();
 
-        for ( const recipe of this.recipes ) {
-            if ( recipe.tags && recipe.tags?.length > 0 ) {
-                for ( let i = 0; i < recipe.tags.length; i++ ) {
-                    allTags.add( recipe.tags[i] );
+        for (const recipe of this.recipes) {
+            if (recipe.tags && recipe.tags?.length > 0) {
+                for (let i = 0; i < recipe.tags.length; i++) {
+                    allTags.add(recipe.tags[i]);
                 }
             }
         }
@@ -21,26 +21,44 @@ export class RecipeBatch {
         return allTags;
     }
 
-    public getRecipesByTag( tag: string ): Recipe[] {
+    public getRecipesByTag(tag: string): Recipe[] {
         const sortedRecipes: Recipe[] = [];
-        
-        for ( const recipe of this.recipes ) {
-            if ( recipe.tags?.includes( tag ) ) {
-                sortedRecipes.push( recipe );
+
+        for (const recipe of this.recipes) {
+            if (recipe.tags?.includes(tag)) {
+                sortedRecipes.push(recipe);
             }
         }
 
         return sortedRecipes;
     }
 
-    public searchByName( searchString: string ): Recipe[] {
+    public searchByName(searchString: string): Recipe[] {
         const searchResults: Recipe[] = [];
 
-        for ( const recipe of this.recipes ) {
-            if ( 
-                recipe.name.toLowerCase().includes( searchString.toLowerCase() )
+        for (const recipe of this.recipes) {
+            if (
+                recipe.name.toLowerCase().includes(searchString.toLowerCase())
             ) {
-                searchResults.push( recipe );
+                searchResults.push(recipe);
+            }
+        }
+
+        return searchResults;
+    }
+
+    public searchByNameOrUser(searchString: string): Recipe[] {
+        const searchResults: Recipe[] = [];
+
+        for (const recipe of this.recipes) {
+            const nameMatch = recipe.name.toLowerCase().includes(searchString.toLowerCase());
+            const userMatch = recipe.user && (
+                recipe.user.firstName?.toLowerCase().includes(searchString.toLowerCase()) ||
+                recipe.user.lastName?.toLowerCase().includes(searchString.toLowerCase()) ||
+                (recipe.user.fullName && recipe.user.fullName.toLowerCase().includes(searchString.toLowerCase()))
+            );
+            if (nameMatch || userMatch) {
+                searchResults.push(recipe);
             }
         }
 

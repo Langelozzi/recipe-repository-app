@@ -48,9 +48,11 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { NgxPrintModule } from 'ngx-print';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { FeedComponent } from './components/feed/feed.component';
+import { RecipeListItemComponent } from './components/recipe-list-item/recipe-list-item.component';
 
 // Angular Material
-@NgModule( {
+@NgModule({
     declarations: [
         AppComponent,
         LoginFormComponent,
@@ -65,6 +67,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         ConfirmationDialogComponent,
         RecipeUploadComponent,
         LandingPageComponent,
+        FeedComponent,
+        RecipeListItemComponent,
     ],
     imports: [
         BrowserModule,
@@ -113,6 +117,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         AuthService,
     ],
-    bootstrap: [ AppComponent ],
-} )
-export class AppModule {}
+    bootstrap: [AppComponent],
+})
+export class AppModule { }

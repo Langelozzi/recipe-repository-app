@@ -10,12 +10,12 @@ import { User } from 'src/models/user';
 import { AuthService } from './../../services/auth-service/auth.service';
 import { first } from 'rxjs';
 
-@Component( {
+@Component({
     selector: 'app-user-home',
     templateUrl: './user-home.component.html',
-    styleUrls: [ './user-home.component.scss' ],
-    animations: [ AnimationHelper.getSimpleFade( 'slowFade', 400 ) ],
-} )
+    styleUrls: ['./user-home.component.scss'],
+    animations: [AnimationHelper.getSimpleFade('slowFade', 400)],
+})
 export class UserHomeComponent implements OnInit {
     public recipes!: Recipe[];
     public currentUser!: any;
@@ -25,34 +25,33 @@ export class UserHomeComponent implements OnInit {
         private authService: AuthService,
         private router: Router,
         private _snackBar: MatSnackBar
-    ) {}
+    ) { }
 
     ngOnInit(): void {
-        this.recipeService.getAllRecipes().pipe( first() ).subscribe(
+        this.recipeService.getAllRecipes().pipe(first()).subscribe(
             // if the response is good then create list of recipes
-            ( data: any ) => {
-                this.recipes = plainToInstance( Recipe, data.recipes );
+            (data: any) => {
+                this.recipes = plainToInstance(Recipe, data.recipes);
             }
         );
 
-        this.authService.getCurrentUser().subscribe( ( user: any ) => {
-            this.currentUser = plainToInstance( User, user );
-        } );
+        this.authService.getCurrentUser().subscribe((user: any) => {
+            this.currentUser = plainToInstance(User, user);
+        });
     }
 
-    viewRecipe( recipeId: string | undefined ): void {
-        this.router.navigate( [ `/recipes/${recipeId}` ] );
+    viewRecipe(recipeId: string | undefined): void {
+        this.router.navigate([`/recipes/${recipeId}`]);
     }
 
     getRecentRecipes(): Recipe[] {
         let recentRecipes: Recipe[];
 
-        if ( this.recipes.length < 5 ) {
+        if (this.recipes.length < 5) {
             recentRecipes = this.recipes;
         } else {
             recentRecipes = this.recipes.slice(
-                this.recipes.length - 5,
-                this.recipes.length
+                0, 5
             );
         }
 
@@ -60,10 +59,10 @@ export class UserHomeComponent implements OnInit {
     }
 
     openCreatePage(): void {
-        this.router.navigate( [ '/recipes/create' ] );
+        this.router.navigate(['/recipes/create']);
     }
 
     openUploadPage(): void {
-        this.router.navigate( [ '/recipes/upload' ] );
+        this.router.navigate(['/recipes/upload']);
     }
 }

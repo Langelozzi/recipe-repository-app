@@ -1,0 +1,43 @@
+<mat-card class="recipe-card" (click)="onRecipeClick()">
+    <mat-card-content>
+        <div class="recipe-header">
+            <div class="recipe-title-section">
+                <h2 class="recipe-name">{{ recipe.name }}</h2>
+                <div class="recipe-author" *ngIf="showUserName && recipe.user">
+                    <mat-icon class="author-icon">person</mat-icon>
+                    <span class="author-name">{{ recipe.user.fullName || (recipe.user.firstName + ' ' +
+                        recipe.user.lastName) }}</span>
+                </div>
+            </div>
+            <div class="recipe-times" *ngIf="recipe.prepTime || recipe.cookTime">
+                <div class="time-item" *ngIf="recipe.prepTime">
+                    <mat-icon class="time-icon">schedule</mat-icon>
+                    <span class="time-label">Prep:</span>
+                    <span class="time-value">{{ recipe.prepTime }} min</span>
+                </div>
+                <div class="time-item" *ngIf="recipe.cookTime">
+                    <mat-icon class="time-icon">local_fire_department</mat-icon>
+                    <span class="time-label">Cook:</span>
+                    <span class="time-value">{{ recipe.cookTime }} min</span>
+                </div>
+                <div class="time-item total-time" *ngIf="getTotalTime()">
+                    <mat-icon class="time-icon">timer</mat-icon>
+                    <span class="time-label">Total:</span>
+                    <span class="time-value">{{ getTotalTime() }} min</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="recipe-description" *ngIf="recipe.description">
+            {{ recipe.description }}
+        </p>
+
+        <div class="recipe-tags" *ngIf="recipe.tags && recipe.tags.length > 0">
+            <mat-chip-list>
+                <mat-chip class="recipe-tag" *ngFor="let tag of recipe.tags">
+                    {{ tag }}
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+    </mat-card-content>
+</mat-card>

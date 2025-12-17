@@ -254,6 +254,8 @@ export class CreateRecipeFormComponent implements OnInit {
             formObject.description.trim()
         );
 
+        newRecipe.visibility = 0; // default to private
+
         return newRecipe;
     }
 

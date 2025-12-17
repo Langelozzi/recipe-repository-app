@@ -12,6 +12,7 @@ import { RecipeViewerComponent } from './components/recipe-viewer/recipe-viewer.
 import { UpdateRecipeComponent } from './components/update-recipe/update-recipe.component';
 import { FavouriteListingComponent } from './components/favourite-listing/favourite-listing.component';
 import { RecipeUploadComponent } from './components/recipe-upload/recipe-upload.component';
+import { FeedComponent } from './components/feed/feed.component';
 
 const routes: Routes = [
     {
@@ -23,42 +24,47 @@ const routes: Routes = [
     {
         path: 'userhome',
         component: UserHomeComponent,
-        canActivate: [ AuthGuard ],
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'feed',
+        component: FeedComponent,
+        canActivate: [AuthGuard],
     },
     {
         path: 'recipes/create',
         component: CreateRecipeFormComponent,
-        canActivate: [ AuthGuard ],
+        canActivate: [AuthGuard],
     },
     {
         path: 'recipes/upload',
         component: RecipeUploadComponent,
-        canActivate: [ AuthGuard ],
+        canActivate: [AuthGuard],
     },
     {
         path: 'recipes',
         component: RecipeListingComponent,
-        canActivate: [ AuthGuard ],
+        canActivate: [AuthGuard],
     },
     {
         path: 'recipes/favourites',
         component: FavouriteListingComponent,
-        canActivate: [ AuthGuard ],
+        canActivate: [AuthGuard],
     },
     {
         path: 'recipes/:id',
         component: RecipeViewerComponent,
-        canActivate: [ AuthGuard ],
+        canActivate: [AuthGuard],
     },
     {
         path: 'recipes/:id/edit',
         component: UpdateRecipeComponent,
-        canActivate: [ AuthGuard ],
+        canActivate: [AuthGuard],
     },
 ];
 
-@NgModule( {
-    imports: [ RouterModule.forRoot( routes ) ],
-    exports: [ RouterModule ],
-} )
-export class AppRoutingModule {}
+@NgModule({
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule],
+})
+export class AppRoutingModule { }

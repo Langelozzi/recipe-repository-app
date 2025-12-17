@@ -4,21 +4,21 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
 
-@Component( {
+@Component({
     selector: 'app-nav-bar',
     templateUrl: './nav-bar.component.html',
-    styleUrls: [ './nav-bar.component.scss' ],
-    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
-} )
+    styleUrls: ['./nav-bar.component.scss'],
+    animations: [AnimationHelper.getSimpleFade('fastFade', 200)],
+})
 export class NavBarComponent implements OnInit {
-    @ViewChild( 'sidenav' ) sideNav!: MatSidenav;
+    @ViewChild('sidenav') sideNav!: MatSidenav;
 
-    constructor( public authService: AuthService, private router: Router ) {}
+    constructor(public authService: AuthService, private router: Router) { }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     isRootPath(): boolean {
-        if ( this.router.url === '/' ) {
+        if (this.router.url === '/') {
             return true;
         } else {
             return false;
@@ -26,7 +26,7 @@ export class NavBarComponent implements OnInit {
     }
 
     isLoggedIn(): boolean {
-        if ( this.authService.isLoggedIn() ) {
+        if (this.authService.isLoggedIn()) {
             return true;
         } else {
             return false;
@@ -35,39 +35,44 @@ export class NavBarComponent implements OnInit {
 
     logout(): void {
         this.authService.logout();
-        this.router.navigate( [ '/login' ] );
+        this.router.navigate(['/login']);
     }
 
     openLogInPage(): void {
-        this.router.navigate( [ '/login' ] );
+        this.router.navigate(['/login']);
     }
 
     openSignUpPage(): void {
-        this.router.navigate( [ '/signup' ] );
+        this.router.navigate(['/signup']);
     }
 
     openCreatePage(): void {
         this.sideNav.close();
-        this.router.navigate( [ '/recipes/create' ] );
+        this.router.navigate(['/recipes/create']);
     }
 
     openUploadPage(): void {
         this.sideNav.close();
-        this.router.navigate( [ '/recipes/upload' ] );
+        this.router.navigate(['/recipes/upload']);
     }
 
     openRecipeListingPage(): void {
         this.sideNav.close();
-        this.router.navigate( [ '/recipes' ] );
+        this.router.navigate(['/recipes']);
     }
 
     openFavouritesPage(): void {
         this.sideNav.close();
-        this.router.navigate( [ '/recipes/favourites' ] );
+        this.router.navigate(['/recipes/favourites']);
     }
 
     openUserHome(): void {
         this.sideNav.close();
-        this.router.navigate( [ '/userhome' ] );
+        this.router.navigate(['/userhome']);
+    }
+
+    openFeed(): void {
+        this.sideNav.close();
+        this.router.navigate(['/feed']);
     }
 }
