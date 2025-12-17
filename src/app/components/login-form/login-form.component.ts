@@ -43,25 +43,17 @@ export class LoginFormComponent implements OnInit {
         const email: string | null = this.loginForm?.get( 'email' )?.value;
         const password: string | null = this.loginForm?.get( 'password' )?.value;
 
-        this.authService
-            .login( {
-                email: <string>email,
-                password: <string>password,
-            } )
-            .subscribe(
-                // if the res has the token then login the user and redirect to home
-                ( tokens ) => {
-                    this.authService.doLoginUser( tokens );
-                    this.router.navigate( [ '/userhome' ] );
-                },
-                // if there is an error then show alert message snack bar
-                ( err ) => {
-                    SnackBarHelper.triggerSnackBar(
-                        this._snackBar,
-                        'Email or Password is invalid',
-                        'Ok'
-                    );
-                }
-            );
+        this.authService.login( {
+            email: <string>email,
+            password: <string>password,
+        }  ).subscribe( {
+            next: ( tokens ) => {
+                this.authService.doLoginUser( tokens );
+                this.router.navigate( [ '/userhome' ] );
+            },
+            error: ( err ) => {
+                SnackBarHelper.triggerSnackBar( this._snackBar, 'Email or Password is invalid', 'Ok' );
+            }
+        } );
     }
 }
