@@ -45,57 +45,43 @@ export class RecipeViewerComponent implements OnInit {
         private dialog: MatDialog,
         private authService: AuthService
     ) {
-<<<<<<< HEAD
-        this.recipeId = this.route.snapshot.paramMap.get('id');
-        this.previousPage = this.router
-            .getCurrentNavigation()
-=======
         this.recipeId = this.route.snapshot.paramMap.get( 'id' );
         this.navigation = this.router.getCurrentNavigation();
         this.previousPage = this.navigation
->>>>>>> origin/master
             ?.previousNavigation?.finalUrl?.toString();
     }
 
     ngOnInit(): void {
-<<<<<<< HEAD
-        if (!this.recipeId) { return; }
+        if ( !this.recipeId ) { return; }
 
-        forkJoin([
+        const stateRecipe = this.navigation?.extras.state ? this.navigation.extras.state['recipe'] : undefined;
+
+        if ( stateRecipe ) {
+            this.recipe = plainToInstance( Recipe, stateRecipe );
+            this.isOwner = true; // state comes from a list the user can access; ownership validation happens via API otherwise.
+            this.splitIngredients();
+            this.cleanIngredientData();
+            return;
+        }
+
+        forkJoin( [
             this.authService.getCurrentUser(),
-            this.recipeService.getRecipeById(this.recipeId)
-        ]).subscribe((results: any[]) => {
-            const userRes = results[0];
-            const recipeRes = results[1];
+            this.recipeService.getRecipeById( this.recipeId )
+        ] ).subscribe( ( results: any[] ) => {
+            const userRes = results[ 0 ];
+            const recipeRes = results[ 1 ];
 
             this.currentUserId = userRes?.user?._id || userRes?._id;
-            this.recipe = plainToInstance(Recipe, recipeRes.recipe);
+            this.recipe = plainToInstance( Recipe, recipeRes.recipe );
 
             this.isOwner = !!(
                 this.currentUserId &&
-                (this.recipe.userId === this.currentUserId || this.recipe.user?.userId === this.currentUserId)
+                ( this.recipe.userId === this.currentUserId || this.recipe.user?.userId === this.currentUserId )
             );
 
             this.splitIngredients();
             this.cleanIngredientData();
-        });
-=======
-        if ( this.navigation?.extras.state ) {
-            const recipe = this.navigation.extras.state['recipe'];
-            this.recipe = recipe;
-            this.splitIngredients();
-            this.cleanIngredientData();
-        } else {
-            this.recipeService
-                .getRecipeById( this.recipeId )
-                .subscribe( ( data: any ) => {
-                    this.recipe = plainToInstance( Recipe, data.recipe );
-                    this.splitIngredients();
-                    this.cleanIngredientData();
-                } );
-        }
-
->>>>>>> origin/master
+        } );
     }
 
     openDialog(): void {
@@ -289,26 +275,15 @@ export class RecipeViewerComponent implements OnInit {
         this.ingredientMultiplier = multiplier;
     }
 
-<<<<<<< HEAD
-    calculateIngredientAmount(amount: any): string {
-        if (this.isNumber(amount)) return `${this.decimalToFraction(amount * this.ingredientMultiplier)}`;
-
-        try {
-            const decimalNum = this.twoPartFractionToDecimal(amount);
-
-            return `${this.decimalToFraction(decimalNum * this.ingredientMultiplier)}`;
-        } catch (error) {
-=======
     calculateIngredientAmount( amount: any ): string {
         if ( this.isNumber( amount ) ) return `${this.decimalToFraction( amount * this.ingredientMultiplier )}`;
 
         try {
             const decimalNum = this.twoPartFractionToDecimal( amount );
-            if ( decimalNum == null || decimalNum == undefined || Number.isNaN( decimalNum ) ) return amount;
+            if ( decimalNum == null || Number.isNaN( decimalNum ) ) return amount;
 
             return `${this.decimalToFraction( decimalNum * this.ingredientMultiplier )}`;
         } catch ( error ) {
->>>>>>> origin/master
             return amount;
         }
     }
@@ -344,11 +319,7 @@ export class RecipeViewerComponent implements OnInit {
         while (Math.abs(value - numerator / denominator) > value * tolerance);
 
         return numerator > denominator ?
-<<<<<<< HEAD
-            this.fractionToTwoPartFraction(`${numerator}/${denominator}`)
-=======
             this.fractionToTwoPartFraction( `${numerator}/${denominator}` )
->>>>>>> origin/master
             : `${numerator}/${denominator}`;
     }
 

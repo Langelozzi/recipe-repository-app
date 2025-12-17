@@ -42,7 +42,7 @@ export class FeedComponent implements OnInit {
         this.recipeBatch = new RecipeBatch(publicRecipes);
         this.listedRecipes = this.recipeBatch.recipes;
       },
-      (error) => {
+      (error: any) => {
         SnackBarHelper.triggerSnackBar(
           this._snackBar,
           'Failed to load recipes',
