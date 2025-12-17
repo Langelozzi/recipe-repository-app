@@ -12,7 +12,8 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
-import { concatMap, first, tap } from 'rxjs';
+import { forkJoin, first } from 'rxjs';
+import { AuthService } from '../../services/auth-service/auth.service';
 
 @Component({
     selector: 'app-recipe-viewer',
@@ -24,6 +25,8 @@ export class RecipeViewerComponent implements OnInit {
     private recipeId: string | null;
     private previousPage: string | undefined;
     public recipe!: any;
+    public isOwner = false;
+    private currentUserId?: string;
     public hasOptionalDetails!: boolean;
     public images?: any = [];
     public ingredientMultiplier = 1;
@@ -38,7 +41,8 @@ export class RecipeViewerComponent implements OnInit {
         private _snackBar: MatSnackBar,
         private router: Router,
         private location: Location,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private authService: AuthService
     ) {
         this.recipeId = this.route.snapshot.paramMap.get('id');
         this.previousPage = this.router
@@ -47,13 +51,26 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.recipeService
-            .getRecipeById(this.recipeId)
-            .subscribe((data: any) => {
-                this.recipe = plainToInstance(Recipe, data.recipe);
-                this.splitIngredients();
-                this.cleanIngredientData();
-            });
+        if (!this.recipeId) { return; }
+
+        forkJoin([
+            this.authService.getCurrentUser(),
+            this.recipeService.getRecipeById(this.recipeId)
+        ]).subscribe((results: any[]) => {
+            const userRes = results[0];
+            const recipeRes = results[1];
+
+            this.currentUserId = userRes?.user?._id || userRes?._id;
+            this.recipe = plainToInstance(Recipe, recipeRes.recipe);
+
+            this.isOwner = !!(
+                this.currentUserId &&
+                (this.recipe.userId === this.currentUserId || this.recipe.user?.userId === this.currentUserId)
+            );
+
+            this.splitIngredients();
+            this.cleanIngredientData();
+        });
     }
 
     openDialog(): void {
@@ -107,10 +124,12 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     openEditPage(): void {
+        if (!this.isOwner) { return; }
         this.router.navigate([`/recipes/${this.recipeId}/edit`]);
     }
 
     deleteRecipe(): void {
+        if (!this.isOwner) { return; }
         this.recipeService.deleteRecipeById(this.recipeId).subscribe(
             (data: any) => {
                 SnackBarHelper.triggerSnackBar(
@@ -132,6 +151,7 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     addToFavourites(): void {
+        if (!this.isOwner) { return; }
         this.recipe.updateFavouriteStatus(true);
 
         this.recipeService.updateRecipe(this.recipe).subscribe(
@@ -153,6 +173,7 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     removeFromFavourites(): void {
+        if (!this.isOwner) { return; }
         this.recipe.favourite = false;
 
         this.recipeService.updateRecipe(this.recipe).subscribe(
