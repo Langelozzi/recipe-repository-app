@@ -194,6 +194,49 @@ export class RecipeViewerComponent implements OnInit {
         );
     }
 
+    makeRecipePublic(): void {
+        if (!this.isOwner) { return; }
+        this.recipe.visibility = 1;
+
+        this.recipeService.updateRecipe(this.recipe).subscribe(
+            (data: any) => {
+                SnackBarHelper.triggerSnackBar(
+                    this._snackBar,
+                    `"${this.recipe.name}" is now public`,
+                    'Ok'
+                );
+            },
+            (err: any) => {
+                SnackBarHelper.triggerSnackBar(
+                    this._snackBar,
+                    `An unexpected error occurred. "${this.recipe.name}" visibility was not changed`,
+                    'Ok'
+                );
+            }
+        );
+    }
+
+    makeRecipePrivate(): void {
+        if (!this.isOwner) { return; }
+        this.recipe.visibility = 0;
+        this.recipeService.updateRecipe(this.recipe).subscribe(
+            (data: any) => {
+                SnackBarHelper.triggerSnackBar(
+                    this._snackBar,
+                    `"${this.recipe.name}" is now private`,
+                    'Ok'
+                );
+            },
+            (err: any) => {
+                SnackBarHelper.triggerSnackBar(
+                    this._snackBar,
+                    `An unexpected error occurred. "${this.recipe.name}" visibility was not changed`,
+                    'Ok'
+                );
+            }
+        );
+    }
+
     duplicateRecipe(): void {
         this.recipeService.duplicateRecipe(this.recipeId).pipe(first()).subscribe({
             next: (data: any) => {

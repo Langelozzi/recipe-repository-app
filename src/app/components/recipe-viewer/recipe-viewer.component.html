@@ -19,6 +19,18 @@
 
         <mat-divider></mat-divider>
 
+        <button *ngIf="recipe.visibility == 1" class="menu-item" mat-button (click)="makeRecipePrivate()">
+          <h4 class="menu-item-title">Make Recipe Private</h4>
+          <mat-icon class="menu-item-icon">visibility</mat-icon>
+        </button>
+
+        <button *ngIf="recipe.visibility == 0" class="menu-item" mat-button (click)="makeRecipePublic()">
+          <h4 class="menu-item-title">Make Recipe Public</h4>
+          <mat-icon class="menu-item-icon">visibility_off</mat-icon>
+        </button>
+
+        <mat-divider></mat-divider>
+
         <button class="menu-item" mat-button (click)="openEditPage()">
           <h4 class="menu-item-title">Edit Recipe</h4>
           <mat-icon class="menu-item-icon">edit</mat-icon>
