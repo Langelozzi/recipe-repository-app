@@ -11,8 +11,7 @@
     },
     "private": true,
     "engines": {
-        "node": "^18.16.0",
-        "npm": "^8.1.2"
+        "node": "24.x"
     },
     "dependencies": {
         "@angular-eslint/template-parser": "^14.0.2",
