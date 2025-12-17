@@ -21,13 +21,37 @@
   gap: 12px;
 }
 
+.recipe-title-section {
+  flex: 1;
+  min-width: 200px;
+}
+
 .recipe-name {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
   color: #333;
-  flex: 1;
-  min-width: 200px;
+}
+
+.recipe-author {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.author-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: #888;
+}
+
+.author-name {
+  font-weight: 500;
+  color: #555;
 }
 
 .recipe-times {

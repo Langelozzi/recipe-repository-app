@@ -42,7 +42,7 @@
         <!-- Recipe list -->
         <div class="recipes-container">
             <div *ngFor="let recipe of listedRecipes">
-                <app-recipe-list-item [recipe]="recipe" (recipeClicked)="viewRecipe($event)">
+                <app-recipe-list-item [recipe]="recipe" [showUserName]="true" (recipeClicked)="viewRecipe($event)">
                 </app-recipe-list-item>
             </div>
             <div *ngIf="listedRecipes.length < 1" class="no-recipes-message">

@@ -14,12 +14,12 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { AnimationHelper } from 'src/app/helpers/animation-helper';
 import { concatMap, first, tap } from 'rxjs';
 
-@Component( {
+@Component({
     selector: 'app-recipe-viewer',
     templateUrl: './recipe-viewer.component.html',
-    styleUrls: [ './recipe-viewer.component.scss' ],
-    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
-} )
+    styleUrls: ['./recipe-viewer.component.scss'],
+    animations: [AnimationHelper.getSimpleFade('fastFade', 200)],
+})
 export class RecipeViewerComponent implements OnInit {
     private recipeId: string | null;
     private previousPage: string | undefined;
@@ -40,7 +40,7 @@ export class RecipeViewerComponent implements OnInit {
         private location: Location,
         private dialog: MatDialog
     ) {
-        this.recipeId = this.route.snapshot.paramMap.get( 'id' );
+        this.recipeId = this.route.snapshot.paramMap.get('id');
         this.previousPage = this.router
             .getCurrentNavigation()
             ?.previousNavigation?.finalUrl?.toString();
@@ -48,16 +48,16 @@ export class RecipeViewerComponent implements OnInit {
 
     ngOnInit(): void {
         this.recipeService
-            .getRecipeById( this.recipeId )
-            .subscribe( ( data: any ) => {
-                this.recipe = plainToInstance( Recipe, data.recipe );
+            .getRecipeById(this.recipeId)
+            .subscribe((data: any) => {
+                this.recipe = plainToInstance(Recipe, data.recipe);
                 this.splitIngredients();
                 this.cleanIngredientData();
-            } );
+            });
     }
 
     openDialog(): void {
-        const dialogRef = this.dialog.open( ConfirmationDialogComponent, {
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             width: '450px',
             data: {
                 title: 'Delete Recipe',
@@ -67,29 +67,29 @@ export class RecipeViewerComponent implements OnInit {
                 submitBtnText: 'Delete',
                 submitBtnColor: ColorPalletEnum.cancelRed,
             },
-        } );
+        });
 
-        dialogRef.afterClosed().subscribe( ( result ) => {
-            if ( result == true ) {
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result == true) {
                 this.deleteRecipe();
             }
-        } );
+        });
     }
 
     goBack(): void {
-        if ( !( this.previousPage == '/recipes' || this.previousPage == '/userhome' || this.previousPage == '/recipes/favourites' ) ) {
-            this.router.navigate( [ '/recipes' ] );
+        if (!(this.previousPage == '/recipes' || this.previousPage == '/userhome' || this.previousPage == '/recipes/favourites' || this.previousPage == '/feed')) {
+            this.router.navigate(['/recipes']);
         } else {
             this.location.back();
         }
     }
 
     getRandomChipColor(): string {
-        return ArrayHelper.getRandomArrItem( [
+        return ArrayHelper.getRandomArrItem([
             ColorPalletEnum.darkPrimary,
             ColorPalletEnum.primary,
             ColorPalletEnum.accent,
-        ] );
+        ]);
     }
 
     getDividerHeight(): string {
@@ -98,8 +98,8 @@ export class RecipeViewerComponent implements OnInit {
         return `${height}px`;
     }
 
-    isLastIngredient( ingrArray: Ingredient[], index: number ): boolean {
-        if ( index == ingrArray.length ) {
+    isLastIngredient(ingrArray: Ingredient[], index: number): boolean {
+        if (index == ingrArray.length) {
             return true;
         } else {
             return false;
@@ -107,21 +107,21 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     openEditPage(): void {
-        this.router.navigate( [ `/recipes/${this.recipeId}/edit` ] );
+        this.router.navigate([`/recipes/${this.recipeId}/edit`]);
     }
 
     deleteRecipe(): void {
-        this.recipeService.deleteRecipeById( this.recipeId ).subscribe(
-            ( data: any ) => {
+        this.recipeService.deleteRecipeById(this.recipeId).subscribe(
+            (data: any) => {
                 SnackBarHelper.triggerSnackBar(
                     this._snackBar,
                     `"${this.recipe.name}" was successfully deleted`,
                     'Ok'
                 );
 
-                this.router.navigate( [ '/recipes' ] );
+                this.router.navigate(['/recipes']);
             },
-            ( err: any ) => {
+            (err: any) => {
                 SnackBarHelper.triggerSnackBar(
                     this._snackBar,
                     `An unexpected error occurred while deleting "${this.recipe.name}"`,
@@ -132,17 +132,17 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     addToFavourites(): void {
-        this.recipe.updateFavouriteStatus( true );
+        this.recipe.updateFavouriteStatus(true);
 
-        this.recipeService.updateRecipe( this.recipe ).subscribe(
-            ( data: any ) => {
+        this.recipeService.updateRecipe(this.recipe).subscribe(
+            (data: any) => {
                 SnackBarHelper.triggerSnackBar(
                     this._snackBar,
                     `"${this.recipe.name}" successfully added to favourites`,
                     'Ok'
                 );
             },
-            ( err: any ) => {
+            (err: any) => {
                 SnackBarHelper.triggerSnackBar(
                     this._snackBar,
                     `An unexpected error occurred. "${this.recipe.name}" was not added to favourites`,
@@ -155,15 +155,15 @@ export class RecipeViewerComponent implements OnInit {
     removeFromFavourites(): void {
         this.recipe.favourite = false;
 
-        this.recipeService.updateRecipe( this.recipe ).subscribe(
-            ( data: any ) => {
+        this.recipeService.updateRecipe(this.recipe).subscribe(
+            (data: any) => {
                 SnackBarHelper.triggerSnackBar(
                     this._snackBar,
                     `"${this.recipe.name}" successfully removed from favourites`,
                     'Ok'
                 );
             },
-            ( err: any ) => {
+            (err: any) => {
                 SnackBarHelper.triggerSnackBar(
                     this._snackBar,
                     `An unexpected error occurred. "${this.recipe.name}" was not removed from favourites`,
@@ -174,55 +174,55 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     duplicateRecipe(): void {
-        this.recipeService.duplicateRecipe( this.recipeId ).pipe( first() ).subscribe( {
-            next: ( data: any ) => {
+        this.recipeService.duplicateRecipe(this.recipeId).pipe(first()).subscribe({
+            next: (data: any) => {
                 const snackBarRef = SnackBarHelper.triggerSnackBar(
                     this._snackBar,
                     `"${this.recipe.name}" successfully duplicated. "${data.recipe.name}" was created`,
                     'Open'
                 );
-                snackBarRef.onAction().subscribe( () => {
-                    this.router.navigate( [ `/recipes/${data.recipe._id}` ] )
-                        .then( () => window.location.reload() );
-                } );
+                snackBarRef.onAction().subscribe(() => {
+                    this.router.navigate([`/recipes/${data.recipe._id}`])
+                        .then(() => window.location.reload());
+                });
             },
-            error: ( err: any ) => {
+            error: (err: any) => {
                 SnackBarHelper.triggerSnackBar(
                     this._snackBar,
                     `An unexpected error occurred. "${this.recipe.name}" was not duplicated`,
                     'Ok'
                 );
             }
-        } );
+        });
     }
 
-    onMultiplyServings( multiplier: number ): void {
+    onMultiplyServings(multiplier: number): void {
         this.ingredientMultiplier = multiplier;
     }
 
-    calculateIngredientAmount( amount: any ): string {
-        if ( this.isNumber( amount ) ) return `${this.decimalToFraction( amount * this.ingredientMultiplier )}`;
-        
+    calculateIngredientAmount(amount: any): string {
+        if (this.isNumber(amount)) return `${this.decimalToFraction(amount * this.ingredientMultiplier)}`;
+
         try {
-            const decimalNum = this.twoPartFractionToDecimal( amount );
-            
-            return `${this.decimalToFraction( decimalNum * this.ingredientMultiplier )}`;
-        } catch ( error ) {
+            const decimalNum = this.twoPartFractionToDecimal(amount);
+
+            return `${this.decimalToFraction(decimalNum * this.ingredientMultiplier)}`;
+        } catch (error) {
             return amount;
         }
     }
 
-    private isNumber( value: any ): boolean {
+    private isNumber(value: any): boolean {
         try {
-            return !isNaN( eval( value ) );
-        } catch ( e ) {
+            return !isNaN(eval(value));
+        } catch (e) {
             return false;
         }
     }
 
-    private decimalToFraction( value: number ): string {
+    private decimalToFraction(value: number): string {
         // if its a whole number, return it
-        if ( value % 1 == 0 ) return value.toString();
+        if (value % 1 == 0) return value.toString();
 
         const tolerance = 1.0E-6;
         let numerator = 1;
@@ -231,43 +231,43 @@ export class RecipeViewerComponent implements OnInit {
         let k2 = 1;
         let b = value;
         do {
-            const a = Math.floor( b );
+            const a = Math.floor(b);
             let aux = numerator;
             numerator = a * numerator + h2;
             h2 = aux;
             aux = denominator;
             denominator = a * denominator + k2;
             k2 = aux;
-            b = 1 / ( b - a );
+            b = 1 / (b - a);
         }
-        while ( Math.abs( value - numerator / denominator ) > value * tolerance );
+        while (Math.abs(value - numerator / denominator) > value * tolerance);
 
-        return numerator > denominator ? 
-            this.fractionToTwoPartFraction( `${numerator}/${denominator}` )
+        return numerator > denominator ?
+            this.fractionToTwoPartFraction(`${numerator}/${denominator}`)
             : `${numerator}/${denominator}`;
     }
 
-    private twoPartFractionToDecimal( value: string ): number {
-        const fraction = value.trim().split( /\s+/ );
-        const wholeNumber = Number( fraction[ 0 ] );
-        const fractionParts = fraction[ 1 ].split( '/' );
-        const denominator = Number( fractionParts[ 1 ] );
-        const numerator = ( wholeNumber * denominator ) + Number( fractionParts[ 0 ] );
+    private twoPartFractionToDecimal(value: string): number {
+        const fraction = value.trim().split(/\s+/);
+        const wholeNumber = Number(fraction[0]);
+        const fractionParts = fraction[1].split('/');
+        const denominator = Number(fractionParts[1]);
+        const numerator = (wholeNumber * denominator) + Number(fractionParts[0]);
 
         return numerator / denominator;
     }
 
-    private fractionToTwoPartFraction( value: string ): string {
-        const splitFraction = value.trim().split( '/' );
-        const numerator = Number( splitFraction[ 0 ] );
-        const denominator = Number( splitFraction[ 1 ] );
-        const wholeNumber = Math.floor( numerator / denominator );
+    private fractionToTwoPartFraction(value: string): string {
+        const splitFraction = value.trim().split('/');
+        const numerator = Number(splitFraction[0]);
+        const denominator = Number(splitFraction[1]);
+        const wholeNumber = Math.floor(numerator / denominator);
 
         return `${wholeNumber} ${numerator % denominator}/${denominator}`;
     }
 
     private splitIngredients(): void {
-        const middleIndex = Math.ceil( this.recipe.ingredients.length / 2 );
+        const middleIndex = Math.ceil(this.recipe.ingredients.length / 2);
 
         this.firstHalfOfIngredients = this.recipe.ingredients.slice(
             0,
@@ -281,9 +281,9 @@ export class RecipeViewerComponent implements OnInit {
     }
 
     private cleanIngredientData(): void {
-        this.recipe.ingredients.map( ( ingr: Ingredient ) => {
-            ingr.quantity = this.isNumber( ingr.quantity ) ? eval( `${ingr.quantity}` ) : ingr.quantity;
-        } );
+        this.recipe.ingredients.map((ingr: Ingredient) => {
+            ingr.quantity = this.isNumber(ingr.quantity) ? eval(`${ingr.quantity}`) : ingr.quantity;
+        });
     }
 
 }

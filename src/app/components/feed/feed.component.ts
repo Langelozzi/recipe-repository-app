@@ -74,7 +74,7 @@ export class FeedComponent implements OnInit {
     if (searchString == '') {
       this.showAllRecipes();
     } else {
-      this.listedRecipes = this.recipeBatch.searchByName(searchString);
+      this.listedRecipes = this.recipeBatch.searchByNameOrUser(searchString);
     }
   }
 }

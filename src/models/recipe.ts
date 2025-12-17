@@ -1,6 +1,13 @@
 import { Ingredient } from '../interfaces/ingredient';
 export class Recipe {
     _id?: string;
+    userId?: string;
+    user?: {
+        userId?: string;
+        firstName?: string;
+        lastName?: string;
+        fullName?: string;
+    };
     name: string;
     ingredients: Ingredient[];
     steps: string[];

@@ -8,6 +8,7 @@ import { Recipe } from '../../../models/recipe';
 })
 export class RecipeListItemComponent implements OnInit {
   @Input() recipe!: Recipe;
+  @Input() showUserName: boolean = false;
   @Output() recipeClicked = new EventEmitter<string>();
 
   constructor() { }

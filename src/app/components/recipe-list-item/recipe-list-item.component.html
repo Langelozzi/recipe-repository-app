@@ -1,7 +1,14 @@
 <mat-card class="recipe-card" (click)="onRecipeClick()">
     <mat-card-content>
         <div class="recipe-header">
-            <h2 class="recipe-name">{{ recipe.name }}</h2>
+            <div class="recipe-title-section">
+                <h2 class="recipe-name">{{ recipe.name }}</h2>
+                <div class="recipe-author" *ngIf="showUserName && recipe.user">
+                    <mat-icon class="author-icon">person</mat-icon>
+                    <span class="author-name">{{ recipe.user.fullName || (recipe.user.firstName + ' ' +
+                        recipe.user.lastName) }}</span>
+                </div>
+            </div>
             <div class="recipe-times" *ngIf="recipe.prepTime || recipe.cookTime">
                 <div class="time-item" *ngIf="recipe.prepTime">
                     <mat-icon class="time-icon">schedule</mat-icon>
