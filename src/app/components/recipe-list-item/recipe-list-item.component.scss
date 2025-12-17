@@ -1,0 +1,125 @@
+.recipe-card {
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+}
+
+.recipe-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.recipe-name {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+  min-width: 200px;
+}
+
+.recipe-times {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.time-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: #666;
+
+  &.total-time {
+    font-weight: 600;
+    color: #522da8;
+  }
+}
+
+.time-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: #522da8;
+}
+
+.time-label {
+  font-weight: 500;
+}
+
+.time-value {
+  color: #333;
+}
+
+.recipe-description {
+  margin: 12px 0;
+  color: #666;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recipe-tags {
+  margin-top: 12px;
+}
+
+.recipe-tag {
+  font-size: 0.85rem;
+  height: 28px;
+  min-height: 28px;
+  padding: 4px 12px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  border-radius: 14px;
+  background-color: #f5f5f5 !important;
+  color: #522da8 !important;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #ebebeb !important;
+  }
+}
+
+::ng-deep .recipe-tags .mat-chip-list-wrapper {
+  flex-wrap: wrap !important;
+  overflow: visible !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .recipe-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .recipe-name {
+    font-size: 1.3rem;
+  }
+
+  .recipe-times {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .time-item {
+    font-size: 0.85rem;
+  }
+}

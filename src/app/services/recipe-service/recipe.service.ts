@@ -6,35 +6,39 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Subject } from 'rxjs';
 import { response } from 'express';
 
-@Injectable( {
+@Injectable({
     providedIn: 'root',
-} )
+})
 export class RecipeService {
     currentRecipe = new Subject<Recipe>();
 
-    constructor( private http: HttpClient ) {}
+    constructor(private http: HttpClient) { }
 
-    createRecipe( body: any ): Observable<object> {
-        return this.http.post( `${environment.baseApiUrl}/recipes/create`, body );
+    createRecipe(body: any): Observable<object> {
+        return this.http.post(`${environment.baseApiUrl}/recipes/create`, body);
     }
 
-    uploadRecipe( body: any ) {
-        return this.http.post( `${environment.baseApiUrl}/recipes/upload`, body );
+    uploadRecipe(body: any) {
+        return this.http.post(`${environment.baseApiUrl}/recipes/upload`, body);
     }
 
     getAllRecipes(): Observable<object> {
-        return this.http.get( `${environment.baseApiUrl}/recipes` );
+        return this.http.get(`${environment.baseApiUrl}/recipes`);
+    }
+
+    getPublicRecipes(): Observable<object> {
+        return this.http.get(`${environment.baseApiUrl}/recipes/public`);
     }
 
     getFavouriteRecipes(): Observable<object> {
-        return this.http.get( `${environment.baseApiUrl}/recipes/favourites` );
+        return this.http.get(`${environment.baseApiUrl}/recipes/favourites`);
     }
 
-    getRecipeById( recipeId: string | null ): Observable<object> {
-        return this.http.get( `${environment.baseApiUrl}/recipes/${recipeId}` );
+    getRecipeById(recipeId: string | null): Observable<object> {
+        return this.http.get(`${environment.baseApiUrl}/recipes/${recipeId}`);
     }
 
-    updateRecipe( recipe: Recipe ): Observable<object> {
+    updateRecipe(recipe: Recipe): Observable<object> {
         return this.http.put(
             `${environment.baseApiUrl}/recipes/${recipe._id}`,
             {
@@ -55,13 +59,13 @@ export class RecipeService {
         );
     }
 
-    deleteRecipeById( recipeId: string | null ): Observable<object> {
+    deleteRecipeById(recipeId: string | null): Observable<object> {
         return this.http.delete(
             `${environment.baseApiUrl}/recipes/${recipeId}`
         );
     }
 
-    getImage( imgPath: string ): Observable<object> {
+    getImage(imgPath: string): Observable<object> {
         return this.http.post(
             `${environment.baseApiUrl}/img`,
             {
@@ -71,7 +75,7 @@ export class RecipeService {
         );
     }
 
-    duplicateRecipe( recipeId: string | null ): Observable<object> {
+    duplicateRecipe(recipeId: string | null): Observable<object> {
         return this.http.post(
             `${environment.baseApiUrl}/recipes/${recipeId}/duplicate`,
             {}

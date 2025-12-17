@@ -7,13 +7,19 @@
     overflow-x: scroll;
     overflow-y: hidden;
     overflow: scroll;
-  }
+}
 
 .tag-chip {
     color: #ffffff !important;
     cursor: pointer !important;
     display: inline-block !important;
     margin-bottom: 2% !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
 }
   
 .tag-chip:nth-of-type(odd) {
@@ -75,6 +81,42 @@ mat-card-title {
 
 .listing-title .mat-card-header-text {
     width: 40px !important;
+}
+
+.filter-info-card {
+    margin-bottom: 16px;
+    background-color: #f9f9f9;
+}
+
+.recipes-container {
+    margin-top: 16px;
+}
+
+.no-recipes-message {
+    text-align: center;
+    padding: 48px 24px;
+    color: #666;
+
+    .no-recipes-icon {
+        font-size: 64px;
+        width: 64px;
+        height: 64px;
+        color: #ccc;
+        margin-bottom: 16px;
+    }
+
+    h3 {
+        margin: 12px 0;
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #555;
+    }
+
+    p {
+        margin: 8px 0;
+        font-size: 1rem;
+        color: #888;
+    }
 }
 
 @media only screen and (max-width: 500px) {

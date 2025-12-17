@@ -9,12 +9,12 @@ import { AnimationHelper } from 'src/app/helpers/animation-helper';
 import { RecipeBatch } from 'src/models/recipe-batch';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-@Component( {
+@Component({
     selector: 'app-recipe-listing',
     templateUrl: './recipe-listing.component.html',
-    styleUrls: [ './recipe-listing.component.scss' ],
-    animations: [ AnimationHelper.getSimpleFade( 'fastFade', 200 ) ],
-} )
+    styleUrls: ['./recipe-listing.component.scss'],
+    animations: [AnimationHelper.getSimpleFade('fastFade', 200)],
+})
 export class RecipeListingComponent implements OnInit {
     public recipeBatch!: RecipeBatch;
     public listedRecipes!: Recipe[];
@@ -22,29 +22,29 @@ export class RecipeListingComponent implements OnInit {
     public sorted = false;
     public currentTag!: string;
 
-    searchFg: FormGroup = new FormGroup( {
-        searchBox: new FormControl( '' ),
-    } );
+    searchFg: FormGroup = new FormGroup({
+        searchBox: new FormControl(''),
+    });
 
     constructor(
         private recipeService: RecipeService,
         private router: Router,
         private _snackBar: MatSnackBar
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.recipeService.getAllRecipes().subscribe(
             // if the response is good then create list of recipes
-            ( data: any ) => {
-                this.recipeBatch = new RecipeBatch( plainToInstance( Recipe, data.recipes ) );
+            (data: any) => {
+                this.recipeBatch = new RecipeBatch(plainToInstance(Recipe, data.recipes));
 
                 this.listedRecipes = this.recipeBatch.recipes;
             }
         );
     }
 
-    viewRecipe( recipeId: string | undefined ): void {
-        this.router.navigate( [ `/recipes/${recipeId}` ] );
+    viewRecipe(recipeId: string): void {
+        this.router.navigate([`/recipes/${recipeId}`]);
     }
 
     showAllRecipes(): void {
@@ -52,20 +52,20 @@ export class RecipeListingComponent implements OnInit {
         this.sorted = false;
     }
 
-    sortByTag( tag: string ): void {
-        this.listedRecipes = this.recipeBatch.getRecipesByTag( tag );
+    sortByTag(tag: string): void {
+        this.listedRecipes = this.recipeBatch.getRecipesByTag(tag);
         this.currentTag = tag;
 
         this.sorted = true;
     }
 
     searchByName(): void {
-        const searchString = this.searchFg.get( 'searchBox' )?.value;
+        const searchString = this.searchFg.get('searchBox')?.value;
 
-        if ( searchString == '' ) {
+        if (searchString == '') {
             this.showAllRecipes();
         } else {
-            this.listedRecipes = this.recipeBatch.searchByName( searchString );
+            this.listedRecipes = this.recipeBatch.searchByName(searchString);
         }
 
     }

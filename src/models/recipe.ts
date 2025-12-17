@@ -14,6 +14,7 @@ export class Recipe {
     tags?: string[];
     description?: string;
     imageData?: string[];
+    visibility?: number;
 
     constructor(
         name: string,
@@ -29,7 +30,8 @@ export class Recipe {
         tags?: string[],
         description?: string,
         _id?: string,
-        imageData?: string[]
+        imageData?: string[],
+        visibility?: number
     ) {
         this._id = _id;
         this.name = name;
@@ -45,6 +47,7 @@ export class Recipe {
         this.tags = tags;
         this.description = description;
         this.imageData = imageData;
+        this.visibility = visibility;
     }
 
     public update(
@@ -60,7 +63,8 @@ export class Recipe {
         facts?: string[],
         tags?: string[],
         description?: string,
-        imageData?: string[]
+        imageData?: string[],
+        visibility?: number
     ): void {
         this.name = name;
         this.ingredients = ingredients;
@@ -75,26 +79,27 @@ export class Recipe {
         this.tags = tags;
         this.description = description;
         this.imageData = imageData;
+        this.visibility = visibility;
     }
 
-    public updateFavouriteStatus( favStatus: boolean ) {
+    public updateFavouriteStatus(favStatus: boolean) {
         this.favourite = favStatus;
     }
 
     public getIngredientNames(): string[] {
         const ingArray: string[] = [];
 
-        for ( const ingredient of this.ingredients ) {
-            ingArray.push( ingredient.ingredient.toLowerCase() );
+        for (const ingredient of this.ingredients) {
+            ingArray.push(ingredient.ingredient.toLowerCase());
         }
 
         return ingArray;
     }
 
     public getNameAsArray(): string[] {
-        const nameArray: string[] = this.name.split( ' ' );
+        const nameArray: string[] = this.name.split(' ');
 
-        for ( let i = 0; i < nameArray.length; i++ ) {
+        for (let i = 0; i < nameArray.length; i++) {
             nameArray[i] = nameArray[i].toLowerCase();
         }
 

@@ -1,0 +1,144 @@
+.feed-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+// scrollable chip list
+::ng-deep .mat-chip-list-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  overflow: scroll;
+}
+
+.tag-chip {
+  color: #ffffff !important;
+  cursor: pointer !important;
+  display: inline-block !important;
+  margin-bottom: 2% !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.tag-chip:nth-of-type(odd) {
+  background-color: #522da8cb !important;
+}
+.tag-chip:nth-of-type(even) {
+  background-color: #ffa807ea !important;
+}
+
+.large-chip {
+  font-size: 1.1rem !important;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-right: -2%;
+  background-color: #3a923291;
+  margin: auto;
+}
+
+.large-chip-close-btn {
+  width: fit-content;
+  height: fit-content;
+  margin-right: -5px;
+  margin-left: 2px;
+}
+
+.large-chip-close-btn-icon {
+  font-size: 1rem;
+  color: #5c5b5bb9;
+}
+
+mat-divider {
+  margin-top: 0px !important;
+  margin-bottom: 1.8% !important;
+  margin-left: 1% !important;
+  margin-right: 1% !important;
+  width: 98% !important;
+}
+
+#search-input {
+  float: right !important;
+  margin-right: 5% !important;
+  width: 100% !important;
+}
+
+mat-card-header {
+  justify-content: space-between;
+}
+
+.mat-card-header-text {
+  margin-right: 0px !important;
+}
+
+mat-card-title {
+  font-size: 2.2rem !important;
+  width: 100% !important;
+  margin-top: 10.5%;
+  margin-right: 0px !important;
+}
+
+.listing-title .mat-card-header-text {
+  width: 40px !important;
+}
+
+.filter-info-card {
+  margin-bottom: 16px;
+  background-color: #f9f9f9;
+}
+
+.recipes-container {
+  margin-top: 16px;
+}
+
+.no-recipes-message {
+  text-align: center;
+  padding: 48px 24px;
+  color: #666;
+
+  .no-recipes-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    color: #ccc;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    margin: 12px 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #555;
+  }
+
+  p {
+    margin: 8px 0;
+    font-size: 1rem;
+    color: #888;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .feed-container {
+    padding: 16px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #search-input {
+    width: 140px !important;
+  }
+
+  mat-card-title {
+    font-size: 1.5rem !important;
+    width: 100% !important;
+    margin-top: 10.5%;
+    margin-right: 0px !important;
+  }
+}

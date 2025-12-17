@@ -1,7 +1,7 @@
-<mat-card *ngIf="recipeBatch" [@fastFade]="'in'">
+<mat-card *ngIf="recipeBatch" [@fastFade]="'in'" class="feed-container">
     <mat-card-header>
         <mat-card-title class="listing-title">
-            My Recipes
+            Recipe Feed
         </mat-card-title>
         <div [formGroup]="searchFg" id="search-div">
             <mat-form-field id="search-input" class="right-align">
@@ -12,15 +12,13 @@
         </div>
     </mat-card-header>
 
-    <!-- Tags -->
-
-
     <mat-card-content>
+        <!-- Tags -->
         <div id="tag-list-container" *ngIf="recipeBatch.getAllTags().size > 0">
             <mat-divider></mat-divider>
 
             <mat-chip-list class="centered-chip-list">
-                <mat-chip (click)="sortByTag( tag )" class="tag-chip" *ngFor="let tag of recipeBatch.getAllTags()">
+                <mat-chip (click)="sortByTag(tag)" class="tag-chip" *ngFor="let tag of recipeBatch.getAllTags()">
                     {{ tag }}
                 </mat-chip>
             </mat-chip-list>
@@ -28,11 +26,12 @@
             <mat-divider></mat-divider>
         </div>
 
+        <!-- Filter indicator -->
         <mat-card *ngIf="sorted" class="filter-info-card">
             <mat-card-title>
                 <mat-chip class="large-chip">
                     {{ currentTag }}
-                    <button mat-icon-button type="button" aria-label="Close recipe" class="large-chip-close-btn"
+                    <button mat-icon-button type="button" aria-label="Clear filter" class="large-chip-close-btn"
                         (click)="showAllRecipes()">
                         <mat-icon class="large-chip-close-btn-icon">close</mat-icon>
                     </button>
@@ -40,6 +39,7 @@
             </mat-card-title>
         </mat-card>
 
+        <!-- Recipe list -->
         <div class="recipes-container">
             <div *ngFor="let recipe of listedRecipes">
                 <app-recipe-list-item [recipe]="recipe" (recipeClicked)="viewRecipe($event)">
